@@ -21,7 +21,7 @@ header-img: "img/post-bg-06.jpg"
 
 ###**新建项目**
 
-使用cmd作为你的shell，然后执行类似的命令：
+使用cmd作为你的shell，然后执行类似的命令:
 
 ``` Python
 //在指定目录下新建一个项目
