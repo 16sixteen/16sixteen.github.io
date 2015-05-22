@@ -35,8 +35,11 @@ Resources是引用的资源
 
 ###**COCOS2DX结构初识**
 首先从新建的项目里的2个文件开始了解cocos2dx：
+
 ###AppDelegate.cpp
+
 ``` C++
+
 //游戏启动完成
 bool AppDelegate::applicationDidFinishLaunching() {
     // initialize director
