@@ -23,7 +23,7 @@ header-img: "img/post-bg-06.jpg"
 
 使用cmd作为你的shell，然后执行类似的命令:
 
-``` Python
+```
 //在指定目录下新建一个项目
 cocos.py new YourGameTitle -p com.yourcompany.gametitle -l cpp -d C:\YourGameTitle
 //在当前目录下新建一个项目
