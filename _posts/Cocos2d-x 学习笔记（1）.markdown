@@ -23,12 +23,7 @@ header-img: "img/post-bg-06.jpg"
 
 使用cmd作为你的shell，然后执行类似的命令:
 
-```
-//在指定目录下新建一个项目
-cocos.py new YourGameTitle -p com.yourcompany.gametitle -l cpp -d C:\YourGameTitle
-//在当前目录下新建一个项目
-cocos.py new YourGameTitle -p com.yourcompany.gametitle -l cpp
-```
+
 
 Classes文件夹是需要完成的程序代码
 proj.win8.1-universal是项目工程文件
