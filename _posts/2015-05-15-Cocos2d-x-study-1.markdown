@@ -136,8 +136,9 @@ Scene* HelloWorld::createScene()
 
 ```C++
   //HelloWorld::init()
-    auto closeItem = MenuItemImage::create(                                                                "CloseNormal.png",
-                                           "CloseSelected.png",      CC_CALLBACK_1(HelloWorld::menuCloseCallback, this));
+    auto closeItem = MenuItemImage::create("CloseNormal.png",
+                                           "CloseSelected.png",
+            CC_CALLBACK_1(HelloWorld::menuCloseCallback, this));
   //png来自Resource  
 	closeItem->setPosition(Vec2(origin.x + visibleSize.width - closeItem->getContentSize().width/2 , origin.y + closeItem->getContentSize().height/2));
 
@@ -176,7 +177,7 @@ Scene* HelloWorld::createScene()
 
 参考文档：
 1.TA的pdf
-2.http://cn.cocos2d-x.org/
+2.[http://cn.cocos2d-x.org/](http://cn.cocos2d-x.org/)
 
 
 
