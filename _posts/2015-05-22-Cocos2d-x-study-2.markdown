@@ -53,11 +53,12 @@ Cocos2d-x使用的是Opengl坐标系：
 
 
 **本地坐标与世界坐标的相互转换：**
+
 ```
-•CCPoint CCNode::convertToNodeSpace(const CCPoint& worldPoint);
-•CCPoint CCNode::convertToWorldSpace(const CCPoint& nodePoint);
-•CCPoint CCNode::convertToNodeSpaceAR(const CCPoint& worldPoint);
-•CCPoint CCNode::convertToWorldSpaceAR(const CCPoint& nodePoint);
+CCPoint CCNode::convertToNodeSpace(const CCPoint& worldPoint);
+CCPoint CCNode::convertToWorldSpace(const CCPoint& nodePoint);
+CCPoint CCNode::convertToNodeSpaceAR(const CCPoint& worldPoint);
+CCPoint CCNode::convertToWorldSpaceAR(const CCPoint& nodePoint);
 ```
 
 **Cocos2d-x内存管理机制**
@@ -67,4 +68,4 @@ Cocos2d-x使用的是Opengl坐标系：
 
 参考文档：
 1.TA的pdf
-2.http://cn.cocos2d-x.org/
+2.[http://cn.cocos2d-x.org/](http://cn.cocos2d-x.org/)
