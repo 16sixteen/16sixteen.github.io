@@ -10,10 +10,8 @@ github_username:  16sixteen
 facebook_username: 
 
 # Build settings
-markdown: kramdown
+markdown: rdiscount
 highlighter: pygments
 permalink: pretty
 paginate: 5
 exclude: ["less","node_modules","Gruntfile.js","package.json","README.md"]
-kramdown:
-  input: GFM
