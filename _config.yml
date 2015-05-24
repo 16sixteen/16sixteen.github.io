@@ -10,7 +10,7 @@ github_username:  16sixteen
 facebook_username: 
 
 # Build settings
-markdown: rdiscount
+markdown: kramdown
 highlighter: pygments
 permalink: pretty
 paginate: 5

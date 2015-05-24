@@ -53,7 +53,7 @@ Cocos2d-x使用的是Opengl坐标系：
 
 
 **本地坐标与世界坐标的相互转换：**
-```C++
+```
 •CCPoint CCNode::convertToNodeSpace(const CCPoint& worldPoint);
 •CCPoint CCNode::convertToWorldSpace(const CCPoint& nodePoint);
 •CCPoint CCNode::convertToNodeSpaceAR(const CCPoint& worldPoint);
