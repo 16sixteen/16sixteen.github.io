@@ -3,6 +3,7 @@ layout:     post
 title:      "Cocos2d-x 学习笔记（2）"
 subtitle:   "cocos2d-x 坐标系"
 date:       2015-05-15 21:23:00
+categories: Jekyll Update
 author:     "SixTeen"
 header-img: "img/post-bg-06.jpg"
 ---
