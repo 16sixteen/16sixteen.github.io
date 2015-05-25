@@ -4,7 +4,7 @@ title:      "Cocos2d-x 学习笔记（1）"
 subtitle:   "cocos2d-x 配置环境 新建项目 初始认识"
 date:       2015-05-15 17:51:00
 author:     "SixTeen"
-tags：      cocos2d-x
+atags:      cocos2d-x
 header-img: "img/post-bg-06.jpg"
 ---
 
