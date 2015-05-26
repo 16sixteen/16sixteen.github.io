@@ -2,7 +2,7 @@
 /* Style and "hide" the sidebar */
 .sidebar {
   position: fixed;
-  top: 14rem;
+  top: 2rem;
   bottom: 0;
   left: -14rem;
   width: 14rem;
