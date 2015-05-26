@@ -2,8 +2,8 @@
 /* Style and "hide" the sidebar */
 .sidebar {
   position: fixed;
-  top: 15rem;
-  bottom: 10rem;
+  top: 0;
+  bottom: 0;
   left: -14rem;
   width: 14rem;
   height: 100%;
