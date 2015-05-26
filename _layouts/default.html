@@ -5,14 +5,14 @@
 
 <body>
 
-    {% include nav.html %}
-
     {% include sidebar.html %} 
+<div class="wrap">   
+    {% include nav.html %}
 
     {{ content }}
 
     {% include footer.html %}
-    <label for="sidebar-checkbox" class="sidebar-toggle"></label>
+</div>
     <script>
       (function(document) {
         var toggle = document.querySelector('.sidebar-toggle');
