@@ -16,7 +16,7 @@ header-img: "img/post-bg-06.jpg"
 在Cocos2d-x-3.x引擎中，采用节点树形结构来管理游戏对象
 
 首先整个游戏只能有一个导演，导演可以控制场景的切换
-```C#
+```
 //场景切换
     //方法一
     auto scene = HelloWorld::createScene();               //创建一个新场景，因为原场景已删除
@@ -59,7 +59,7 @@ addChild(layer, 10);
 
 
 创建一个场景的时候，create会自动调用init函数，init函数里通常是这个场景里的层，精灵的初始化，以及一些监听器的安装。
-```C#
+```
 //HelloWorldScene.cpp
 Scene* HelloWorld::createScene()
 {
@@ -72,7 +72,7 @@ Scene* HelloWorld::createScene()
     return scene;
 }
 ```
-```C#
+```
 //HelloWorldScene.cpp
 bool HelloWorld::init()
 {
