@@ -9,6 +9,11 @@ twitter_username:
 github_username:  16sixteen
 facebook_username: 
 
+
+# Sidebar filter
+# Choose 'tag' or 'category' as filter in sidebar.
+filter: 'tag'
+
 # Build settings
 markdown: rdiscount
 highlighter: pygments
