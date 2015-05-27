@@ -12,7 +12,7 @@ facebook_username:
 
 # Sidebar filter
 # Choose 'tag' or 'category' as filter in sidebar.
-filter: 'tag'
+filter: 'tags'
 
 # Build settings
 markdown: rdiscount
