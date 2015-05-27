@@ -18,11 +18,13 @@
           </a>
         {% endfor %}
       {% elsif site.filter == 'tags' %}
-      <li class="sidebar-tag" data-filter="{{ site.tags | first }}">{{ site.tags | first }}</li>
+        {% for tag in site.tags %}
+          <li class="sidebar-tag" data-filter="{{ tag | first }}">{{ tag | first }}</li>
         {% for post in site.posts %}
           <a class="toc-link" data-tags="{{ post.tags | join: ' ' }}" href="{{ post.url }}">
             {{ post.title }}
           </a>
+        {% endfor %}
         {% endfor %}
       {% endif %}
     </ul>
