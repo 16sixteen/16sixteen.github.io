@@ -1,3 +1,14 @@
+---
+layout:     post
+title:      "Cocos2d-x 学习笔记（3）"
+subtitle:   "cocos2d-x 帧动画 调度器"
+date:       2015-05-17 13:26:00
+categories: cocos2d-x
+tags:       cocos2d-x
+author:     "SixTeen"
+header-img: "img/post-bg-06.jpg"
+---
+
 # Cocos2d-x 学习笔记（4.2）
 
 标签（空格分隔）： cocos2d-x 帧动画 调度器

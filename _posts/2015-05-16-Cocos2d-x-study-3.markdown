@@ -3,7 +3,7 @@ layout:     post
 title:      "Cocos2d-x 学习笔记（3）"
 subtitle:   "cocos2d-x scene sprite layout 场景切换"
 date:       2015-05-16 23:26:00
-categories: Jekyll Update
+categories: cocos2d-x
 tags:       cocos2d-x
 author:     "SixTeen"
 header-img: "img/post-bg-06.jpg"
