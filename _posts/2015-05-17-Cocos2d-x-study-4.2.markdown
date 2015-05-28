@@ -102,7 +102,7 @@ bool HelloWorld::init()
 }
 ```
 
-{% highlight c++ linenos %}
+{% highlight c++ %}
 //单次调度器(schedulerOnce)
 //用unschedule(SEL_SCHEDULE selector, float delay)来取消该触发器。
 
