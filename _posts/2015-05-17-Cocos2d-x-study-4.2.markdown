@@ -102,7 +102,7 @@ bool HelloWorld::init()
 }
 ```
 
-{% highlight c %}
+```c
 //单次调度器(schedulerOnce)
 //用unschedule(SEL_SCHEDULE selector, float delay)来取消该触发器。
 
@@ -116,7 +116,7 @@ void HelloWorld::updateOnce(float dt)
 {
     log("Once");
 }
-{% endhighlight %}
+```
 
 参考文档：
 1.TA的pdf
