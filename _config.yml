@@ -15,8 +15,8 @@ facebook_username:
 filter: 'tags'
 
 # Build settings
-markdown: rdiscount
-rdiscount:
+markdown: redcarpet
+redcarpet:
 extensions: ["fenced_code_blocks", "tables", "highlight", "strikethrough"]
 highlighter: pygments
 permalink: pretty
