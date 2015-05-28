@@ -16,8 +16,6 @@ filter: 'tags'
 
 # Build settings
 markdown: redcarpet
-redcarpet:
-extensions: ["fenced_code_blocks", "tables", "highlight", "strikethrough"]
 highlighter: pygments
 permalink: pretty
 paginate: 5
