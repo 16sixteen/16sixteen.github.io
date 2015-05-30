@@ -19,7 +19,7 @@ header-img: "img/post-bg-06.jpg"
 
 通过连续播放形成动画的效果，使游戏具有很灵动的效果。不过这个极大的加重了制作的负担而且最终输出的文件量也很大。
 
-```
+{% highlight c++ %}
 auto s = Director::getInstance()->getWinSize();
 // 创建一张贴图
 auto texture = Director::getInstance()->getTextureCache()->addImage("dragon_animation.png");
@@ -51,7 +51,7 @@ auto animate = Animate::create(animation);
 auto seq= Sequence::create(animate, FlipX::create(true), animate->clone(), FlipX::create(false), NULL);
 // 播放序列动作特效
 sprite->runAction(RepeatForever::create( seq) );
-```
+{% endhighlight %}
 
 ###**调度器Scheduler,Update**
 
@@ -62,7 +62,7 @@ sprite->runAction(RepeatForever::create( seq) );
 单次调度器:scheduleOnce(SEL_SCHEDULE selector, float delay)
 </font>
 
-```
+{% highlight c++ %}
 //默认调度器(schedulerUpdate)
 //通过执行schedulerUpdate()调度器每帧执行update方法，如果需要停止这个调度器，可以使用unschedulerUpdate()方法。
 
@@ -80,9 +80,9 @@ void HelloWorld::update(float dt)
 {
     log("update");
 }
-```
+{% endhighlight %}
 
-```
+{% highlight c++ %}
 //自定义调度器(scheduler)，最常用的调度器
 //取消该调度器可以用unschedule(SEL_SCHEDULE selector, float delay)
 
@@ -100,7 +100,7 @@ bool HelloWorld::init()
 {
     log("Custom");
 }
-```
+{% endhighlight %}
 
 {% highlight c++ %}
 //单次调度器(schedulerOnce)
