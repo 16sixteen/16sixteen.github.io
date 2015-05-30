@@ -6,7 +6,7 @@ date:       2015-05-17 13:26:00
 categories: cocos2d-x
 tags:       cocos2d-x
 author:     "SixTeen"
-header-img: "img/post-bg-06.jpg"
+header-img: "img/cocos2dx.png"
 ---
 
 # Cocos2d-x 学习笔记（4.2）
