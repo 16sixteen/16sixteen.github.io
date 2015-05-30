@@ -19,14 +19,14 @@ header-img: "img/post-bg-06.jpg"
 
 首先整个游戏只能有一个导演，导演可以控制场景的切换
 
-```
+{% highlight c++ %}
 //场景切换
     //方法一
     auto scene = HelloWorld::createScene();               //创建一个新场景，因为原场景已删除
     Director::getInstance()->replaceScene(scene);
     //方法二
     Director::getInstance()->popScene();        //原场景依然存在，直接出栈
-```
+{% endhighlight %}
 
 以导演为父节点，存在着很多的scene，场景下又有很多的层，层里又有很多的精灵，这样，一个游戏的基本框架已经有了，精灵是作为一个游戏里的一个对象，元素的存在，通常是运动的，层则是存放这一些精灵的地方，我们可以把不同种类的精灵放到不同的层上，而场景，则是精灵们运动的范围。场景，是cocos2dx中必不可少的元素，游戏中通常我们需要构建不同的场景（至少一个），游戏里关卡、版块的切换也就是一个一个场景的切换，就像在电影中变换舞台和场地一样。场景的一个重要的作用就是流程控制的作用，我们可以通过Director的一系列方法控制游戏中不同的场景的自由切换。
 ###**下面是Director控制场景的常用方法：**
@@ -57,20 +57,20 @@ resume ()
 
 Layer是处理玩家事件响应的Node子类。与场景不同，层通常包含的是直接在屏幕上呈现的内容，并且可以接受用户的输入事件，包括触摸，加速度计和键盘输入等。我们需要在层中加入精灵，文本标签或者其他游戏元素，并设置游戏元素的属性，比如位置，方向和大小；设置游戏元素的动作等。通常，层中的对象功能类似，耦合较紧，与层中游戏内容相关的逻辑代码也编写在层中，在组织好层后，只需要把层按照顺序添加到场景中就可以显示出来了。要向场景添加层，我们可以使用addChild方法。
 
-```
+{% highlight c++ %}
 addChild( Node child ) 
 addChild( Node child, int zOrder ) 
 addChild( Node *child, int zOrder, int tag )
-```
+{% endhighlight %}
 
-```
+{% highlight c++ %}
 //一个例子
 auto layer = LayerColor::create(Color4B(0, 128, 128, 255));
 //设置层的大小
 layer->setContentSize(CCSizeMake(120, 80));
 layer->setPosition(Point(50, 50));
 addChild(layer, 10);
-```
+{% endhighlight %}
 对于场景而言，通常我们添加的节点就是层。先添加的层会被置于后添加的层之下。如果需要为它们指定先后次序，可以使用不同的zOrder值。tag是元素的标识号码，如果为子节点设置了tag值，就可以在它的父节点中利用tag值就可以找到它了。
 
 
@@ -80,7 +80,7 @@ addChild(layer, 10);
 
 创建一个场景的时候，create会自动调用init函数，init函数里通常是这个场景里的层，精灵的初始化，以及一些监听器的安装。
 
-```
+{% highlight c++ %}
 //HelloWorldScene.cpp
 Scene* HelloWorld::createScene()
 {
@@ -92,9 +92,9 @@ Scene* HelloWorld::createScene()
     scene->addChild(layer);
     return scene;
 }
-```
+{% endhighlight %}
 
-```
+{% highlight c++ %}
 //HelloWorldScene.cpp
 bool HelloWorld::init()
 {
@@ -138,7 +138,7 @@ bool HelloWorld::init()
 	this->addChild(menu, 3);
     return true;
 }
-```
+{% endhighlight %}
 
 
 

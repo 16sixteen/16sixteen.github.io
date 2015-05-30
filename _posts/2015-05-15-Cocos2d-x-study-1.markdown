@@ -25,12 +25,12 @@ header-img: "img/post-bg-06.jpg"
 
 使用cmd作为你的shell，然后执行类似的命令：
 
-```
+{% highlight c++ %}
 //在指定目录下新建一个项目
 cocos.py new YourGameTitle -p com.yourcompany.gametitle -l cpp -d C:\YourGameTitle
 //在当前目录下新建一个项目
 cocos.py new YourGameTitle -p com.yourcompany.gametitle -l cpp
-```
+{% endhighlight %}
 
 Classes文件夹是需要完成的程序代码
 proj.win8.1-universal是项目工程文件
@@ -39,7 +39,7 @@ Resources是引用的资源
 ###**COCOS2DX结构初识**
 首先从新建的项目里的2个文件开始了解cocos2dx：
 ###AppDelegate.cpp
-``` C++
+{% highlight c++ %}
 //游戏启动完成
 bool AppDelegate::applicationDidFinishLaunching() {
     // initialize director
@@ -68,10 +68,10 @@ bool AppDelegate::applicationDidFinishLaunching() {
 
     return true;
 }
-```
+{% endhighlight %}
 
 
-```C++
+{% highlight c++ %}
 //应用程序进入后台
 // This function will be called when the app is inactive. When comes a phone call,it's be invoked too
 void AppDelegate::applicationDidEnterBackground() {
@@ -80,10 +80,10 @@ void AppDelegate::applicationDidEnterBackground() {
     // if you use SimpleAudioEngine, it must be pause
     // SimpleAudioEngine::getInstance()->pauseBackgroundMusic();
 }
-```
+{% endhighlight %}
 
 
-```C++
+{% highlight c++ %}
 //游戏从后台恢复
 // this function will be called when the app is active again
 void AppDelegate::applicationWillEnterForeground() {
@@ -92,9 +92,9 @@ void AppDelegate::applicationWillEnterForeground() {
     // if you use SimpleAudioEngine, it must resume here
     // SimpleAudioEngine::getInstance()->resumeBackgroundMusic();
 }
-```
+{% endhighlight %}
 ###HelloWorldScene.h
-```C++
+{% highlight c++ %}
 class HelloWorld : public cocos2d::Layer
 {
 public:
@@ -114,10 +114,10 @@ public:
     //宏，创建helloworld对象，注意HelloWorld是单例的
     CREATE_FUNC(HelloWorld);
 };
-```
+{% endhighlight %}
 
 ###HelloWorldScene.cpp
-```C++
+{% highlight c++ %}
 Scene* HelloWorld::createScene()
 {
     // 'scene' is an autorelease object
@@ -132,11 +132,11 @@ Scene* HelloWorld::createScene()
     // return the scene
     return scene;
 }
-```
+{% endhighlight %}
 在这段代码中，首先利用Scene::create方法创建了一个空场景，然后利用Helloworld::create方法创建一个HelloWorld层的实例，最后调用scene对象的addChild方法来把创建的层添加到场景之中。
 
 
-```C++
+{% highlight c++ %}
   //HelloWorld::init()
     auto closeItem = MenuItemImage::create("CloseNormal.png",
                                            "CloseSelected.png",
@@ -171,7 +171,7 @@ Scene* HelloWorld::createScene()
     this->addChild(sprite, 0);
     
     return true;
-```
+{% endhighlight %}
 
 
 

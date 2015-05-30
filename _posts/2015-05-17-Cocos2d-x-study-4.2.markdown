@@ -19,7 +19,7 @@ header-img: "img/post-bg-06.jpg"
 
 通过连续播放形成动画的效果，使游戏具有很灵动的效果。不过这个极大的加重了制作的负担而且最终输出的文件量也很大。
 
-{% highlight c++ %}
+{% highlight c# %}
 auto s = Director::getInstance()->getWinSize();
 // 创建一张贴图
 auto texture = Director::getInstance()->getTextureCache()->addImage("dragon_animation.png");
