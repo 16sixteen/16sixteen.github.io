@@ -193,9 +193,6 @@ a.sidebar-nav-item:focus {
   top:  .8rem;
   left: 1rem;
   display: block;
-  padding: .25rem .75rem;
-  color: #505050;
-  background-color: #fff;
   border-radius: .25rem;
   cursor: pointer;
 }
