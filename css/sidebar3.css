@@ -191,6 +191,7 @@ a.sidebar-nav-item:focus {
 .sidebar-toggle {
   position: absolute;
   background-image: url("/img/sidebar.png");
+  background-size: contain;
   width: 2rem;
   height: 1.78rem;
   top:  .8rem;
