@@ -10,23 +10,15 @@
 
   <nav class="sidebar-nav">
     <ul id="sidebar-tags">
-      {% if site.filter == 'category' %}
-        <li class="sidebar-tag" data-filter="{{ category | first }}">{{ category | first }}</li>   
-        {% for post in site.posts %}
-          <a class="toc-link" data-tags="{{ post.categories | join: ' ' }}" href="{{ post.url }}">
-            {{ post.title }}
-          </a>
-        {% endfor %}
-      {% elsif site.filter == 'tags' %}
-        {% for tag in site.tags %}
-          <li class="sidebar-tag" data-filter="{{ tag | first }}">{{ tag | first }}</li>
-        {% for post in site.posts %}
-          <a class="toc-link" data-tags="{{ post.tags | join: ' ' }}" href="{{ post.url }}">
-            {{ post.title }}
-          </a>
-        {% endfor %}
-        {% endfor %}
-      {% endif %}
+{% for category in site.categories %}
+<h2>{{ category | first }}</h2>
+</span>{{ category | last | size }}</span>
+<ul class="arc-list">
+    {% for post in category.last %}
+        <li>{{ post.date | date:"%d/%m/%Y"}}<a href="{{ post.url }}">{{ post.title }}</a></li>
+    {% endfor %}
+</ul>
+{% endfor %}
     </ul>
   </nav>
 
