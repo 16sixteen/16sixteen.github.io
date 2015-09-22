@@ -3,7 +3,7 @@ layout:     post
 title:      "SlovingReport(1)"
 subtitle:   "1020"
 date:       2015-09-22 21:51:00
-categories: sloving-report
+categories: algorithm
 tags:       sloving-report
 author:     "SixTeen"
 header-img: "img/solvingReport.jpg"
