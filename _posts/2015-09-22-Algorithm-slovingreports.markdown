@@ -21,7 +21,6 @@ header-img: "img/solvingReport.jpg"
 Soj-1020 sloving report
 题意：输入一串质数，以及一个极大的数字(长度小于400),将这个数字分别对这串质数取模的结果以(r1,r2...rn)的形式输出
 ![p](/img/slovingReport/1020.png)
-![p](https://16sixteen.github.io/img/home-bg.jpg)
 数据结构：栈，数组
 我使用的方法是使用栈来存这个大数字，然后用像笔算那样的方法一位位的除下去
 {% highlight c++ %}
