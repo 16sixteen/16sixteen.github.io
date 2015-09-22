@@ -20,4 +20,4 @@ header-img: "img/solvingReport.jpg"
 
 Soj-1020 sloving report
 题意：输入一串质数，以及一个极大的数字(长度小于400)
-![p](img/slovingReport/1020.jpg)
+![p](../img/slovingReport/1020.jpg)
