@@ -20,5 +20,53 @@ header-img: "img/solvingReport.jpg"
 
 Soj-1020 sloving report
 题意：输入一串质数，以及一个极大的数字(长度小于400),将这个数字分别对这串质数取模的结果以(r1,r2...rn)的形式输出
-![p](img/slovingReport/1020.png)
+![p](/img/slovingReport/1020.png)
 ![p](https://16sixteen.github.io/img/home-bg.jpg)
+数据结构：栈，数组
+我使用的方法是使用栈来存这个大数字，然后用像笔算那样的方法一位位的除下去
+{% highlight c++ %}
+#include<iostream>
+#include<string>
+#include<stack>
+using namespace std;
+
+int main(){
+    int t;
+    int m;
+    string s;
+    stack<int> x;
+    stack<int> y;
+    int big;
+    int a[200];
+    int b[200];
+    cin >> t;
+    for (int i = 0; i < t; i++) {
+        cin >> m;
+        for (int j = 0; j < m; j++) {
+            cin >> a[j];
+        }
+        cin >> s;
+        for (int j = s.length() - 1; j >= 0; j--) {
+            x.push((s[j] - '0'));
+        }
+        for (int j = 0; j < m; j++){
+            y = x;
+            big = 0;
+            while (!y.empty()){
+                big = big * 10 + y.top();
+                y.pop();
+                big = big%a[j];
+            }
+            b[j] = big;
+        }
+        cout << "(";
+        for (int j = 0; j < m-1; j++){
+            cout << b[j];
+            cout << ",";
+        }
+        cout << b[m - 1] << ")" << endl;
+        x = y;
+    }
+    return 0;
+}
+{% endhighlight %}
