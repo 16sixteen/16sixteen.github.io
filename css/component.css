@@ -113,9 +113,9 @@
 }
 
 .slideshow li {
-/*	width: 660px;
+	width: 660px;
 	height: 560px;
-*/	position: absolute;
+	position: absolute;
 	top: 50%;
 	left: 50%;
 	margin: -280px 0 0 -330px;
@@ -272,6 +272,7 @@ span.nav-close:before {
 		width: auto;
 		margin: 0 auto;
 		max-width: 100%;
+		max-height: 100%;
 	}
 
 	.slideshow nav span,
