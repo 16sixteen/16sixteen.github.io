@@ -22,7 +22,7 @@
 
 .grid-gallery figure img {
 	display: block;
-	max-width: 100%;
+	max-width: 35em;
 	max-height: 35em;
 }
 
