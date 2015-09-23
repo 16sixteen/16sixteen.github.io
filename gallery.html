@@ -21,7 +21,8 @@ header-img: "img/gallery-bg.jpg"
   </head>
   <body>
 {% include head.html %}
-{% include sidebar.html %} 
+{% include sidebar.html %}
+<div class="wrap">  
 {% include nav.html %}
 <header class="intro-header" style="background-image: url('{{ site.baseurl }}/{% if page.header-img %}{{ page.header-img }}{% else %}{{ site.header-img }}{% endif %}')">
     <div class="container">
@@ -205,6 +206,7 @@ header-img: "img/gallery-bg.jpg"
 <!--******************************************************************-->
 
   {% include footer.html %}
+</div>
 
     <script src="{{ site.baseurl }}/js/imagesloaded.pkgd.min.js"></script>
     <script src="{{ site.baseurl }}/js/masonry.pkgd.min.js"></script>
