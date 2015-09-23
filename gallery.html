@@ -12,9 +12,9 @@ title: "gallery"
     <meta name="keywords" content="jekyll, image gallery, image grid, template, masonry" />
     <meta name="author" content="Nii Adjetey Sowah" />
 
-    <link rel="stylesheet" type="text/css" href="{{ site.url }}/css/demo.css" />
-    <link rel="stylesheet" type="text/css" href="{{ site.url }}/css/component.css" />
-    <script src="{{ site.url }}/js/modernizr.custom.js"></script>
+    <link rel="stylesheet" type="text/css" href="{{ site.baseurl }}/css/demo.css" />
+    <link rel="stylesheet" type="text/css" href="{{ site.baseurl }}/css/component.css" />
+    <script src="{{ site.baseurl }}/js/modernizr.custom.js"></script>
   </head>
   <body>
 
@@ -44,7 +44,7 @@ title: "gallery"
     <!--******************************************************************-->
     <li>
       <figure>
-        <img src="{{ site.url }}/img/gallery/1.jpg" alt="img"/>
+        <img src="{{ site.baseurl }}/img/gallery/1.jpg" alt="img"/>
         <figcaption>
           <h3>1</h3>
           <p>123</p>
@@ -63,7 +63,7 @@ title: "gallery"
     <!--******************************************************************-->
     <li>
       <figure>
-        <img src="{{ site.url }}/img/gallery/1.jpg" alt="img"/>
+        <img src="{{ site.baseurl }}/img/gallery/1.jpg" alt="img"/>
         <figcaption><h3>header</h3><p>caption</p></figcaption>
       </figure>
     </li>
@@ -94,10 +94,10 @@ title: "gallery"
 <!--******************************************************************-->
 <!--******************************************************************-->
 
-    <script src="{{ site.url }}/js/imagesloaded.pkgd.min.js"></script>
-    <script src="{{ site.url }}/js/masonry.pkgd.min.js"></script>
-    <script src="{{ site.url }}/js/classie.js"></script>
-    <script src="{{ site.url }}/js/cbpGridGallery.js"></script>
+    <script src="{{ site.baseurl }}/js/imagesloaded.pkgd.min.js"></script>
+    <script src="{{ site.baseurl }}/js/masonry.pkgd.min.js"></script>
+    <script src="{{ site.baseurl }}/js/classie.js"></script>
+    <script src="{{ site.baseurl }}/js/cbpGridGallery.js"></script>
     <script>
       new CBPGridGallery( document.getElementById( 'grid-gallery' ) );
     </script>
