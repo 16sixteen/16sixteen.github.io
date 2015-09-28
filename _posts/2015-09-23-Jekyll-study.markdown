@@ -20,7 +20,7 @@ published:  true
 要在本地搭建Jekyll的本地测试环境，首先要安装ruby和devkit，这2个的安装包都可以在[这里下载](http://rubyinstaller.org/downloads/),(可能需要使用vpn来翻墙)。
 ![ruby](/img/jekyllstudy/ruby.png)![devkit](/img/jekyllstudy/devkit.png)
 
-##安装步骤
+###安装步骤
 1.安装ruby的时候，有一个多选，全选上即可
 
 2.安装好ruby之后，把devkit解压到一个文件夹中(文件路径最好不要有中文和空格)，在该文件夹中打开cmd，输入
@@ -39,10 +39,15 @@ jekyll -version
 出现版本信息就表示安装成功了
 
 4.现在我们可以在本地预览我们的github page了
-在io的目录下，输入jekyll serve --watch就可以在本地http://localhost:4000/搭建起jekyll项目了
+在io的目录下，输入
+{% highlight c %}
+jekyll serve --watch
+{% endhighlight %}
+就可以在本地http://localhost:4000/搭建起jekyll项目了
 ![servewatch](/img/jekyllstudy/servewatch.png)
 
-
+而且每次修改后不用stop之后再跑，jekyll能自动更新到最新
+![serveupdate](/img/jekyllstudy/serveupdate.png)
 
 
 参考文档：
