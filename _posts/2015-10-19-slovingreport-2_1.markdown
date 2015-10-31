@@ -45,7 +45,7 @@ void shifttable(int n){
 }
 
 //String Matching --Horspool Algorithm
-void Boyer_Moore(int m,int n){
+void Horspool(int m,int n){
     shifttable(n);
     int i = n - 1;
     int k = n - 1;
@@ -76,7 +76,7 @@ int main(){
         for (int i = 0; i < m; i++){
             cin >> target[i];
         }
-        Boyer_Moore(m,n);
+        Horspool(m,n);
     }
     return 0;
 }

@@ -1,7 +1,7 @@
 ---
 layout:     post
 title:      "SlovingReport(2)"
-subtitle:   "1150 1151 1515 1007 1036"
+subtitle:   "1150 1151 1515 1007 1036 1006 1009 1050 1443 1156 1024 1063"
 date:       2015-10-07 00:00:00
 categories: sloving-report
 tags:       sloving-report
@@ -10,7 +10,7 @@ header-img: "img/solvingReport.jpg"
 published:   true
 ---
 
-#<a href="#01">1150-1151</a> <a href="#02">1515</a> <a href="#03">1007</a> <a href="#04">1036</a> <a href="#05"></a> <a href="#06"></a> <a href="#07"></a> <a href="#08"></a>
+#<a href="#01">1150-1151</a> <a href="#02">1515</a> <a href="#03">1007</a> <a href="#04">1036</a> <a href="#05">1006</a> <a href="#06">1009</a> <a href="#07">1050</a> <a href="#08">1443</a> <a href="#09">1156</a> <a href="#10">1024</a> <a href="#11">1063</a>
 
 ---
 
@@ -891,16 +891,95 @@ int main(){
 {% endhighlight %}
 
 
-###<a name="11"></a>Soj-
+###<a name="11"></a>Soj-1063
 
+根据输入的信息，查询对应id的员工的boss id和该员工所拥有的部下
 
-![p](/img/slovingReport/.png)
+相应的规则：
+
+    1.薪酬是唯一的
+    2.薪酬和身高都比你高的人是你的boss(薪酬>自己，身高>=自己)
+    3.你的部下必须是薪酬和身高都比你低的人
+    4.你部下的部下是你的部下(符合第三点)
+
+这题使用的是先按薪酬排序，排完序之后，对于要查询的id，找到他的位置，从该位置开始往前扫描，遇到身高比他低的都是他的部下。要注意的是，当遇到一个身高比他高的人的时候，就可以停止继续扫描了，因为这个人薪酬比你低，身高比你高，他是你的同事，他前面身高薪酬比你低的都是他的部下，而同事的部下并不是你的部下。而找boss，则是从自己的位置往前扫，身高大于或者等于自己的那个人。
+
+![p](/img/slovingReport/1063.png)
 
 
 {% highlight c++ %}
+#include<iostream>
+#include<algorithm>
 
+using namespace std;
+
+struct person{
+    int id;
+    int salary;
+    int height;
+    void set(int i, int s, int h){
+        id = i;
+        salary = s;
+        height = h;
+    }
+    bool operator<(person p)const{
+        if (salary < p.salary){
+            return true;
+        }
+        else{
+            return false;
+        }
+    }
+};
+person p[30005];
+int main(){
+    int n;
+    cin >> n;
+    for (int i = 0; i < n; i++){
+        int m, q;
+        cin >> m >> q;
+        for (int j = 0; j < m; j++){
+            int i, s, h;
+            cin >> i >> s >> h;
+            p[j].set(i, s, h);
+        }
+        sort(p, p + m);
+        int id;
+        for (int j = 0; j < q; j++){
+            cin >> id;
+            int count = 0;
+            int flag = 0;
+            int pos;
+            int boss = 0;
+            for (int k = 0; k < m; k++){
+                if (p[k].id == id){
+                    pos = k;
+                    for (int l = k + 1; l < m; l++){
+                        if (p[l].height >= p[pos].height){
+                            boss = p[l].id;
+                            break;
+                        }
+                    }
+                    break;
+                }
+            }
+            for (int k = pos - 1; k >= 0; k--){
+                if (p[k].height > p[pos].height){
+                    break;
+                }
+                else{
+                    count++;
+                }
+            }
+            cout << boss << ' ' << count << endl;
+        }
+    }
+    return 0;
+}               
 {% endhighlight %}
 
 
+    
 
+    Fin 10.27/20:30
 

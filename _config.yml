@@ -15,7 +15,9 @@ facebook_username:
 filter: 'tags'
 
 # Build settings
-markdown: redcarpet
+#markdown: redcarpet
+markdown: kramdown
+excerpt_separator: ""
 highlighter: pygments
 permalink: pretty
 paginate: 5

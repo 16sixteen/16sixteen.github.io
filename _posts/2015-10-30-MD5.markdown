@@ -1,0 +1,223 @@
+---
+layout:     post
+title:      "MD5工作过程和C++实现版"
+subtitle:   "MD5"
+date:       2015-10-30 23:44:00
+categories: web-security
+tags:       web-security
+author:     "SixTeen"
+header-img: "img/solvingReport.jpg"
+published:   true
+---
+
+#MD5算法流程
+MD5是输入不定长度信息，输出固定长度128-bits(32位16进制数)的算法。经过程序流程，生成四个8位16进制数（32bits）数据，最后联合起来成为一个128-bits（32位16进制数）散列。基本方式为，求余、取余、调整长度、与链接变量进行循环运算。得出结果。
+
+##wiki上的伪代码: ([wiki](https://zh.wikipedia.org/wiki/MD5))([C++版](/web-security/2015/10/30/MD5_C++/))
+
+    //Note: All variables are unsigned 32 bits and wrap modulo 2^32 when calculating
+    var int[64] r, k
+
+    //r specifies the per-round shift amounts
+    r[ 0..15]：= {7, 12, 17, 22,  7, 12, 17, 22,  7, 12, 17, 22,  7, 12, 17, 22} 
+    r[16..31]：= {5,  9, 14, 20,  5,  9, 14, 20,  5,  9, 14, 20,  5,  9, 14, 20}
+    r[32..47]：= {4, 11, 16, 23,  4, 11, 16, 23,  4, 11, 16, 23,  4, 11, 16, 23}
+    r[48..63]：= {6, 10, 15, 21,  6, 10, 15, 21,  6, 10, 15, 21,  6, 10, 15, 21}
+
+    //Use binary integer part of the sines of integers as constants:
+    for i from 0 to 63
+        k[i] := floor(abs(sin(i + 1)) × 2^32)
+
+    //Initialize variables:
+    var int h0 := 0x67452301
+    var int h1 := 0xEFCDAB89
+    var int h2 := 0x98BADCFE
+    var int h3 := 0x10325476
+
+    //Pre-processing:
+    append "1" bit to message
+    append "0" bits until message length in bits ≡ 448 (mod 512)
+    append bit length of message as 64-bit little-endian integer to message
+
+    //Process the message in successive 512-bit chunks:
+    for each 512-bit chunk of message
+        break chunk into sixteen 32-bit little-endian words w[i], 0 ≤ i ≤ 15
+
+        //Initialize hash value for this chunk:
+        var int a := h0
+        var int b := h1
+        var int c := h2
+        var int d := h3
+
+        //Main loop:
+        for i from 0 to 63
+            if 0 ≤ i ≤ 15 then
+                f := (b and c) or ((not b) and d)
+                g := i
+            else if 16 ≤ i ≤ 31
+                f := (d and b) or ((not d) and c)
+                g := (5×i + 1) mod 16
+            else if 32 ≤ i ≤ 47
+                f := b xor c xor d
+                g := (3×i + 5) mod 16
+            else if 48 ≤ i ≤ 63
+                f := c xor (b or (not d))
+                g := (7×i) mod 16
+     
+            temp := d
+            d := c
+            c := b
+            b := leftrotate((a + f + k[i] + w[g]),r[i]) + b
+            a := temp
+        Next i
+        //Add this chunk's hash to result so far:
+        h0 := h0 + a
+        h1 := h1 + b 
+        h2 := h2 + c
+        h3 := h3 + d
+    End ForEach
+    var int digest := h0 append h1 append h2 append h3 //(expressed as little-endian)
+
+#步骤分析
+
+##1.初始化4个值和常量数组K和左移表
+
+初始的128位值为初试链接变量，这些参数用于第一轮的运算，以大端字节序来表示，他们分别为： 
+    
+    A=0x01234567，B=0x89ABCDEF，C=0xFEDCBA98，D=0x76543210。
+
+（每一个变量给出的数值是高字节存于内存低地址，低字节存于内存高地址，即大端字节序。在程序中变量A、B、C、D的值分别为0x67452301，0xEFCDAB89，0x98BADCFE，0x10325476）
+{% highlight c++ %}
+//Initialize variables:
+var int h0 := 0x67452301
+var int h1 := 0xEFCDAB89
+var int h2 := 0x98BADCFE
+var int h3 := 0x10325476
+{% endhighlight %}
+
+通过函数初始化64个常量：
+
+{% highlight c++ %}
+for i from 0 to 63
+    k[i] := floor(abs(sin(i + 1)) * 2^32)
+{% endhighlight %}
+
+用作左移的左移表：
+
+{% highlight c++ %}
+r[ 0..15] := {7, 12, 17, 22,  7, 12, 17, 22, 
+              7, 12, 17, 22,  7, 12, 17, 22} 
+r[16..31] := {5,  9, 14, 20,  5,  9, 14, 20,  
+              5,  9, 14, 20, 5,  9, 14, 20}
+r[32..47] := {4, 11, 16, 23,  4, 11, 16, 23,  
+              4, 11, 16, 23,  4, 11, 16, 23}
+r[48..63] := {6, 10, 15, 21,  6, 10, 15, 21,  
+              6, 10, 15, 21,  6, 10, 15, 21}
+{% endhighlight %}
+
+##2.填充
+
+我们需要将信息切分成512bits一份的chunk，不够就进行填充，最后64bits留作存放信息的长度。
+
+首先需要对信息进行填充，使其位长对512求余的结果等于448(448+64=512)，信息的位长（Bits Length）将被扩展至N*512+448,因此总共有N+1块
+
+填充的方法如下：
+
+1) 在信息的后面填充一个1和无数个0，直到满足上面的条件时才停止用0对信息的填充。
+
+2) 在这个结果后面附加一个以64位二进制表示的填充前信息长度（单位为Bit），如果二进制表示的填充前信息长度超过64位，则取低64位。
+
+{% highlight c++ %}
+//Pre-processing:
+append "1" bit to message
+append "0" bits until message length in bits equivalent to 448 (mod 512)
+append bit length of message as 64-bit little-endian integer to message
+{% endhighlight %}
+
+##3.对每个512bits的块进行加工
+这步主循环里用到的主要的4个操作
+    
+$$F(X,Y,Z) = (X\wedge{Y}) \vee (\neg{X} \wedge{Z})$$
+
+$$G(X,Y,Z) = (X\wedge{Z}) \vee (Y \wedge \neg{Z})$$
+
+$$H(X,Y,Z) = X \oplus Y \oplus Z$$
+
+$$I(X,Y,Z) = Y \oplus (X \vee \neg{Z})$$
+
+###i.先将512bits分成16个整数（4Bytes，32bits，512/32=16）,用w数组储存
+    
+    break chunk into sixteen 32-bit little-endian words w[i], 0 ≤ i ≤ 15
+
+###ii.给这512bits的块赋予初始hash值
+
+{% highlight c++ %}
+//Initialize hash value for this chunk:
+var int a := h0
+var int b := h1
+var int c := h2
+var int d := h3
+{% endhighlight %}    
+
+###iii.主循环
+
+先进行64次循环操作，0-15次使用F操作，16-31次使用G操作，32-47次使用H操作，48-63使用I操作
+
+    
+    for i from 0 to 63
+        if 0 ≤ i ≤ 15 then
+            f := (b and c) or ((not b) and d)
+            g := i
+        else if 16 ≤ i ≤ 31
+            f := (d and b) or ((not d) and c)
+            g := (5×i + 1) mod 16
+        else if 32 ≤ i ≤ 47
+            f := b xor c xor d
+            g := (3×i + 5) mod 16
+        else if 48 ≤ i ≤ 63
+            f := c xor (b or (not d))
+            g := (7×i) mod 16
+
+
+每次循环都更新块的hash值
+
+{% highlight c++ %}
+temp := d
+d := c
+c := b
+b := leftrotate((a + f + k[i] + w[g]),r[i]) + b
+a := temp
+{% endhighlight %}
+
+###处理完一个512块后，更新总的hash值
+
+{% highlight c++ %}
+h0 := h0 + a
+h1 := h1 + b 
+h2 := h2 + c
+h3 := h3 + d
+{% endhighlight %}
+
+##4得出最后的结果，也就是32位的十六进制数字（h0-h3均为8位十六进制数字）
+
+    var int digest := h0 append h1 append h2 append h3 //(expressed as little-endian)
+    
+
+##MD5算法具有以下特点：
+
+1、压缩性：任意长度的数据，算出的MD5值长度都是固定的。（最后算出的都是32位16进制数）
+
+2、容易计算：从原数据计算出MD5值很容易。
+
+3、抗修改性：对原数据进行任何改动，哪怕只修改1个字节，所得到的MD5值都有很大区别。
+
+4、强抗碰撞：已知原数据和其MD5值，想找到一个具有相同MD5值的数据（即伪造数据）是非常困难的。
+
+>参考资料：
+
+1.[wiki](https://zh.wikipedia.org/wiki/MD5)
+
+2.[百度百科](http://baike.baidu.com/link?url=MPYRxYGccb52nAOlQASg7FYhlp6f3Yism1eJ4tr7YWIA3xG1EMBJOuAAmbUOM7szc9Zc551Dykt96Ofx4gUWRK)
+
+
+    Fin 10.30/23:45

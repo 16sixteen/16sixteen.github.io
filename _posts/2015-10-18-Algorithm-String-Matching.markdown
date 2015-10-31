@@ -1,6 +1,6 @@
 ---
 layout:     post
-title:      "字符串匹配"
+title:      "字符串匹配-Horspool"
 subtitle:   "Horspool算法"
 date:       2015-10-18 21:51:00
 categories: Algorithm
@@ -13,7 +13,7 @@ header-img: "img/solvingReport.jpg"
 
 ---
 
-##<a name = "#001"></a>Horspool算法
+##<a name = "001"></a>Horspool算法
 
 Horspool算法是将Boyer-Moore算法的坏字符匹配改良的一种算法。Boyer-Moore算法是将匹配过程中失效的字符当做坏字符，而Horspool则是将最末尾的当做坏字符。Horspool算法非常容易理解。
 
@@ -90,6 +90,9 @@ int main(){
 ![转移表](/img/algorithm/string_matching_5.png)
 
 [sicily1282使用Horspool算法](/sloving-report/2015/10/20/slovingreport-2_1/)
+
+如果target的长度为n,pattern的长度为m，那么Horspool算法最坏情况下的时间复杂度是O(mn)，但平均情况下它的时间复杂度是O(n)。
+
 
 参考文档：
 
