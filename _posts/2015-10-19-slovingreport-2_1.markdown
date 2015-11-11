@@ -23,7 +23,7 @@ published:   true
 
 ![p](/img/slovingReport/1282.png)
 
-这题是字符串匹配问题，用了[Horspool算法](/algorithm/2015/10/19/Algorithm-String-Matching/)
+这题是字符串匹配问题，用了[Horspool算法](/algorithm/Algorithm-String-Matching/)
 {% highlight c++ %}
 #include<iostream>
 #include<stdio.h>

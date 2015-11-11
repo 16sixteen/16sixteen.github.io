@@ -13,12 +13,12 @@ facebook_username:
 # Sidebar filter
 # Choose 'tag' or 'category' as filter in sidebar.
 filter: 'tags'
-
+permalink: /:categories/:title
 # Build settings
 #markdown: redcarpet
 markdown: kramdown
 excerpt_separator: ""
 highlighter: pygments
-permalink: pretty
+#permalink: pretty
 paginate: 5
 exclude: ["less","node_modules","Gruntfile.js","package.json","README.md"]

@@ -189,7 +189,7 @@ pattern处理时间是O(strlen(pattern)),匹配时间O(strlen(target))，总时�
 
 
 
-[sicily1282使用kmp算法](/sloving-report/2015/10/24/slovingreport-2_2/)
+[sicily1282使用kmp算法](/sloving-report/slovingreport-2_2/)
 
 参考文档：
 

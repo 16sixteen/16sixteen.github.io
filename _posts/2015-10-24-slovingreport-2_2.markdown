@@ -23,7 +23,7 @@ published:   true
 
 ![p](/img/slovingReport/1282.png)
 
-这题是字符串匹配问题，用了[kmp算法](/algorithm/2015/10/24/Algorithm-String-Matching-2/)
+这题是字符串匹配问题，用了[kmp算法](/algorithm/Algorithm-String-Matching-2/)
 {% highlight c++ %}
 #include<iostream>
 #include<string.h>

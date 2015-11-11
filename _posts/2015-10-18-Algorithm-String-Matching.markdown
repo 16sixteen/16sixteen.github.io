@@ -89,7 +89,7 @@ int main(){
 随手测试输入输出:
 ![转移表](/img/algorithm/string_matching_5.png)
 
-[sicily1282使用Horspool算法](/sloving-report/2015/10/20/slovingreport-2_1/)
+[sicily1282使用Horspool算法](/sloving-report/slovingreport-2_1/)
 
 如果target的长度为n,pattern的长度为m，那么Horspool算法最坏情况下的时间复杂度是O(mn)，但平均情况下它的时间复杂度是O(n)。
 
