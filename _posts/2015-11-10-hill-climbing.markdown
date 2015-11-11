@@ -10,7 +10,7 @@ header-img: "img/solvingReport.jpg"
 published:   true
 ---
 
-#<a href="#01">最陡爬山法</a><a href="#02">首选爬山法</a><a href="#03">随机重新开始爬山法</a><a href="#04">C++实现</a>
+#<a href="#01">最陡爬山法</a> <a href="#02">首选爬山法</a> <a href="#03">随机重新开始爬山法</a> <a href="#04">C++实现</a>
 
 ---
 
