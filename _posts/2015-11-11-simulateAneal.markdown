@@ -89,6 +89,9 @@ bool simulateAneal(queen q,int* sum){
 
 {% endhighlight %}
 
+>参考资料：<br />[大白话解析模拟退火算法](http://www.cnblogs.com/heaad/archive/2010/12/20/1911614.html)
+
+
 
     FIN 11.11/19.53
 
