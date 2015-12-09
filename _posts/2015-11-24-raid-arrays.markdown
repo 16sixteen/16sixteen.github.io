@@ -10,7 +10,7 @@ header-img: "img/solvingReport.jpg"
 published:   true
 ---
 
-<a href="#01">raid0</a> <a href="#02">raid1</a> <a href="#03">raid0+1</a> <a href="#04">raid1+0</a><a href="#05">raid5</a>
+<a href="#01">raid0</a> <a href="#02">raid1</a> <a href="#03">raid0+1</a> <a href="#04">raid1+0</a> <a href="#05">raid5</a>
 
 ----
 
@@ -61,12 +61,12 @@ RAID1所做的就是对磁盘做镜像(mirroring),从事实现对磁盘损坏时
 
 原理：异或的互换性
 
-$$ A = B\oplusC\oplusD $$
+$$ A = B \oplus C \oplus D $$
 
-$$ B = A\oplusC\oplusD $$
+$$ B = A \oplus C \oplus D $$
 
-$$ C = A\oplusB\oplusD $$
+$$ C = A \oplus B \oplus D $$
 
-$$ D = A\oplusB\oplusC $$
+$$ D = A \oplus B \oplus C $$
 
     FIN 12.9/12.59
