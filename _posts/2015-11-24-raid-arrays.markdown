@@ -4,7 +4,7 @@ title:      "自制阵列实验的收获"
 subtitle:   "raid0 raid1 raid0+1 raid1+0 raid5"
 date:       2015-11-24 15:40:00
 categories: data-storage
-tags:       data-storage
+tags:       数据存储
 author:     "SixTeen"
 header-img: "img/solvingReport.jpg"
 published:   true

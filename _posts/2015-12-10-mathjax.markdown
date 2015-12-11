@@ -1,0 +1,88 @@
+---
+layout:     post
+title:      "常用的mathjax符号"
+subtitle:   "mathjax"
+date:       2015-12-10 00:05:00
+categories: jekyll-study
+tags:       jekyll-study
+author:     "SixTeen"
+header-img: "img/solvingReport.jpg"
+published:   true
+---
+
+    $$ content $$
+
+上标: `x^y` $$ x^y $$
+
+下标：`x_i` $$ x_i $$
+
+组: `x^10` $$ x^10 $$ 使用`{..}`可以分组，`x^{10}` $$ x^{10} $$ ,`x_i^2` $$ x_i^2 $$ , `x_{i^2}` $$ x_{i^2} $$
+
+括号：`()``[]``\{\}` 由于大括号被用做分组，因此使用大括号需要转义 `\{x_{i^2}\}` $$ \{x_{i^2}\} $$ 
+
+括号的自适应： `( \frac{\frac{1}{2}}2 )` $$ ( \frac{\frac{1}{2}}2 ) $$ `\left( \frac{\frac{1}{2}}2 \right)` $$ \left( \frac{\frac{1}{2}}2 \right) $$
+
+尖括号：`\langle x \rangle` $$ \langle x \rangle $$ 
+
+上取整： `\lceil x \rceil` $$ \lceil x \rceil $$ 
+
+下取整：`\lfloor x \rfloor` $$ \lfloor x \rfloor $$
+ 
+分数：`\frac{aa}{bb}` $$ \frac{aa}{bb} $$
+
+根号: `\sqrt[x]{a}` $$ \sqrt[x]{a} $$
+
+求和： `\sum_1^n` $$ \sum_1^n $$ `sum_{i=0}^n i` $$ sum_{i=0}^n i $$
+
+积分: `\int_0^1` $$ \int_0^1 $$
+
+三角函数: `\sin{x+1}` $$ \sin{x+1} $$ `\csc{x+1}` $$ \csc{x+1} $$ `\cos{x+1}` $$ \cos{x+1} $$ `\sec{x+1}` $$ \sec{x+1} $$ `\tan{x+1}` $$ \tan{x+1} $$ `\cot{x+1}` $$ \cot{x+1} $$ `\arctan{x+1}` $$ \arctan{x+1} $$
+
+极限：`\lim_{x\to \infty}` $$ \lim_{x\to \infty} $$
+
+集合：`\cup` $$ \cup $$ `\cap` $$ \cap $$ `\subset` $$ \subset $$ `\subseteq` $$ \subseteq $$ `\in` $$ \in $$ `\notin` $$ \notin $$ `\varnothing` $$ \varnothing $$
+
+组合：`{1 \choose n}` $$ {1 \choose n} $$
+
+箭头：`1 \to \infty` $$ 1 \to \infty $$
+
+向量： `\vec{a}` $$ \vec{a} $$
+
+竖线： `\mid` $$ \mid $$ `\mid x \mid` $$ \mid x \mid $$
+
+蕴含(推出)：`KB \Rightarrow a` $$ KB \Rightarrow a $$
+
+逻辑运算符号： And： `\land` $$ \land $$ Or： `\lor` $$ \lor $$ Not:`\lnot` $$ \lnot $$ 所有： `\forall` $$ \forall $$ 存在： `\exists` $$ \exists $$ 蕴含: `\vDash` $$ KB\vDash a $$ 把e放入O中得到a： `O\vdash{e} INT` $$ O\vdash{e} INT $$  
+
+比较符号： `\lt` $$ \lt $$ `\gt` $$ \gt $$ `\le` $$ \le $$ `\ge` $$ \ge $$ `\neq` $$ \neq $$ `\not\lt` $$ \not\lt $$
+
+异或：`\oplus` $$ A \oplus B = C $$
+
+约等于：`\approx` $$ \approx $$
+
+等价于：`A \equiv B` $$ A \equiv B $$
+
+epsilon: `\varepsilon` $$ \varepsilon $$ `\phi \varphi` $$ \phi \varphi $$
+
+delta: `\Delta` $$ \Delta $$
+
+omh: `\Omega` $$ \Omega $$
+
+hat: `\hat{x}` $$ \hat{x} $$ `widehat{xy}` $$ \widehat{xy} $$
+
+除号： `2 \div 1 = 2` $$ 2 \div 1 = 2 $$
+
+叉乘： `\vec{a} \times \vec{b}` $$ \vec{a} \times \vec{b} $$
+
+点乘:  `\vec{a} \cdot \vec{b}` $$ \vec{a} \cdot \vec{b} $$
+
+联合并集，联合交集: `\bigcup` $$ \bigcup $$  `\bigcap` $$ \bigcap $$
+
+大集合：`\{x \mid x \in S\}` $$ \{x \mid x \in S\} $$
+
+手绘查询符号的Mathjax<br/>[Detexify](http://detexify.kirelabs.org/classify.html)
+
+>参考资料：<br/>1.[meta.math.stackexchange.com](http://meta.math.stackexchange.com/questions/5020/mathjax-basic-tutorial-and-quick-reference/5044)<br/>2.[RyanZhaoblog](http://mlworks.cn/posts/introduction-to-mathjax-and-latex-expression/)
+
+
+    FIN 12.11/13.29
