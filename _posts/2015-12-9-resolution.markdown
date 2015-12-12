@@ -26,7 +26,7 @@ $$ \forall y \forall m \exists n f(A,y,F(y),m,n) \{x/A, z/F(y)\} $$
 
 $$ \forall y \forall m f(A,y,F(y),m,G(y,m)) \{x/A,z/F(y),n/G(y,m)\} $$
 
-归结：
+归结例子：
 
 前提：$$ \forall Horse(x) \Rightarrow Animal(x) $$
 
@@ -45,5 +45,7 @@ $$ \forall y \forall m f(A,y,F(y),m,G(y,m)) \{x/A,z/F(y),n/G(y,m)\} $$
 归结1：$$ 式子3 \lor 式子2 = \lnot Animal(x) \lor Horse(x) \{y/x\} $$
 
 归结2：$$ \lor 式子1 = true $$ 
+
+证毕
 
     FIN 12.12/17.35
