@@ -20,7 +20,7 @@ markdown: kramdown
 excerpt_separator: ""
 #jekyll3.0 not support other highlight
 #highlighter: pygments
-highlighter:rouge
+highlighter: rouge
 #permalink: pretty
 paginate: 5
 exclude: ["less","node_modules","Gruntfile.js","package.json","README.md"]
