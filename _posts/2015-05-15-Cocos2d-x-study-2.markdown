@@ -15,7 +15,7 @@ header-img: "img/cocos2dx.png"
 
 ---
 
-##**Cocos2d-x游戏设计理念**
+## **Cocos2d-x游戏设计理念**
 
 1.Director:是游戏的大脑，通过它来控制场景跳转，事件分发等功能。
 2.Scene:通常一个场景是游戏的一个界面
@@ -23,9 +23,9 @@ header-img: "img/cocos2dx.png"
 4.Sprite：可以理解为游戏的每一个角色为Sprite，它时处理图片与动画的基本层
 5.Action：角色可以通过Action实现运动，旋转等
 
-##**Cocos2d-x坐标系**
+## **Cocos2d-x坐标系**
 
-###**UI坐标系**
+### **UI坐标系**
 
 IOS/Android/Windows SDK中的通用UI坐标系：
 •起点坐标(x=0, y=0)位于左上角
@@ -35,7 +35,7 @@ IOS/Android/Windows SDK中的通用UI坐标系：
 注意：Cocos2d-x中<font color = "blue">触摸返回</font>的坐标为UI坐标
 </font>
 
-###**Cocos2d-x坐标系**
+### **Cocos2d-x坐标系**
 
 Cocos2d-x使用的是Opengl坐标系：
 •起点坐标(x=0, y=0)位于左下角
@@ -45,17 +45,17 @@ Cocos2d-x使用的是Opengl坐标系：
 注意：Cocos2d-x中<font color = "blue">setPosition</font>使用的是Cocos2d-x坐标系
 </font>
 
-###**1.世界坐标系**
+### **1.世界坐标系**
 
     与GL坐标系相同，是屏幕全局坐标
-###**2.本地坐标系**
+### **2.本地坐标系**
 
     是节点（CCNode）的坐标系，原点在节点左下角，x轴向右，y轴向上。cocos2d中的元素是有父子关系的层级结构，我们通过Node的position设定元素的位置使用的是相对与其父节点的本地坐标系而非世界坐标系。最后在绘制屏幕的时候cocos2d会把这些元素的本地坐标映射成世界坐标系坐标。
 <font color="red">
     注意：Cocos2d-x中<font color = "blue">setPosition</font>使用的是对于父节点的本地坐标
 </font>
 
-###锚点（AnchorPoint）
+### 锚点（AnchorPoint）
 
 锚点可认为是一个对象的中心点，父对象通过把子对象的锚点放到position上来实现布局。
 

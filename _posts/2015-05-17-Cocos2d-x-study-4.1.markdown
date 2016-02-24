@@ -14,7 +14,7 @@ header-img: "img/cocos2dx.png"
 标签（空格分隔）： cocos2d-x 文字 菜单 进度条 动作
 ---
 
-###**文字Label**
+### **文字Label**
 
 {% highlight c++ %}
 auto newlabel1 = Label::createWithSystemFont("New Label","Arial",30);
@@ -69,7 +69,7 @@ static MenuItemSprite * create(Node* normalSprite, Node* selectedSprite, Node* d
 static MenuItemSprite * create(Node* normalSprite, Node* selectedSprite, constccMenuCallback& callback);
 static MenuItemSprite * create(Node* normalSprite, Node* selectedSprite, Node* disabledSprite, constccMenuCallback& callback);
 {% endhighlight %}
-###**进度条ProgressTimer**
+### **进度条ProgressTimer**
 
 {% highlight c++ %}
 	//progressBar
@@ -102,7 +102,7 @@ static MenuItemSprite * create(Node* normalSprite, Node* selectedSprite, Node* d
 	this->addChild(pT);
 {%endhighlight%}
 
-###**动作Action**
+### **动作Action**
 Action：动作特效。引擎内部封装了很多Action的子类，它们分别实现了各种各样的特效，如移动、旋转、跳动、缩放、闪烁等等。每一个Node都可以通过runAction(Action* action)来播放一个特效。
 
 {% highlight c++ %}

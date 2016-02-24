@@ -9,7 +9,7 @@ author:     "SixTeen"
 header-img: "img/solvingReport.jpg"
 ---
 
-#<a href="#01">1020</a> <a href="#02">1021</a> <a href="#03">1027</a> <a href="#04">1035</a> <a href="#05">1046</a> <a href="#06">1051</a> <a href="#07">1198</a> <a href="#08">1176</a>
+# <a href="#01">1020</a> <a href="#02">1021</a> <a href="#03">1027</a> <a href="#04">1035</a> <a href="#05">1046</a> <a href="#06">1051</a> <a href="#07">1198</a> <a href="#08">1176</a>
 
 ---
 
@@ -19,7 +19,7 @@ header-img: "img/solvingReport.jpg"
 用了几天时间才写完这几道课堂布置的题目。。。还是要加油啊！
 
 
-###<a name="01"></a>Soj-1020
+### <a name="01"></a>Soj-1020
 
 题意：输入一串质数，以及一个极大的数字(长度小于400),将这个数字分别对这串质数取模的结果以(r1,r2...rn)的形式输出
 ![p](/img/slovingReport/1020.png)
@@ -72,7 +72,7 @@ int main(){
 }
 {% endhighlight %}
 
-###<a name="02"></a>Soj-1021
+### <a name="02"></a>Soj-1021
 
 题意就是很多对夫妇围圈坐，如果一对夫妇坐在相邻的位置，就可以移出，问最后到底能不能全部移出。
 ![p](/img/slovingReport/1021.png)
@@ -114,7 +114,7 @@ int main(){
 }
 {% endhighlight %}
 
-###<a name="03"></a>Soj-1027
+### <a name="03"></a>Soj-1027
 
 给n个人和其对应的ip地址，同一个ip地址只会出现2次，第一次出现的是本人，第二次出现的是马甲，现在要求我们找出马甲对应的本人
 ![p](/img/slovingReport/1027.png)
@@ -161,7 +161,7 @@ int main(){
 }
 {% endhighlight %}
 
-###<a name="04"></a>Soj-1035
+### <a name="04"></a>Soj-1035
 
 给n条DNA单链，问按照碱基互补配对元(A-T,C-G),能组合出几个双螺旋结构
 ![p](/img/slovingReport/1035.png)
@@ -212,7 +212,7 @@ int main(){
 }
 {% endhighlight %}
 
-###<a name="05"></a>Soj-1046
+### <a name="05"></a>Soj-1046
 
 题意 给n个样例，每个样例的格式是时间段的个数，需要的方案个数，最短的区间
 ![p](/img/slovingReport/1046.png)
@@ -293,7 +293,7 @@ int main() {
 {% endhighlight %}
 
 
-###<a name="06"></a>Soj-1051
+### <a name="06"></a>Soj-1051
 
 输入的这几个数字的关系是第一个是直径，这段时间里转了多少次，最后一个是运动的时间
 
@@ -324,7 +324,7 @@ int main() {
 }      
 {% endhighlight %}
 
-###<a name="07"></a>Soj-1198
+### <a name="07"></a>Soj-1198
 
 要求把这些字符组合之后字典序最小的组合输出
 ![p](/img/slovingReport/1198.png)
@@ -360,7 +360,7 @@ int main() {
 }              
 {% endhighlight %}
 
-###<a name="08"></a>Soj-1176
+### <a name="08"></a>Soj-1176
 
 题意 2个人轮流取数，第一个人可以选择取最左边的或者最右边的，而第二个人取最左边和最右边中最大的一个，我们的任务是求出第一个人最多可以赢第二个人多少分
 ![p](/img/slovingReport/1176.png)

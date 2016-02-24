@@ -167,3 +167,142 @@ mySprite->setAnchorPoint(Vec2(0,0));
 
 Actions
 
+创建一个场景然后添加精灵对象在屏幕上仅仅是你需要完成的工作的一部分。让一个游戏更生动你必须让事物都动起来。动作对象是每个游戏中不可分割的一部分。动作对象允许你在一个时间段内转变节点对象。想将一个精灵从一个点移动到另一个点，然后使用回调函数？没问题。你可以创建一个一系列动作的Sequence（顺序动作）。你可以改变节点的属性，例如位置，旋转，大小。例如：MoveBy,Rotate,Scale.所有的游戏都使用动作。
+
+举个例子：
+
+![pac1](http://www.cocos2d-x.org/docs/programmers-guide/2-img/2n_level1_action_start.png)
+
+5秒之后，精灵会移动到一个新的位置。
+
+![pac2](http://www.cocos2d-x.org/docs/programmers-guide/2-img/2n_level1_action_end.png)
+
+动作对象非常容易创建：
+
+{% highlight c++ %}
+
+auto mySprite = Sprite::create("Blue_Front1.png");
+
+//向右移动一个精灵50个像素点，向上10个像素点，历时2秒
+auto moveBy = MoveBy::create(2,Vec(50,10));
+mySprite->runAction(moveBy);
+
+//将精灵移动去一个指定的位置，历时2秒
+auto moveTo = MoveTo::create(2,Vec(50,10));
+mySprite->runAction(moveTo);
+
+{% endhighlight %}
+
+Sequences and Spawns
+
+顺序是多个动作对象以指定的顺序运行。如果需要将顺序反序运行？没问题，cocos2d-x可以让你不用额外的工作就能处理这个问题。
+
+举个例子：
+
+![s1](http://www.cocos2d-x.org/docs/programmers-guide/2-img/2_sequence_scaled.png)
+
+创建的代码非常容易：
+
+{% highlight c++ %}
+
+auto mySprite = Node::create();
+//移动到50,10,历时2秒
+auto moveTo1 = MoveTo::create(2,Vec2(50,10));
+
+//从现在的位置，向右位移100，向上位移10，历时2秒
+auto moveBy1 = MoveBy::create(2,Vec2(100,10));
+
+//移动到150，10的位置，历时2秒
+auto moveTo2 = MoveTo::create(2,Vec2(150,10));
+
+//创建延时
+auto delay = DelayTime::create(1);
+
+mySprite->runAction(Sequence::create(moveTo1,delay,moveBy1,delay.clone(),moveTo2,nullptr));
+
+{% endhighlight %}
+
+上面的例子是运行一个顺序，但如果想要同时运行所有的动作呢，cocos2d-x支持这个，使用的是Spawn。Spawn会同时运行所有的动作，有一些动作的持续时间可能更长，所以所有的动作不一定在同一时刻完成。
+
+{% highlight c++ %}
+
+auto myNode = Node::create();
+
+auto moveTo1 = MoveTo::create(2,Vec2(50,10));
+auto moveBy1 = MoveBy::create(2,Vec2(100,10));
+auto moveTo2 = MoveTo::create(2,Vec2(150,10));
+
+myNode->runAction(Spawn::create(moveTo1,moveBy1,moveTo2,nullptr));
+
+{% endhighlight %}
+
+为什么Spawn会发生？可能当你的人物获得更强大的力量之后，就能同时进行多个动作。也许击败boss之后会获得这样的强大力量。
+
+Parent Child Relationship(父子关系)
+
+cocos2d-x使用父子关系。这意味着改变父亲节点的属性，同样会应用到儿子处。试着想象一个单独的节点和一个有孩子的节点：
+
+![pcr1](http://www.cocos2d-x.org/docs/programmers-guide/2-img/2n_parent.png)
+
+![pcr2](http://www.cocos2d-x.org/docs/programmers-guide/2-img/2n_parent_rotation.png)
+
+{% highlight c++ %}
+
+auto myNode = Node::create();
+myNode->setRotation(50);
+
+{% endhighlight %}
+
+![pcr3](http://www.cocos2d-x.org/docs/programmers-guide/2-img/2n_parent_scaled.png)
+
+{% highlight c++ %}
+
+auto myNode = Node::create();
+myNode->setScale(2.0);
+
+{% endhighlight %}
+
+Logging as a way to output messages(通过log来输出信息)
+
+很多时候，当你的应用运行的时候，你可能希望看到一些信息输出到控制台来方便debug。使用```log()```可以达到这个目的。
+
+{% highlight c++ %}
+
+//输出string
+log("This would be outputted to the console");
+
+//a string and a variable
+string s = "variable";
+log("string is %s",s);
+
+//a double and a variable
+double dd = 42;
+log("double is %f",dd);
+
+//an integer and a variable
+int i = 6;
+log("integer is %d",i);
+
+//a float and a variable
+float f = 2.0f;
+log("float is %f",f);
+
+//a bool and a variable
+bool b = true;
+if b == true then
+    log("bool is true");
+else 
+    log("bool is false");
+end
+
+{% endhighlight %}
+
+当然，你可以使用你更熟悉的std::cout来代替log(),log()适合更复杂的格式输出。
+
+Conclusion
+
+我们已经学习了cocos2d-x的很多概念。不用担心。跟着你的思绪脚踏实地慢慢前进。cocos2d-x和编程是没有一夜通的捷径的。练习和理解是最有效的！
+
+
+
+>资料均来源于[Chapter 2: Basic Cocos2d-x Concepts](http://www.cocos2d-x.org/docs/programmers-guide/2/index.html)

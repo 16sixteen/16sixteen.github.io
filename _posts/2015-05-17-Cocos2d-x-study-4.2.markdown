@@ -15,7 +15,7 @@ header-img: "img/cocos2dx.png"
 
 ---
 
-###**帧动画SpriteFrame**
+### **帧动画SpriteFrame**
 
 通过连续播放形成动画的效果，使游戏具有很灵动的效果。不过这个极大的加重了制作的负担而且最终输出的文件量也很大。
 
@@ -53,7 +53,7 @@ auto seq= Sequence::create(animate, FlipX::create(true), animate->clone(), FlipX
 sprite->runAction(RepeatForever::create( seq) );
 {% endhighlight %}
 
-###**调度器Scheduler,Update**
+### **调度器Scheduler,Update**
 
 常用的3种调度器
 <font color="blue">

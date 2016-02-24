@@ -9,11 +9,11 @@ author:     "SixTeen"
 header-img: "img/solvingReport.jpg"
 ---
 
-#<a href="#001">Horspool</a>
+# <a href="#001">Horspool</a>
 
 ---
 
-##<a name = "001"></a>Horspool算法
+## <a name = "001"></a>Horspool算法
 
 Horspool算法是将Boyer-Moore算法的坏字符匹配改良的一种算法。Boyer-Moore算法是将匹配过程中失效的字符当做坏字符，而Horspool则是将最末尾的当做坏字符。Horspool算法非常容易理解。
 

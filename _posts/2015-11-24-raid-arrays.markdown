@@ -32,28 +32,28 @@ SSD：在小文件读性能上，闪存上的最小单位是128k，因此并发�
 RIAD(Redundant Arrays of Independent Disks)，组成RAID的好处是有很高的可靠性，加快IO。
 
 
-###<a name="01"/>RAID0
+### <a name="01"/>RAID0
 
 RAID0所做的就是把数个磁盘条带化(striping)从而实现并行读写，因此读写速度理论能达到N倍(磁盘个数)。RAID0单个磁盘损坏数据就不可修复了。
 
 ![](/img/data/stripe.png)
 ![](/img/data/raid0.png)
 
-###<a name="01"/>RAID1
+### <a name="01"/>RAID1
 
 RAID1所做的就是对磁盘做镜像(mirroring),从事实现对磁盘损坏时可以进行修复。RAID1的读取速度是原来的2倍，写接近单盘速度，不过2个盘只能使用1个盘的容量使得raid1的价格昂贵。
 
 ![](/img/data/raid1.png)
 
-###<a name="03"/>RAID0+1
+### <a name="03"/>RAID0+1
 
 0+1就是先raid0，再做raid1，理论上能容忍最多2个盘的损坏。raid0+1的缺点是如果raid0部分坏一个，raid1部分坏一个，就无法修复了，因为是按条带进行镜像的，因此镜像raid1部分坏一个就会导致数据无法恢复。
 
-###<a name="04"/>RAID1+0
+### <a name="04"/>RAID1+0
 
 1+0和0+1类似，不过是先对每个盘做raid1，再做raid0。这样做的好处就是能容忍任意2个盘的损坏，比raid0+1要安全，速度又是一样，这也是0+1变得少见的原因。
 
-###<a name="05"/>RAID5
+### <a name="05"/>RAID5
 
 把奇偶校验平均到每个盘中，防止了raid4中校验盘的集中频繁读改写。
 

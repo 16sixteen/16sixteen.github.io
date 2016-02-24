@@ -10,7 +10,7 @@ header-img: "img/solvingReport.jpg"
 published:   true
 ---
 
-#<a href="#01">1282</a>
+# <a href="#01">1282</a>
 
 ---
 
@@ -19,7 +19,7 @@ published:   true
 
 
 
-###<a name="01"></a>Soj-1282
+### <a name="01"></a>Soj-1282
 
 ![p](/img/slovingReport/1282.png)
 

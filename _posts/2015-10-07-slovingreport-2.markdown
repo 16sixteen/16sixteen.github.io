@@ -10,7 +10,7 @@ header-img: "img/solvingReport.jpg"
 published:   true
 ---
 
-#<a href="#01">1150-1151</a> <a href="#02">1515</a> <a href="#03">1007</a> <a href="#04">1036</a> <a href="#05">1006</a> <a href="#06">1009</a> <a href="#07">1050</a> <a href="#08">1443</a> <a href="#09">1156</a> <a href="#10">1024</a> <a href="#11">1063</a>
+# <a href="#01">1150-1151</a> <a href="#02">1515</a> <a href="#03">1007</a> <a href="#04">1036</a> <a href="#05">1006</a> <a href="#06">1009</a> <a href="#07">1050</a> <a href="#08">1443</a> <a href="#09">1156</a> <a href="#10">1024</a> <a href="#11">1063</a>
 
 ---
 
@@ -19,7 +19,7 @@ published:   true
 
 
 
-###<a name="01"></a>Soj-1150 1151
+### <a name="01"></a>Soj-1150 1151
 
 ![p](/img/slovingReport/1150.png)
 对于给定的状态，判断在规定的步数能否通过3种操作到达，输出的是步数以及操作码
@@ -180,7 +180,7 @@ int main(){
 
 {% endhighlight %}
 
-###<a name="02"></a>Soj-1515
+### <a name="02"></a>Soj-1515
 
 
 和上面的一题一样，只是把操作和初始状态换了，换汤不换药的一题
@@ -329,7 +329,7 @@ int main(){
 }
 {% endhighlight %}
 
-###<a name="03"></a>Soj-1007
+### <a name="03"></a>Soj-1007
 
 按规律把字符放一个2维矩阵再按顺序输出
 
@@ -370,7 +370,7 @@ int main(){
 }        
 {% endhighlight %}
 
-###<a name="04"></a>Soj-1036
+### <a name="04"></a>Soj-1036
 
 
 ![p](/img/slovingReport/1036.png)
@@ -440,7 +440,7 @@ int main(){
 }                    
 {% endhighlight %}
 
-###<a name="05"></a>Soj-1006
+### <a name="05"></a>Soj-1006
 
 ![p](/img/slovingReport/1006.png)
 题目要求对于给定的几个预测结果，算出与所有预测距离最近的一个排列。
@@ -499,7 +499,7 @@ int main(){
 {% endhighlight %}
 
 
-###<a name="06"></a>Soj-1009
+### <a name="06"></a>Soj-1009
 
 梅森素数
 
@@ -540,7 +540,7 @@ int main(){
 }
 {% endhighlight %}
 
-###<a name="07"></a>Soj-1050
+### <a name="07"></a>Soj-1050
 
 5个数字之间可以任意进行四则运算，求出不大于目标数的最大结果，使用深搜，需要注意的是，5个数字可以不全部用完，结果可以是负数。另外，除法必须要可以整除才能进行。
 
@@ -678,7 +678,7 @@ int main(){
 }
 {% endhighlight %}
 
-###<a name="08"></a>Soj-1443
+### <a name="08"></a>Soj-1443
 
 输入的2个数字，第一个数字是总共有多少个数，第二个数字是我们所需的数所在的位置。第二行则是该列数字分别的优先度。在这一题里面，队列中的第一个数，如果是优先度最高的，就可以pop掉，否则放到队尾，最后输出的是我们所需的数字是第几个pop的。
 
@@ -753,7 +753,7 @@ int main(){
 {% endhighlight %}
 
 
-###<a name="09"></a>Soj-1156
+### <a name="09"></a>Soj-1156
 
 构建了一棵树，然后按先序遍历输出这棵树，这题需要注意的是我们在插入的同时要注意找出这棵树的根节点
 ![p](/img/slovingReport/1156.png)
@@ -828,7 +828,7 @@ int main(){
 {% endhighlight %}
 
 
-###<a name="10"></a>Soj-1024
+### <a name="10"></a>Soj-1024
 
 输入第一行的2个数字，第一个数字是总共有n个节点，第二个数字是起始点，第二行，是n-1行路径，然后求出国王最多能走多远，节点只能通过一次
 ![p](/img/slovingReport/1024.png)
@@ -891,7 +891,7 @@ int main(){
 {% endhighlight %}
 
 
-###<a name="11"></a>Soj-1063
+### <a name="11"></a>Soj-1063
 
 根据输入的信息，查询对应id的员工的boss id和该员工所拥有的部下
 

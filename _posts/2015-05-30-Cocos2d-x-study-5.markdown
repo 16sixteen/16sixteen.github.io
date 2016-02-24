@@ -14,13 +14,13 @@ header-img: "img/cocos2dx.png"
 标签（空格分隔）： cocos2d-x 容器 简单的本地数据存取
 ---
 
-##**容器**
+## **容器**
 
 容器就是我们存放数据的容器。适当的使用容器能给我们带来很多的方便。
 
 比较常用的容器有vector和map。这2个容器和c++stl里的容器用法基本上是一样的。
 
-###**Vector**
+### **Vector**
 
 cocos2dx里的vector<T>的模板T必须是<font color = "red">继承自cocos2dx::Ref的指针类型</font>
 
@@ -61,7 +61,7 @@ for(;it != container.end();){
 }
 {%endhighlight%}
 
-###**Map**
+### **Map**
 
 cocos2dx里的Map<K,V>的模板V必须是<font color = "red">继承自cocos2dx::Ref的指针类型</font>
 
@@ -76,9 +76,9 @@ map.insert("monster",sprite);
 map.at("monster");
 {%endhighlight%}
 
-##**本地数据存取**
+## **本地数据存取**
 
-###**UserDefault**
+### **UserDefault**
 
 适合用于基础数据类型的存取，数据将以xml的文件格式存储
 

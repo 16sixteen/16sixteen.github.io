@@ -20,7 +20,7 @@ published:  true
 要在本地搭建Jekyll的本地测试环境，首先要安装ruby和devkit，这2个的安装包都可以在[这里下载](http://rubyinstaller.org/downloads/),(可能需要使用vpn来翻墙)。
 ![ruby](/img/jekyllstudy/ruby.png)![devkit](/img/jekyllstudy/devkit.png)
 
-###安装步骤
+### 安装步骤
 1.安装ruby的时候，有一个多选，全选上即可
 
 2.安装好ruby之后，把devkit解压到一个文件夹中(文件路径最好不要有中文和空格)，在该文件夹中打开cmd，输入
