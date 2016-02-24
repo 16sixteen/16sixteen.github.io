@@ -12,4 +12,4 @@ published:   true
 
 ## 问题列表：
 
-1. [can't add script because it doesn't exist](/unity3d/unity3d_problem_cantaddscript/)
+1. [can't add script because it doesn't exist](/unity3d/unity3d_problem_cantaddscript)
