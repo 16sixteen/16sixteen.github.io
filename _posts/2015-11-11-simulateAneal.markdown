@@ -3,8 +3,8 @@ layout:     post
 title:      "模拟退火法"
 subtitle:   "simulateAneal implement"
 date:       2015-11-11 19:29:00
-categories: algorithm
-tags:       algorithm 人工智能
+categories: Algorithm
+tags:       Algorithm 人工智能
 author:     "SixTeen"
 header-img: "img/solvingReport.jpg"
 published:   true

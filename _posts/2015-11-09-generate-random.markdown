@@ -3,8 +3,8 @@ layout:     post
 title:      "C/C++里如何生成随机数"
 subtitle:   "rand "
 date:       2015-11-09 20:24:00
-categories: algorithm
-tags:       algorithm
+categories: Algorithm
+tags:       Algorithm
 author:     "SixTeen"
 header-img: "img/solvingReport.jpg"
 published:   true

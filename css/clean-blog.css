@@ -1,3 +1,29 @@
+/*add*/
+.categories-list-item {
+  font-size:14px;
+  padding:8px 15px;
+  transition:0.4s ease;
+  -webkit-transition:0.4s ease;
+  -moz-transition:0.4s ease;
+  -o-transition:0.4s ease;
+}
+.my-link {
+  color:#666;
+}
+.categories-list-item .my-badge {
+  font-size:14px;
+  font-weight: bold;
+  color:#fff;
+  background-color:#999;
+  padding:0 7px 1px 7px;
+
+  border-radius:9px;
+  transition:0.4s ease;
+  -webkit-transition:0.4s ease;
+  -moz-transition:0.4s ease;
+  -o-transition:0.4s ease;
+}
+/*fork*/
 body {
   font-family: 'Lora', 'Times New Roman', serif;
   font-size: 20px;

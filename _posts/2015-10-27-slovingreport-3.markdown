@@ -7,7 +7,7 @@ categories: sloving-report
 tags:       sloving-report
 author:     "SixTeen"
 header-img: "img/solvingReport.jpg"
-published:   true
+published:   false
 ---
 
 #<a href="#01"></a> <a href="#02"></a> <a href="#03"></a> <a href="#04"></a> <a href="#05"></a> <a href="#06"></a> <a href="#07"></a> <a href="#08"></a>

@@ -3,8 +3,8 @@ layout:     post
 title:      "局部搜索"
 subtitle:   "searching-with-partial-observation"
 date:       2015-11-10 21:20:00
-categories: algorithm
-tags:       algorithm 人工智能
+categories: Algorithm
+tags:       Algorithm 人工智能
 author:     "SixTeen"
 header-img: "img/solvingReport.jpg"
 published:   true

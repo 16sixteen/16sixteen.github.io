@@ -3,8 +3,8 @@ layout:     post
 title:      "爬山法"
 subtitle:   "stochastic first-choice random-restart implement"
 date:       2015-11-10 21:24:00
-categories: algorithm
-tags:       algorithm 人工智能
+categories: Algorithm
+tags:       Algorithm 人工智能
 author:     "SixTeen"
 header-img: "img/solvingReport.jpg"
 published:   true

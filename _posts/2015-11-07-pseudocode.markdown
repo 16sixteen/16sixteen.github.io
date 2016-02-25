@@ -3,8 +3,8 @@ layout:     post
 title:      "伪代码"
 subtitle:   "pseudocode"
 date:       2015-11-07 20:24:00
-categories: algorithm
-tags:       algorithm
+categories: Algorithm
+tags:       Algorithm
 author:     "SixTeen"
 header-img: "img/solvingReport.jpg"
 published:   true
