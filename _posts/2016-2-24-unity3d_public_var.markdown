@@ -10,7 +10,7 @@ header-img: "img/solvingReport.jpg"
 published:   true
 ---
 
-在C#代码中使用的公有变量可以在Inspector中直接更改
+### 在C#代码中使用的公有变量可以在Inspector中直接更改
 
 ![public_var](/img/unity3d/public_var.png)
 ![public_var_inspector](/img/unity3d/public_var_inspector.png)
@@ -20,5 +20,11 @@ published:   true
 
 ![public_var](/img/unity3d/public_var.png)
 
+### C#的获取组件
 
+获取对象
+
+```GameObject myGameObject = GameObject.Find("object_name");```
+
+```myGameObject.GetComponent<component_name>()```
 
