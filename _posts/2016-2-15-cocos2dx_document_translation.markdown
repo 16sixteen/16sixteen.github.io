@@ -9,6 +9,8 @@ author:     "SixTeen"
 header-img: "img/cocos2dx.png"
 ---
 
+
+
 # 欢迎使用cocos文档
 
 我们知道学习新东西很困难，尤其是当你没法找到能帮你解决你现有问题的有用的文档的时候。这份文档的设计就是为了帮助你学习如何通过使用cocos家族的产品去写游戏。你能把它当做一个引用来从头到尾的阅读。
@@ -540,16 +542,244 @@ mySprite->setSkewY(20.0f);
 
 ![spx](http://www.cocos2d-x.org/docs/programmers-guide/3-img/i7.png)
 
-Sprite properties not affected by anchor point
+Sprite properties not affected by anchor point（不受锚点影响的精灵属性）
+
+有一些精灵属性是不受锚点影响的。例如颜色和透明度。
+
+Color
+
+改变精灵的颜色，这是通过传输一个```Color3B```对象来实现的。Color3B对象是```RGB```值。我们之前没有提过Color3B，Color3B是一个简单的定义了RGB的颜色对象。一个RGB颜色是一个3byte值（0-255）。Cocos2d-x也提供了预定义的颜色，你可以直接使用它们。你可以非常方便快捷的使用它们，一个简单的例子```Color3B::White```,```Color3B::Red```。
+
+{% highlight c++ %}
+
+// set the color by passing in a pre-defined Color3B object.
+mySprite->setColor(Color3B::WHITE);
+
+// Set the color by passing in a Color3B object.
+mySprite->setColor(Color3B(255, 255, 255)); // Same as Color3B::WHITE
+
+{% endhighlight %}
+
+![spx](http://www.cocos2d-x.org/docs/programmers-guide/3-img/i10.png)
+
+Opacity
+
+一个不透明的对象是不透明的。这个属性的值从0-255.255表示完全不透明，0表示完全透明。0其实意味着不可见。默认的初始值是255。
+
+{% highlight c++ %}
+
+//把透明度设为30，精灵是11.7%的不透明
+//30/256=0.1171875
+mySprite->setOpacity(30);
+
+{% endhighlight %}
+
+![spx](http://www.cocos2d-x.org/docs/programmers-guide/3-img/i11.png)
+
+Polygon Sprite(多边形精灵)
+
+多边形精灵也是精灵的一种。和一般由2个三角形组成的矩形不同，多边形精灵对象是由多个三角形构成的。
+
+为什么使用多边形精灵？
+
+因为更适合。
+
+有很多的技术术语和像素填充率有关的，我们这里不深入，但我们可以用形象的例子：多边形精灵根据精灵的形状来描绘而不是根据最大的宽和高来描绘。这节省了很多不必要的描绘。看看下面的例子：
+
+![spx](http://www.cocos2d-x.org/docs/programmers-guide/3-img/polygonsprite.png)
+
+注意左右2个不同版本之间的不同点：
+
+左边，一个普通的精灵由2个三角形描绘
+
+右边，一个多边形精灵由许多更小的三角形描绘
+
+更多的三角形意味着更少的像素，因此需要更少的描绘。
+
+AutoPolygon（自动多边形）
+
+自动多边形是一个助手类。目的是在运行时把图片变成2d多边形网格。在运行的过程中，从跟踪所有的点，测绘三角形。这样我们可以用精灵对象的create函数来创建一个多边形精灵：
+
+{% highlight c++ %}
+
+// Generate polygon info automatically.
+auto pinfo = AutoPolygon::generatePolygon("filename.png");
+
+// Create a sprite with polygon info.
+auto sprite = Sprite::create(pinfo);
+
+{% endhighlight %}
+
+# Chapter 4: Actions
+
+动作对象就像他的名字一样，他会让节点改变自身的属性达到动态的效果。动作对象允许节点在一段时间里改变自身的属性。任何对象只要是继承```Node```对象都可以使用```Action```来执行动作。举个例子，你可以在你所指定的时间段内将一个精灵从一个位置移动到另一个位置。
+
+```MoveTo```和```MoveBy```例子：
+
+{% highlight c++ %}
+
+//将精灵在2秒内移动到50，10
+auto moveTo = MoveTo::create(2,Vec2(50,10));
+mySprite1->runAction(moveTo);
+
+//将精灵向右移20
+auto moveBy = MoveBy::create(2,Vec2(20,0));
+mySprite2->runAction(moveBy);
+
+{% endhighlight %}
+
+### By and To, what is the difference?(By和To的不同点)
+
+你会注意```Action```有By和To2个版本。为什么？因为他们的实现方式是不一样的。By是和节点现在的状态有关的。而To的动作是绝对的，这意味着To不需要获取节点现在的状态。看看下面的例子：
+
+{% highlight c++ %}
+
+auto mySprite = Sprite::create("mysprite.png");
+mySprite->setPosition(Vec2(200,256));
+
+//MoveBy 让精灵沿着x轴方向在2秒内移动300
+//MoveBy x= 200+300 = 500，精灵的位置在500，256
+auto moveBy = MoveBy::create(2,Vec2(300,mySprite->getPositonY()));
+
+//MoveTo 让精灵在2秒内移动到300,256
+//精灵的位置就在300，256
+auto moveTo = MoveTo::create(2,Vec2(300,mySprite->getPositionY()));
+
+//Delay 创造一个小延时
+auto delay = DelayTime::create(1);
+
+auto seq = Sequence::create(moveBy,delay,moveTo,nullptr);
+
+mySprite->runAction(seq);
+
+{% endhighlight %}
+
+![actionx](http://www.cocos2d-x.org/docs/programmers-guide/4-img/i0.png)
+
+### Basic Actions and how to run them
+
+基础动作通常是一次单独的动作，因此它只完成一个目标。让我们看一些例子：
+
+#### Move
+
+在一段时间内移动一个节点：
+
+{% highlight c++ %}
+
+auto mySprite = Sprite::create("mysprite.png");
+
+//在2秒内移动一个精灵到指定的位置
+auto moveTo = MoveTo::create(2,Vec2(50,0));
+
+mySprite->runAction(moveTo);
+
+//在2秒内移动一个精灵到自身的右边50，上方0
+auto moveBy = MoveBy::create(2,Vec2(50,0));
+
+mySprite->runAction(moveBy);
+
+{% endhighlight %}
+
+![actionx](http://www.cocos2d-x.org/docs/programmers-guide/4-img/i1.png)
+
+### Rotate
+
+在2秒内顺时针旋转一个节点。
+
+{% highlight c++ %}
+
+auto mySprite = Sprite::create("mysprite.png");
+
+//在2秒内顺时针旋转到指定的角度
+auto rotateTo  = RotateTo::create(2.0f,40.0f);
+mySprite->runAction(rotateTo);
+
+//2秒内在原来的基础上顺时针旋转40度
+auto rotateBy = RotateBy::create(2.0f,40.0f);
+mySprite->runAction(rotateBy);
+
+{% endhighlight %}
+
+![actionx](http://www.cocos2d-x.org/docs/programmers-guide/4-img/i3.png)
+
+### Scale
+
+在2秒内按比例放大3倍。
+
+{% highlight c++ %}
+
+auto mySprite = Sprite::create("mysprite.png");
+
+//在2秒内按比例同时放大现在大小的x轴，y轴3倍
+auto scaleBy = ScaleBy::create(2.0f,3.0f);
+
+//在2秒内放大到现在大小的x轴3倍，y轴3倍
+auto scaleBy = ScaleBy::create(2.0f,3.0f,3.0f);
+mySprite->runAction(scaleBy);
+
+//在2秒内放大到原来大小的3倍
+auto scaleTo = ScaleTo::create(2.0f,3.0f);
+mySprite->runAction(scaleTo);
+
+//在2秒内放大到原来大小的x轴3倍，y轴3倍
+auto scaleTo = ScaleTo::create(2.0f,3.0f,3.0f);
+mySprite->runAction(scaleTo);
+
+{% endhighlight %}
+
+![actionx](http://www.cocos2d-x.org/docs/programmers-guide/4-img/i4.png)
+
+### Fade In/Out
+
+渐入淡出一个节点。
+
+通过改变透明度从0-255的变化，实现渐入。将这个变化反过来，就是淡出。
+
+{% highlight c++ %}
+
+auto mySprite = Sprite::create("mysprite.png");
+
+//在1秒内渐入
+auto fadeIn = FadeIn::create(1.0f);
+mySprite->runAction(fadeIn);
+
+//在2秒内淡出
+auto fadeOut = FadeOut::create(2.0f);
+mySprite->runAction(fadeOut);
+
+{% endhighlight %}
+
+![actionx](http://www.cocos2d-x.org/docs/programmers-guide/4-img/i2.png)
+
+### Tint (染色)
+
+对一个节点染色就是通过```NodeRGB```协议将节点在指定的时间内从现在的颜色染成指定的颜色。
+
+{% highlight c++ %}
+
+auto mySprite = Sprite::create("mysprite.png");
+
+//在2秒内通过指定的RGB值对节点进行染色
+auto tintTo = TintTo::create(2.0f,120.0f,232.0f,254.0f);
+mySprite->runAction(tintTo);
+
+//2秒内在原有的RGB值上变化指定的RGB值
+auto tintBy = TintBy::create(2.0f,120.0f,232.0f,254.0f);
+mySprite->runAction(tintBy);
+
+{% endhighlight %}
+
+![actionx](http://www.cocos2d-x.org/docs/programmers-guide/4-img/i5.png)
+
+### Animate(动画)
+
+使用```Animate```可以让你的精灵实现简单的帧播放的动画效果。只要简单间断的替换掉当前的显示帧到动画显示的下一帧，就可以实现。看看下面的例子：
+
+{% highlight c++ %}
+{% endhighlight %}
 
 
 
 
 
-
-
-
-
-
-
->资料均来源于<br/>[Chapter 2: Basic Cocos2d-x Concepts](http://www.cocos2d-x.org/docs/programmers-guide/2/index.html)<br/>[Chapter 3: Sprites](http://www.cocos2d-x.org/docs/programmers-guide/3/index.html#creating-sprites)<br/>
+>资料均来源于<br/>[Chapter 2: Basic Cocos2d-x Concepts](http://www.cocos2d-x.org/docs/programmers-guide/2/index.html)<br/>[Chapter 3: Sprites](http://www.cocos2d-x.org/docs/programmers-guide/3/index.html#creating-sprites)<br/>[Chapter 4: Actions](http://www.cocos2d-x.org/docs/programmers-guide/4/index.html)<br/>
