@@ -46,4 +46,4 @@ header-img: "img/solvingReport.jpg"
 
 >参考资料：<br/>[编辑距离及编辑距离算法](http://www.cnblogs.com/biyeymyhjob/archive/2012/09/28/2707343.html)
 
->FIN 3.10 13.28
+    FIN 3.10 13.28
