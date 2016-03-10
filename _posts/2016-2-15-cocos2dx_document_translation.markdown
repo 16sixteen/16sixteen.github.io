@@ -13,7 +13,7 @@ header-img: "img/cocos2dx.png"
 
 # 欢迎使用cocos文档
 
-我们知道学习新东西很困难，尤其是当你没法找到能帮你解决你现有问题的有用的文档的时候。这份文档的设计就是为了帮助你学习如何通过使用cocos家族的产品去写游戏。你能把它当做一个引用来从头到尾的阅读。
+我们知道学习新东西很困难，尤其是当你没法找到能帮你解决你现有问题的有用的文档的时候。这份文档的设计就是为了帮助你学习如何通过使用cocos家族的产品去写游戏。你能把它当做一个引用来从头到尾的阅读。(官方文档的示例代码中的精灵都是创建之后没有设置位置，没有加入scene中，运行的时候注意自己手动加入)
 
 # 篇章2：基础的cocos2d-x概念
 
@@ -776,10 +776,451 @@ mySprite->runAction(tintBy);
 使用```Animate```可以让你的精灵实现简单的帧播放的动画效果。只要简单间断的替换掉当前的显示帧到动画显示的下一帧，就可以实现。看看下面的例子：
 
 {% highlight c++ %}
+
+auto mySprite = Sprite::create("mysprite.png");
+
+//现在创建精灵动画帧
+Vector<SpriteFrame*> animateFrames;
+animateFrames.reserve(12);
+animateFrames.pushBack(SpriteFrame::create("Blue_Front1.png",Rect(0,0,65,81)));
+animateFrames.pushBack(SpriteFrame::create("Blue_Front2.png",Rect(0,0,65,81)));
+animateFrames.pushBack(SpriteFrame::create("Blue_Front3.png",Rect(0,0,65,81)));
+animateFrames.pushBack(SpriteFrame::create("Blue_Left1.png",Rect(0,0,65,81)));
+animateFrames.pushBack(SpriteFrame::create("Blue_Left2.png",Rect(0,0,65,81)));
+animateFrames.pushBack(SpriteFrame::create("Blue_Left3.png",Rect(0,0,65,81)));
+animateFrames.pushBack(SpriteFrame::create("Blue_Back1.png",Rect(0,0,65,81)));
+animateFrames.pushBack(SpriteFrame::create("Blue_Back2.png",Rect(0,0,65,81)));
+animateFrames.pushBack(SpriteFrame::create("Blue_Back3.png",Rect(0,0,65,81)));
+animateFrames.pushBack(SpriteFrame::create("Blue_Right1.png",Rect(0,0,65,81)));
+animateFrames.pushBack(SpriteFrame::create("Blue_Right2.png",Rect(0,0,65,81)));
+animateFrames.pushBack(SpriteFrame::create("Blue_Right3.png",Rect(0,0,65,81)));
+
+//用动画帧创建动画
+Animation* animation = Animation::createWithSpriteFrames(animateFrames,0.1f);
+Animate* animate = Animate::create(animation);
+
+//运行动作和不断循环播放
+mySprite->runAction(RepeatForever::create(animate));
+
 {% endhighlight %}
 
+### Easing
+
+```Easing```是一个指定了加速度的动画效果，能使动画看起来更平滑。我们不用担心速度的问题，因为ease动作的起始时间和结束时间都是一样的。Ease动作一种模仿物理动作的很好方法。也许你想添加一些类似物理效果的动作，但是又不想所有的动作都附上复杂的物理效果，那么这是一个很好的选择。一个很好的例子就是在菜单和按钮上的使用。
+
+下图是一些常用的easing函数的图形：
+
+![actionx](http://www.cocos2d-x.org/docs/programmers-guide/4-img/easing-functions.png)
+
+cocos2d-x支持上图大部分的easing函数。他们非常容易实现。让我们看看使用的实例：丢一个精灵对象到屏幕顶端，然后让他反弹。
+
+{% highlight c++ %}
+
+//create a sprite
+auto mySprite = Sprite::create("mysprite.png");
+
+// create a MoveBy Action to where we want the sprite to drop from.
+auto move = MoveBy::create(2, Vec2(200, dirs->getVisibleSize().height -
+ newSprite2->getContentSize().height));
+auto move_ease_in_back = move->reverse();
+
+// create a BounceIn Ease Action
+auto move_ease_in = EaseBounceIn::create(move->clone() );
+
+// create a delay that is run in between sequence events
+auto delay = DelayTime::create(0.25f);
+
+// create the sequence of actions, in the order we want to run them
+auto seq1 = Sequence::create(move_ease_in, delay, move_ease_in_back,
+    delay->clone(), nullptr);
+
+// run the sequence and repeat forever.
+mySprite->runAction(RepeatForever::create(seq1));
+
+{% endhighlight %}
+
+#### Sequences and how to run them (顺序和如何使用顺序)
+
+顺序是一系列的动作以顺序的形式运行。顺序可以包含任何数目的Action，Function甚至是顺序。cocos2dx有一个```CallFunc```对象允许你创建一个FUNCTION()然后将他放到顺序里执行。这允许你往顺序对象中加入你自己设定的函数，这意味着你不仅仅能执行内置的Action。下图是一个顺序运行的时候的大概情况：
+
+![actionx](http://www.cocos2d-x.org/docs/programmers-guide/4-img/sequence.png)
+
+一个例子：
+
+{% highlight c++ %}
+
+auto mySprite = Sprite::create("mysprite.png");
+
+// create a few actions.
+auto jump = JumpBy::create(0.5, Vec2(0, 0), 100, 1);
+
+auto rotate = RotateTo::create(2.0f, 10);
+
+// create a few callbacks
+auto callbackJump = CallFunc::create([](){
+    log("Jumped!");
+});
+
+auto callbackRotate = CallFunc::create([](){
+    log("Rotated!");
+});
+
+// create a sequence with the actions and callbacks
+auto seq = Sequence::create(jump, callbackJump, rotate, callbackRotate, nullptr);
+
+// run it
+mySprite->runAction(seq);
+
+{% endhighlight %}
+
+这个顺序动作会作什么？他会以下面的顺序运行动作：Jump -> callbackJump() -> Rotate -> callbackRotate()。
+
+### Spawn
+
+Spawn和顺序非常相似，不同的一点是它是同时运行所有的动作。你可以包含任意的动作对象，甚至是Spawn对象。
+
+![actionx](http://www.cocos2d-x.org/docs/programmers-guide/4-img/spawn.png)
+
+Spawn和连续多个的```runAction()```语句的效果一样。然而，spawn的好处是你可以将spawn放到Sequence中来帮助你达到你想要的效果。结合```Spawn```和```Sequence```是非常有力的。
+
+例子,给定：
+{% highlight c++ %}
+
+//create 2 action and run Spawn on a Sprite
+auto mySprite = Sprite::create("mysprite.png");
+
+auto moveBy = MoveBy::create(10,Vec2(400,100));
+auto fadeTo = FadeTo::create(2.0f,120.0f);
+
+{% endhighlight %}
+
+使用Spawn：
+
+{% highlight c++ %}
+
+//running the above Actions with Spawn
+auto mySpawn = Spawn::createWithTwoActions(moveBy,fadeTo);
+mySprite->runAction(mySpawn);
+
+{% endhighlight %}
+
+使用连续的```runAction()```语句：
+
+{% highlight c++ %}
+
+//running the above Actions with consecutive runAction() statements.
+mySprite->runActionn(moveBy);
+mySprite->runAction(fadeTo);
+
+{% endhighlight %}
+
+这2种方法有一样的效果。然而，我们能将Spawn放入Sequence中。下面的流程图展示了他是怎么运作的：
+
+![actionx](http://www.cocos2d-x.org/docs/programmers-guide/4-img/spawn_in_a_sequence.png)
+
+{% highlight c++ %}
+
+// create a Sprite
+auto mySprite = Sprite::create("mysprite.png");
+
+// create a few Actions
+auto moveBy = MoveBy::create(10, Vec2(400,100));
+auto fadeTo = FadeTo::create(2.0f, 120.0f);
+auto scaleBy = ScaleBy::create(2.0f, 3.0f);
+
+// create a Spawn to use
+auto mySpawn = Spawn::createWithTwoActions(scaleBy, fadeTo);
+
+// tie everything together in a sequence
+auto seq = Sequence::create(moveBy, mySpawn, moveBy, nullptr);
+
+// run it
+mySprite->runAction(seq);
+
+{% endhighlight %}
+
+### Clone(克隆)
+
+如果你有一个动作，你可以使用clone让这个动作应用到各个节点上。你为什么必须要去克隆？这是一个好问题。动作对象有内部状态。当他们运行的时候，他们实际上在改变节点的属性。吐过不使用```clone()```，你不能真正的把唯一的动作应用到节点上。这会带来不可预料的结果，因为你不确定动作现在正在改变的是什么属性。
+
+让我们举个例子，你现在有一个heroSprite，他的位置是（0，0），如果你运行一个动作：
+
+{% highlight c++ %}
+
+MoveBy::create(10,Vec2(400,100));
+
+{% endhighlight %}
+
+这会使heroSprite在10秒内从（0，0）移动到（400，100）。heroSprite现在有一个新的位置（400，100），更重要的是Action把这个位置存到了他的内部状态中，现在你有一个emenySprite在（200，200）。然后你对这个emenySprite同样使用这个动作，它会定位到（800，200）而不是你预料中的位置。你知道为什么吗？因为Action已经有一个内部位置。克隆一个Action来避免这一点。这会确保你拥有一个确定唯一的动作版本应用到你的节点上。（实际测试是只有后一个节点能应用这个动作，前一个节点没有运行动作）
+
+{% highlight c++ %}
+
+// create our Sprites
+auto heroSprite = Sprite::create("herosprite.png");
+auto enemySprite = Sprite::create("enemysprite.png");
+
+// create an Action
+auto moveBy = MoveBy::create(10, Vec2(400,100));
+
+// run it on our hero
+heroSprite->runAction(moveBy);
+
+// run it on our enemy
+enemySprite->runAction(moveBy); // oops, this will not be unique!
+// uses the Actions current internal state as a starting point.
+
+{% endhighlight %}
+
+{% highlight c++ %}
+
+// create our Sprites
+auto heroSprite = Sprite::create("herosprite.png");
+auto enemySprite = Sprite::create("enemysprite.png");
+
+// create an Action
+auto moveBy = MoveBy::create(10, Vec2(400,100));
+
+// run it on our hero
+heroSprite->runAction(moveBy);
+
+// run it on our enemy
+enemySprite->runAction(moveBy->clone()); // correct! This will be unique
+
+
+{% endhighlight %}
+
+### Reverse
+
+Reverse就是如果你有一系列的动作，你可以使用```reverse()```去运行，它会按相反的顺序运行。也可以让一个单独简单动作反向运行。使用```reverse()```实际上是控制原来的Sequence和Spawn的属性反转。
+
+使用一个Spawn作为一个简单的例子：
+
+{% highlight c++ %}
+
+//reverse a sequence , spawn or action
+mySprite->runAction(mySpawn->reverse());
+
+{% endhighlight %}
+
+大部分的动作和顺序对象都是可以反转的：
+
+{% highlight c++ %}
+
+//create a sprite
+auto mySprite = Sprite::create("mysprite.png");
+mySprite->setPosition(50,56);
+
+// create a few Actions
+auto moveBy = MoveBy::create(2.0f, Vec2(500,0));
+auto scaleBy = ScaleBy::create(2.0f, 2.0f);
+auto delay = DelayTime::create(2.0f);
+
+// create a sequence
+auto delaySequence = Sequence::create(delay, delay->clone(), delay->clone(),
+delay->clone(), nullptr);
+
+auto sequence = Sequence::create(moveBy, delay, scaleBy, delaySequence, nullptr);
+
+// run it
+newSprite2->runAction(sequence);
+
+// reverse it
+newSprite2->runAction(sequence->reverse());
+
+{% endhighlight %}
+
+上面的代码会发生什么？如果我们把每一步都记录下来，以一个表的形式来看，应该很有帮助：
+
+{% highlight c++ %}
+
+mySprite is created
+mySprite position is set to (50, 56)
+sequence starts to run
+sequence moves mySprite by 500, over 2 seconds, mySprite new position (550, 56)
+sequence delays for 2 seconds
+sequence scales mySprite by 2x over 2 seconds
+sequence delays for 8 more seconds (notice we run another sequence to accomplish this)
+we run a reverse() on the sequence so we re-run each action backwards
+sequence is delayed for 8 seconds
+sequence scales mySprite by -2x over 2 seconds
+sequence delays for 2 seconds
+sequence moves mySprite by -500, over 2 seconds, mySprite new position (50, 56)
+
+{% endhighlight %}
+
+你可以看见```reverse()```使用起来非常的方便，但它的内部逻辑其实很不简单。这些cocos2dx已经帮你解决。
+
+# Chapter 5: Building and Transitioning Scenes
+
+### 什么是场景
+
+一个场景是一个容器，这个容易里有精灵，标签，节点和其他你的游戏需要的对象。一个场景负责运行游戏逻辑和渲染每一帧的内容。你的游戏需要最少一个场景。你可以把游戏看做一场电影。观众实时看到正在发生的事情就是运行中的场景。你可以有任意个场景对象并对他们进行流畅的过渡。cocos2d-x提供了scene transitions，你可以使用很酷的过渡效果。
+
+### 创建一个场景
+
+{% highlight c++ %}
+
+auto myScene = Scene::create();
+
+{% endhighlight %}
+
+### Remember the Scene Graph?
+
+在第二章的引导中，我们学习过scene graph（场景图），我们知道我们游戏中的场景是按什么顺序绘制的。场景图决定了GUI元素的绘制顺序。场景图的构成又和z-order有关。
+
+### A Simple Scene
+
+让我们创建一个简单的```Scene```，记住cocos2d-x实用右手坐标系。这意味着我们(0,0)在左下角。当你开始设置你游戏元素位置的时候，你应该从左下角开始计算。让我们创建一个简单的场景并在里面加一些元素。
+
+{% highlight c++ %}
+
+auto dirs = Director::getInstance();
+Size visibleSize = dirs->getVisibleSize();
+
+auto myScene = Scene::create();
+
+auto label1 = Label::createWithTTF("My Game","Marker Felt.ttf",36);
+label1->setPosition(Vec2(visibleSize.width/2,visibleSize.height/2));
+
+myScene->addChild(label1);
+
+auto sprite1 = Sprite::create("mysprite.png");
+sprite1->setPosition(Vec2(100,100));
+
+myScene->addChild(sprite1);
+
+{% endhighlight %}
+
+当我们运行这段代码的时候，我们应该看到一个简单的场景里有一个标签和一个精灵。
+
+### Transitioning between Scenes
+
+你可能需要在Scene对象之间切换。也许开始新的游戏，改变关卡甚至结束游戏，cocos2d-x提供许多方法去完成场景过渡。
+
+#### Ways to transition between Scenes
+
+有许多的方法去帮助你过渡场景。每一个都有指定的功能。
+
+{% highlight c++ %}
+
+auto myScene = Scene::create();
+
+{% endhighlight %}
+
+runWithScene()只用在第一个场景。这是让你开始你游戏里的第一个场景。
+
+{% highlight c++ %}
+
+Director::getInstance()->runWithScene(myScene);
+
+{% endhighlight %}
+
+replaceScene()-完全替换掉当前的场景
+
+{% highlight c++ %}
+
+Director::getInstance()->replaceScene(myScene);
+
+{% endhighlight %}
+
+pushScene()暂停当前运行的场景，把它放入暂停场景的堆栈中，只有当前运行的场景能调用。
+
+{% highlight c++ %}
+
+Director::getInstance()->pushScene(myScene);
+
+{% endhighlight %}
+
+popScene()场景会替换掉当前的场景。当前场景会被删除，只有当前活动的场景能调用。
+
+#### Transition Scenes with effects
+
+你可以添加视觉效果到你的游戏过渡。
+
+{% highlight c++ %}
+
+auto myScene = Scene::create();
+
+// Transition Fade
+Director::getInstance()->replaceScene(TransitionFade::create(0.5, myScene, Color3B(0,255,255)));
+
+// FlipX
+Director::getInstance()->replaceScene(TransitionFlipX::create(2, myScene));
+
+// Transition Slide In
+Director::getInstance()->replaceScene(TransitionSlideInT::create(1, myScene) );
+
+{% endhighlight %}
+
+# Chapter 6: UI
+
+看看平常你所使用的app，我敢肯定你会看见UI挂件。不仅仅是游戏，任何应用都会有一些挂件。UI代表了什么？UI有什么用处？非常多的问题。
+
+### Widgets, oh, my!
+
+UI是一个缩写，它的全称是user interface。你知道，它们是在屏幕上的。这些对象包括：labels（标签），buttons（按钮），menus（菜单），sliders（滑块）和views（？）。Cocos2d-x提供了一套UI挂件让我们很容易地在我们的项目中使用UI。这看起来好像微不足道，但创建了一个核心类例如label。你能想象必须写你自己的挂件集吗？别担心，你的需求我们能满足。
+
+### Label
+
+cocos2d-x提供了一个```Label```对象，可以使用```true type```，```bitmap```或者系统字体。这个类能处理你对Label的所有需要。
+
+#### Label BMFont
+
+```BMFont```是一种使用bitmap的标签类型。bitmap字体的特点是点矩阵形成的。非常快和方便去使用，但不可扩展的，因为它需要对每个大小字需要单独的字体。每个字在标签里都是一个独立的精灵。这意味着每个字符都能被旋转，放大，染色和有不同的锚点或者其他一些属性的改变。
+
+创建一个BMFont标签需要2个文件，1个.fnt文件和一张拥有每个.png格式字符的图片。如果你是用工具类似Glyph Designer，这些文件会自动创建。下面是用bitmap font创建一个Label对象：
+
+{% highlight c++ %}
+
+auto myLabel = Label::createWithBMFont("bitmapRed.fnt","Your Text");
+
+{% endhighlight %}
+
+![uix](http://www.cocos2d-x.org/docs/programmers-guide/6-img/LabelBMFont.png)
+
+参数里的所有字符都必须再.fnt文件中存在，否则他们不会被渲染。如果你渲染一个标签对象，请确保所有的字符都能在.fnt文件中找到。
+
+#### Label TTF
+
+True Type Fonts和bitmap fonts不一样。true type fonts是渲染字体的轮廓的。这就是说你不需要为每一个你要用到的字体的各个大小和颜色准备一个独立的字体文件。创建一个```Label```对象，使用true type font。创建的时候你需要指定一个.ttf字体文件名，文字和字体大小。不像BMFont，TTF可以渲染不同大小的字体而不需要独立的字体文件。举个例子，使用true type font：
+
+{% highlight c++ %}
+
+auto myLabel = Label::createWithTTF("Your Text", "Marker Felt.ttf", 24);
+
+{% endhighlight %}
+
+![uix](http://www.cocos2d-x.org/docs/programmers-guide/6-img/LabelTTF.png)
+
+尽管ttf比bitmap font灵活很多，但ttf在改变属性的时候的开销要大很多。
+
+如果你需要多个ttf的Label对象，并且他们都有统一的属性，你可以创建一个TTFConfig去管理他们。TTFConfig对象允许你设置你的label所需要的属性。你可以把它看做食谱，并且你的label对象按照这个食谱来烹饪。
+
+你可以为你的label创建一个TTFConfig对象：
+
+{% highlight c++ %}
+
+//create a TTFConfig files for labels to share
+TTFConfig labelConfig;
+labelConfig.fontFilePath = "myFont.ttf";
+labelConfig.fontSize = 16;
+labelConfig.glyphs = GlyphCollection::DYNAMIC;
+labelConfig.outlineSize = 0;
+labelConfig.customGlyphs = nullptr;
+labelConfig.distanceFieldEnabled = false;
+
+// create a TTF Label from the TTFConfig file.
+auto myLabel = Label::createWithTTF(labelConfig, "My Label Text");
+
+{% endhighlight %}
+
+![uix](http://www.cocos2d-x.org/docs/programmers-guide/6-img/LabelTTFWithConfig.png)
+
+TTFConfig也可以用来显示中文，日文，韩文。
+
+#### Label SystemFont
 
 
 
 
->资料均来源于<br/>[Chapter 2: Basic Cocos2d-x Concepts](http://www.cocos2d-x.org/docs/programmers-guide/2/index.html)<br/>[Chapter 3: Sprites](http://www.cocos2d-x.org/docs/programmers-guide/3/index.html#creating-sprites)<br/>[Chapter 4: Actions](http://www.cocos2d-x.org/docs/programmers-guide/4/index.html)<br/>
+>资料均来源于<br/>[Chapter 2: Basic Cocos2d-x Concepts](http://www.cocos2d-x.org/docs/programmers-guide/2/index.html)<br/>[Chapter 3: Sprites](http://www.cocos2d-x.org/docs/programmers-guide/3/index.html#creating-sprites)<br/>[Chapter 4: Actions](http://www.cocos2d-x.org/docs/programmers-guide/4/index.html)<br/>[Chapter 5: Building and Transitioning Scenes](http://www.cocos2d-x.org/docs/programmers-guide/5/index.html)<br/>[Chapter 6: UI](http://www.cocos2d-x.org/docs/programmers-guide/6/index.html)<br/>
