@@ -2,7 +2,7 @@
 layout:     post
 title:      "编辑距离"
 subtitle:   "Levenshtein算法"
-date:       2016-3-10 12:11:00
+date:       2016-03-10 12:11:00
 categories: Algorithm
 tags:       Algorithm
 author:     "SixTeen"

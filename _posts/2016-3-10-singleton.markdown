@@ -1,10 +1,10 @@
 ---
 layout:     post
-title:      "abcd"
+title:      "单例模式"
 subtitle:   " "
-date:       2016-3-10 11:11:00
-categories: Unity3d
-tags:       Unity3d
+date:       2016-03-10 11:11:00
+categories: Algorithm
+tags:       Algorithm
 author:     "SixTeen"
 header-img: "img/solvingReport.jpg"
 published:   true
