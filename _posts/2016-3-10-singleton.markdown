@@ -1,6 +1,6 @@
 ---
 layout:     post
-title:      "单例模式"
+title:      "abcd"
 subtitle:   " "
 date:       2016-3-10 14:11:00
 categories: Unity3d
