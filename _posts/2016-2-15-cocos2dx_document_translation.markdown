@@ -1220,6 +1220,106 @@ TTFConfig也可以用来显示中文，日文，韩文。
 
 #### Label SystemFont
 
+系统字体是一种使用默认系统字体和字体大小的标签类型。这种字体不会改变自身属性。你可以认为系统字体，系统规则。创建一个系统字体标签：
+
+{% highlight c++ %}
+
+auto myLabel = Label::createWithSystemFont("My Label Text","Arial",16);
+
+{% endhighlight %}
+
+![uix](http://www.cocos2d-x.org/docs/programmers-guide/6-img/LabelWithSystemFont.png)
+
+### Label Effects
+
+当你在你的屏幕上有了一个标签后，你可能会想着让他更漂亮一些。可能它们看上去非常的平坦，幸运的，你不用为此特意去创建你自己的字体。Label对象可以使用效果应用到上面。不是所有的标签对象都支持应用效果。效果有：shadow（阴影），outline（轮廓），glow（发光）。你可以应用一个或者多个效果到你的标签上。
+
+阴影效果：
+
+{% highlight c++ %}
+
+auto myLabel = Label::createWithTTF("myFont.ttf","My Label Text",16);
+
+//shadow effect is supported by all Label types
+myLabel->enableShadow();
+
+{% endhighlight %}
+
+![uix](http://www.cocos2d-x.org/docs/programmers-guide/6-img/LabelWithShadow.png)
+
+使用轮廓效果：
+
+{% highlight c++ %}
+
+auto myLabel = Label::createWithTTF("myFont.ttf","My Label Text",16);
+
+//outline effect is TTF only, specify the outline color desired
+myLabel->enableOutline(Color4B::WHITE,1);
+
+{% endhighlight %}
+
+![uix](http://www.cocos2d-x.org/docs/programmers-guide/6-img/LabelWithOutline.png)
+
+发光效果：
+
+{% highlight c++ %}
+
+auto myLabel = Label::createWithTTF("myFont.ttf","My Label Text",16);
+
+//glow effect is TTF only, specify the glow color desired
+myLabel->enalbleGlow(Color4B::YELLOW);
+
+{% endhighlight %}
+
+![uix](http://www.cocos2d-x.org/docs/programmers-guide/6-img/LabelWithGlow.png)
+
+### Menu and Menu Items
+
+我们应该非常熟悉菜单是什么了。我们可以看看我们所使用的app。在你的游戏里，通过使用菜单对象在各个游戏选项中跳转。菜单经常包含按钮，例如：PLAY,QUIT，SETTING,ABOUT。菜单也能包含菜单对象来组成嵌套的菜单系统。一个菜单对象是一种特殊的节点对象。你可以创建一个空的菜单对象来作为你的menu items的存放地点：
+
+{% highlight c++ %}
+
+auto myMenu = Menu::create();
+
+{% endhighlight %}
+
+像我们上面描述的PLAY,QUIT,SETTING,ABOUT，这些都是你的menu items。cocos2d-x提供了不同的方法去创建你的menu items，包括Label对象，制定图片。Menu items通常有2个可能的状态，一个正常状态和一个被选择状态。当你点击menu item的时候，一个callback就会触发。你可以想象成一个链状反应。你点击menu item然后运行你指定的代码。一个```Menu```可以有一个或者多个items。
+
+{% highlight c++ %}
+
+//creating a menu with a single item
+
+//create a menu item by specifying images
+auto closeItem = MenuItemImage::create("CloseNormal.png","CloseSelected.png", CC_CALLBACK_1(HelloWorld::menuCloseCallback,this));
+
+auto menu = Menu::create(closeItem,NULL);
+this->addChild(menu,1);
+
+{% endhighlight %}
+
+一个菜单也可以使用一个```MenuItem```的vector来创建：
+
+{% highlight c++ %}
+
+// creating a Menu from a Vector of items
+Vector<MenuItem*> MenuItems;
+
+auto closeItem = MenuItemImage::create("CloseNormal.png", "CloseSelected.png",
+CC_CALLBACK_1(HelloWorld::menuCloseCallback, this));
+
+MenuItems.pushBack(closeItem);
+
+/* repeat for as many menu items as needed */
+
+auto menu = Menu::createWithArray(MenuItems);
+this->addChild(menu, 1);
+
+{% endhighlight %}
+
+效果大概如下：
+
+![uix](http://www.cocos2d-x.org/docs/programmers-guide/6-img/menu.png)
+
 
 
 
