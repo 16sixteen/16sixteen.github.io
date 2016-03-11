@@ -1416,5 +1416,146 @@ this->addChild(checkbox);
 
 你可以看到上面指定了.png图片作为每个可能状态的图。那些图片如下：
 
+![1](http://www.cocos2d-x.org/docs/programmers-guide/6-img/CheckBox_Normal.png)![2](http://www.cocos2d-x.org/docs/programmers-guide/6-img/CheckBox_Press.png)![3](http://www.cocos2d-x.org/docs/programmers-guide/6-img/CheckBox_Disable.png)![4](http://www.cocos2d-x.org/docs/programmers-guide/6-img/CheckBoxNode_Normal.png)![5](http://www.cocos2d-x.org/docs/programmers-guide/6-img/CheckBoxNode_Disable.png)
+
+屏幕上看起来是这样的：
+
+![uix](http://www.cocos2d-x.org/docs/programmers-guide/6-img/Checkbox_example.png)
+
+### LoadingBar
+
+你玩游戏的时候肯定遇见过游戏加载内容的时候，你要进行些许等待。游戏会给你展示进度条，填充的时候代表加载完成的进度。这就是进度条，状态条，或者说是加载条。创建一个加载条：
+
+{% highlight c++ %}
+
+#include "ui/CocosGUI.h"
+
+auto loadingBar = LoadingBar::create("LoadingBarFile.png");
+
+// set the direction of the loading bars progress
+loadingBar->setDirection(LoadingBar::Direction::RIGHT);
+
+this->addChild(loadingBar);
+
+{% endhighlight %}
+
+上面的例子中，我们设置了加载条填充的方向为右边。然而，你也许想设置百分比。这非常容易办到：
+
+{% highlight c++ %}
+
+#include "ui/CocosGUI.h"
+
+auto loadingBar = LoadingBar::create("LoadingBarFile.png");
+loadingBar->setDirection(LoadingBar::Direction::RIGHT);
+
+// something happened, change the percentage of the loading bar
+loadingBar->setPercent(25);
+
+// more things happened, change the percentage again.
+loadingBar->setPercent(35);
+
+this->addChild(loadingBar);
+
+{% endhighlight %}
+
+我们看到的例子使用的png图片是这个：
+
+![uix](http://www.cocos2d-x.org/docs/programmers-guide/6-img/LoadingBarFile.png)
+
+在屏幕上看起来是这样的：
+
+![uix](http://www.cocos2d-x.org/docs/programmers-guide/6-img/LoadingBar_example.png)
+
+### Slider
+
+有时候需要轻微的改变一些数值。也许你有一个角色，你允许玩家去调整力量来攻击敌人。Slider允许玩家移动一个指示器来设置数值。创建Slider的方法如下：
+
+{% highlight c++ %}
+
+#include "ui/CocosGUI.h"
+
+auto slider = Slider::create();
+slider->loadBarTexture("Slider_Back.png"); // what the slider looks like
+slider->loadSlidBallTextures("SliderNode_Normal.png", "SliderNode_Press.png", "SliderNode_Disable.png");
+slider->loadProgressBarTexture("Slider_PressBar.png");
+
+slider->addTouchEventListener([&](Ref* sender, Widget::TouchEventType type){
+        switch (type)
+        {
+                case ui::Widget::TouchEventType::BEGAN:
+                        break;
+                case ui::Widget::TouchEventType::ENDED:
+                        std::cout << "slider moved" << std::endl;
+                        break;
+                default:
+                        break;
+        }
+});
+
+this->addChild(slider);
+
+{% endhighlight %}
+
+上面指定的.png图片为slider的每个状态提供了图片。
+
+![1](http://www.cocos2d-x.org/docs/programmers-guide/6-img/Slider_Back.png)![2](http://www.cocos2d-x.org/docs/programmers-guide/6-img/Slider_PressBar.png)![3](http://www.cocos2d-x.org/docs/programmers-guide/6-img/SliderNode_Normal.png)![4](http://www.cocos2d-x.org/docs/programmers-guide/6-img/SliderNode_Press.png)![5](http://www.cocos2d-x.org/docs/programmers-guide/6-img/SliderNode_Disable.png)
+
+在屏幕上看起来是这样的：
+
+![uix](http://www.cocos2d-x.org/docs/programmers-guide/6-img/Slider_example.png)
+
+### TextField
+
+你想让你的玩家玩你的游戏的时候输入他所希望的名字来作为主要角色的名字吗？他们要在哪里输入呢？对的，textfield。TextField挂件用来输入文字的。它支持触摸事件，集中，百分比位置，百分比内容大小。创建一个TextField挂件：
+
+{% highlight c++ %}
+
+#include "ui/CocosGUI.h"
+
+auto textField = TextField::create("","Arial",30);
+
+textField->addTouchEventListener([&](Ref* sender, Widget::TouchEventType type){
+                std::cout << "editing a TextField" << std::endl;
+});
+
+this->addChild(textField);
+
+{% endhighlight %}
+
+在上面的例子中，textfield创建和指定了一个callback。
+
+TextField的功能很丰富，它能满足你所有的输入需求。你想让玩家输入密码？你想限制玩家输入字符的数目？TextField都能提供这些功能。让我们看看下面的例子：
+
+{% highlight c++ %}
+
+#include "ui/CocosGUI.h"
+
+auto textField = TextField::create("","Arial",30);
+
+// make this TextField password enabled
+textField->setPasswordEnabled(true);
+
+// set the maximum number of characters the user can enter for this TextField
+textField->setMaxLength(10);
+
+textField->addTouchEventListener([&](Ref* sender, Widget::TouchEventType type){
+                std::cout << "editing a TextField" << std::endl;
+});
+
+this->addChild(textField);
+
+{% endhighlight %}
+
+在屏幕上看起来是这样的：
+
+![uix](http://www.cocos2d-x.org/docs/programmers-guide/6-img/TextField_example.png)
+
+当你编辑textField，键盘会出现：
+
+![uix](http://www.cocos2d-x.org/docs/programmers-guide/6-img/TextField_example_keyboard.png)
+
+
+
+
 
 >资料均来源于<br/>[Chapter 2: Basic Cocos2d-x Concepts](http://www.cocos2d-x.org/docs/programmers-guide/2/index.html)<br/>[Chapter 3: Sprites](http://www.cocos2d-x.org/docs/programmers-guide/3/index.html#creating-sprites)<br/>[Chapter 4: Actions](http://www.cocos2d-x.org/docs/programmers-guide/4/index.html)<br/>[Chapter 5: Building and Transitioning Scenes](http://www.cocos2d-x.org/docs/programmers-guide/5/index.html)<br/>[Chapter 6: UI](http://www.cocos2d-x.org/docs/programmers-guide/6/index.html)<br/>
