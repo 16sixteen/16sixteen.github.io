@@ -1320,7 +1320,101 @@ this->addChild(menu, 1);
 
 ![uix](http://www.cocos2d-x.org/docs/programmers-guide/6-img/menu.png)
 
+#### Lambda functions as Menu callbacks
 
+我们上面刚刚学习完你可以点击菜单项目来触发一个callback。C++11提供lambda函数，cocos2dx充分利用了这个特点。一个lambda函数是你可以写在你的源代码行间的函数。
+
+一个简单的lambda：
+
+{% highlight c++ %}
+
+//create a simple Hello World lambda
+auto func = [](){cout<<"Hello World"}
+
+//now call it someplace in code
+func();
+
+{% endhighlight %}
+
+使用lambda作为MenuItem callback：
+
+{% highlight c++ %}
+
+auto closeItem = MenuItemImage::create("CloseNormal.png","CloseSelected.png",[&](Ref* sender){
+   //your code here 
+});
+
+{% endhighlight %}
+
+### Buttons
+
+我们都知道按钮是我们点击它就会在我们的游戏中触发一些事件。也许你使用按钮去切换场景，或者添加精灵对象到你的游戏中。当你点击按钮的时候，它拦截触摸事件，调用预定义的callback。按钮有normal状态和selected状态。Button的外表会基于他的状态而改变。创建一个按钮和定义它的callback非常简单：
+
+{% highlight c++ %}
+
+#include "ui/CocosGUI.h"
+
+auto button = Button::create("normal_image.png", "selected_image.png", "disabled_image.png");
+
+button->setTitleText("Button Text");
+
+button->addTouchEventListener([&](Ref* sender, Widget::TouchEventType type){
+        switch (type)
+        {
+                case ui::Widget::TouchEventType::BEGAN:
+                        break;
+                case ui::Widget::TouchEventType::ENDED:
+                        std::cout << "Button 1 clicked" << std::endl;
+                        break;
+                default:
+                        break;
+        }
+});
+
+this->addChild(button);
+
+{% endhighlight %}
+
+你可以看到上面的例子，指定了.png图片来作为按钮的每个状态的图片。按钮的3个图片看起来像这样：
+
+![ui1](http://www.cocos2d-x.org/docs/programmers-guide/6-img/Button_Normal.png)![ui2](http://www.cocos2d-x.org/docs/programmers-guide/6-img/Button_Press.png)![ui3](http://www.cocos2d-x.org/docs/programmers-guide/6-img/Button_Disable.png)
+
+按钮在图片上看起来是这样的：
+
+![uix](http://www.cocos2d-x.org/docs/programmers-guide/6-img/Button_example.png)
+
+### CheckBox
+
+我们经常填写checkboxes，例如工作申请和租借合同之类。你可以在游戏中使用checkboxes。你能让你的玩家在游戏中作出yes或者no的选择。你可能听说例如0或1的选择。checkbox允许使用者去作出这类选择。checkbox有5种不同的状态：normal,selected,disabled。创建一个checkbox非常简单：
+
+{% highlight c++ %}
+
+#include "ui/CocosGUI.h"
+
+auto checkbox = CheckBox::create("check_box_normal.png",
+                                 "check_box_normal_press.png",
+                                 "check_box_active.png",
+                                 "check_box_normal_disable.png",
+                                 "check_box_active_disable.png");
+
+checkbox->addTouchEventListener([&](Ref* sender, Widget::TouchEventType type){
+        switch (type)
+        {
+                case ui::Widget::TouchEventType::BEGAN:
+                        break;
+                case ui::Widget::TouchEventType::ENDED:
+                        std::cout << "checkbox 1 clicked" << std::endl;
+                        break;
+                default:
+                        break;
+        }
+});
+
+this->addChild(checkbox);
+
+{% endhighlight %}
+
+你可以看到上面指定了.png图片作为每个可能状态的图。那些图片如下：
 
 
 >资料均来源于<br/>[Chapter 2: Basic Cocos2d-x Concepts](http://www.cocos2d-x.org/docs/programmers-guide/2/index.html)<br/>[Chapter 3: Sprites](http://www.cocos2d-x.org/docs/programmers-guide/3/index.html#creating-sprites)<br/>[Chapter 4: Actions](http://www.cocos2d-x.org/docs/programmers-guide/4/index.html)<br/>[Chapter 5: Building and Transitioning Scenes](http://www.cocos2d-x.org/docs/programmers-guide/5/index.html)<br/>[Chapter 6: UI](http://www.cocos2d-x.org/docs/programmers-guide/6/index.html)<br/>
