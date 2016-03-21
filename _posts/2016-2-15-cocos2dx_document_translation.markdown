@@ -1554,8 +1554,103 @@ this->addChild(textField);
 
 ![uix](http://www.cocos2d-x.org/docs/programmers-guide/6-img/TextField_example_keyboard.png)
 
+# Chapter 7: Other Node Types
+
+你在你的游戏中使用了精灵，标签，动作对象。除了这些在前面章节介绍到的基本类型之外，Coco2dx提供更多的节点来帮助你完成特殊的功能。也许你想做一个瓦片游戏？或者一个2d的scroller。又或者你想往你的游戏中添加粒子效果。cocos2dx提供这些对象帮你完成。
+
+### TileMap
+
+TileMaps是使用瓦片制作的地图。每一个瓦片都能有独立的行为。TileMaps以XML为基础的TML作为存储TileMaps的文件。TMX是设计为瓦片地图使用，但他也
 
 
+{% highlight c++ %}
 
+//reading in a tiled map
+auto map = TMXTiledMap::create("TileMap.tmx");
+addChild(map,0,99);//with a tag of '99'
 
->资料均来源于<br/>[Chapter 2: Basic Cocos2d-x Concepts](http://www.cocos2d-x.org/docs/programmers-guide/2/index.html)<br/>[Chapter 3: Sprites](http://www.cocos2d-x.org/docs/programmers-guide/3/index.html#creating-sprites)<br/>[Chapter 4: Actions](http://www.cocos2d-x.org/docs/programmers-guide/4/index.html)<br/>[Chapter 5: Building and Transitioning Scenes](http://www.cocos2d-x.org/docs/programmers-guide/5/index.html)<br/>[Chapter 6: UI](http://www.cocos2d-x.org/docs/programmers-guide/6/index.html)<br/>
+{% endhighlight %}
+
+瓦片地图有许多层，由z轴决定。你通过层的名字获取指定的层：
+
+{% highlight c++ %}
+
+//how to get a specific layer
+auto map = TMXTiledMap::create("TileMap.tmx");
+auto layer = map->getLayer("Layer0");
+auto tile = layer->getTileAt(Vec2(1,63));
+
+{% endhighlight %}
+
+每一个瓦片都有独立的坐标和id，这让我们非常容易能获取到我们想要获取的瓦片。你可以通过id获取任意的瓦片：
+
+{% highlight c++ %}
+
+//to obtain a specific tiles id
+unsigned int gid = layer->getTileGIDAt(Vec2(0,63));
+
+{% endhighlight %}
+
+一个瓦片地图层的例子：
+
+![tile-map-example](http://www.cocos2d-x.org/docs/programmers-guide/7-img/tilemap1.png)
+![tile-map-example-2](http://www.cocos2d-x.org/docs/programmers-guide/7-img/tilemap2.png)
+
+### Particle System
+
+也许你的游戏需要燃烧的火花的特效，法术释放的视觉效果，或者爆炸效果。那你要怎么制作这些这么复杂的效果呢？你能作出来吗？是的，使用粒子系统你就能轻松完成。粒子系统这个术语来源于电脑图形技术，使用大量非常细小的精灵或者图形对象来模拟某些模糊的现象，这个对于传统的渲染方式是非常难以实现的。一些真实的例子包括一些非常混乱的系统，自然现象，化学反应。下面是一些粒子特效：
+
+![particle-effect](http://www.cocos2d-x.org/docs/programmers-guide/7-img/particle1.png)
+![particle-effect2](http://www.cocos2d-x.org/docs/programmers-guide/7-img/particle3.png)
+
+#### Tools for creating Particle Effects（略）Built-In Particle Effects (略)
+
+使用ParticleFireworks（烟花）：
+
+{% highlight c++ %}
+
+auto emitter = ParticleFireworks::create();
+addChild(emitter,10);
+
+{% endhighlight %}
+
+效果如下：
+
+![particle-effect3](http://www.cocos2d-x.org/docs/programmers-guide/7-img/particle2.png)
+
+但是如果你想要的例子效果不是你想要的呢？你可以手动的操纵它。让我们同样以烟火例子然后手动的操纵它的属性：
+
+{% highlight c++ %}
+
+auto emitter = ParticleFireworks::create();
+
+//set the duration
+emitter->setDuration(ParticleSystem::DURATION_INFINITY);
+
+//radius mode
+emitter->setEmitterMode(ParticleSystem::Mode::RADIUS);
+
+//radius mode：100 pixels from center
+emitter->setStartRadius(100);
+emitter->setStartRadiusVar(0);
+emitter->setEndRadius(ParticleSystem::START_RADIUS_EQUAL_TO_END_RADIUS);
+emitter->setEndRadiusVar(0); //not used when start == end
+
+addChild(emitter,10);
+
+{% endhighlight %}
+
+### Parallax(视差)
+
+视差节点是一类特别的节点，是用于模仿视差卷轴的。parallax节点可以根据不同的位置让对象显示不同的位置和方向，形成特别的视差效果。举个日常生活中的例子，就像我们通过摄像机镜头看事物一样。超级马里奥是一个经典的例子。ParallaxNode可以通过Sequence四处移动或者通过鼠标，触摸，加速度，键盘来手动触发。
+
+视差节点比一般的节点要复杂。因为他需要多个节点来触发他的功能。一个单独的parallaxnode是无法靠自身形成效果的。你需要最少2个额外的节点来完成parallaxnode。
+
+{% highlight c++ %}
+
+//create ParallaxNode
+auto paraNode = ParallaxNode::create();
+
+{% endhighlight %}
+
+>资料均来源于<br/>[Chapter 2: Basic Cocos2d-x Concepts](http://www.cocos2d-x.org/docs/programmers-guide/2/index.html)<br/>[Chapter 3: Sprites](http://www.cocos2d-x.org/docs/programmers-guide/3/index.html#creating-sprites)<br/>[Chapter 4: Actions](http://www.cocos2d-x.org/docs/programmers-guide/4/index.html)<br/>[Chapter 5: Building and Transitioning Scenes](http://www.cocos2d-x.org/docs/programmers-guide/5/index.html)<br/>[Chapter 6: UI](http://www.cocos2d-x.org/docs/programmers-guide/6/index.html)<br/>[Chapter 7: Other Node Types](http://www.cocos2d-x.org/docs/programmers-guide/7/index.html)<br/>
