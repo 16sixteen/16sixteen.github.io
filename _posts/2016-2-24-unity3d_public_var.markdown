@@ -10,7 +10,7 @@ header-img: "img/solvingReport.jpg"
 published:   true
 ---
 
->## 索引：<br/><a href="#01">C#公有变量</a><br/><a href="#02">C#的获取组件</a><br/><a href="#03">C#用代码改变材质</a><br/><a href="#04">Vector3</a><br/><a href="#05">Transform.Translate和Transform.Rotate</a><br/><a href="#06">Time,Random</a><br/><a href="#07">单例模式</a><br/><a href="#08">C# Collection使用</a><br/>
+>## 索引：<br/><a href="#01">C#公有变量</a><br/><a href="#02">C#的获取组件</a><br/><a href="#03">C#用代码改变材质</a><br/><a href="#04">Vector3</a><br/><a href="#05">Transform.Translate和Transform.Rotate</a><br/><a href="#06">Time,Random</a><br/><a href="#07">单例模式</a><br/><a href="#08">C# Collection使用</a><br/><a href="#08">双击检测</a><br/>
 
 
 
@@ -91,3 +91,37 @@ Vector3里的变量x,y,z分别代表x,y,z轴上的坐标。
 ## <a name="08"/>C# Collection使用
 
 [collection使用](/unity3d/unity3d_collection/)
+
+## <a name="09"/>双击检测
+
+{% highlight c++ %}
+//double_click.cs
+using UnityEngine;
+using System.Collections;
+
+public class double_click : MonoBehaviour {
+
+    private float doubleClickStart = 0;
+    private float doubleClickGap = 0.2f;
+    //点击鼠标左键的时候，将doubleClickStart设为当前的时间，
+    //如果再次点击的间隔少于doubleclickGap，返回true
+    bool doubleClick(){
+        if (Input.GetKeyUp (KeyCode.Mouse0)) {
+            if (Time.time - doubleClickStart < doubleClickGap) {
+                return true;
+            }else{
+                doubleClickStart = Time.time;
+                return false;
+            }
+        }
+        return false;
+    }
+    // Update is called once per frame
+    void Update () {
+        if (doubleClick ()) {
+            print (1);
+        }
+    }
+}
+
+{% endhighlight %}
