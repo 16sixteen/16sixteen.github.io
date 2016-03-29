@@ -7,6 +7,5 @@ categories: Unity3d
 tags:       Unity3d
 author:     "SixTeen"
 header-img: "img/solvingReport.jpg"
-published:   true
+published:   false
 ---
-

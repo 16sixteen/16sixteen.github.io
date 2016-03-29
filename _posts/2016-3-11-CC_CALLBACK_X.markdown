@@ -9,6 +9,7 @@ author:     "SixTeen"
 header-img: "img/cocos2dx.png"
 ---
 
+## std::bind
 
 
 
