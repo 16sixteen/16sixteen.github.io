@@ -1653,4 +1653,7 @@ auto paraNode = ParallaxNode::create();
 
 {% endhighlight %}
 
+你需要多个节点来添加到视差节点中：
+
+
 >资料均来源于<br/>[Chapter 2: Basic Cocos2d-x Concepts](http://www.cocos2d-x.org/docs/programmers-guide/2/index.html)<br/>[Chapter 3: Sprites](http://www.cocos2d-x.org/docs/programmers-guide/3/index.html#creating-sprites)<br/>[Chapter 4: Actions](http://www.cocos2d-x.org/docs/programmers-guide/4/index.html)<br/>[Chapter 5: Building and Transitioning Scenes](http://www.cocos2d-x.org/docs/programmers-guide/5/index.html)<br/>[Chapter 6: UI](http://www.cocos2d-x.org/docs/programmers-guide/6/index.html)<br/>[Chapter 7: Other Node Types](http://www.cocos2d-x.org/docs/programmers-guide/7/index.html)<br/>
