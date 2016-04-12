@@ -71,7 +71,7 @@ cocos2d-x使用导演的概念，就像在电影中一样，导演控制操作�
 
 当你开始添加节点，精灵，动画到你游戏的时候，你想让这些按照你所想的那样被绘制出来。但如果不符合你的要求的时候，当你的精灵被背景遮挡的时候，你想他移到最前面的时候，应该怎么做？不是一件很难的事情，你只需要退回去，把运行的场景图在纸上画一画，我敢肯定你会非常快的找到你的错误。
 
-当场景图是一棵树的时候，你可以遍历一遍这棵树。cocos2d-x使用先序遍历算法。先序遍历算法是先遍历树的左子树，然后根节点，最后是右子树。当最右边的子树被最后渲染，因此他显示在画面最前面。
+当场景图是一棵树的时候，你可以遍历一遍这棵树。cocos2d-x使用中序遍历算法。中序遍历算法是先遍历树的左子树，然后根节点，最后是右子树。当最右边的子树被最后渲染，因此他显示在画面最前面。
 
 ![p6](http://www.cocos2d-x.org/docs/programmers-guide/2-img/in-order-walk.png)
 
@@ -1655,5 +1655,22 @@ auto paraNode = ParallaxNode::create();
 
 你需要多个节点来添加到视差节点中：
 
+{% highlight c++ %}
+
+// create ParallaxNode
+auto paraNode = ParallaxNode::create();
+
+// background image is moved at a ratio of 0.4x, 0.5y
+paraNode->addChild(background, -1, Vec2(0.4f,0.5f), Vec2::ZERO);
+
+// tiles are moved at a ratio of 2.2x, 1.0y
+paraNode->addChild(middle_layer, 1, Vec2(2.2f,1.0f), Vec2(0,-200) );
+
+// top image is moved at a ratio of 3.0x, 2.5y
+paraNode->addChild(top layer, 2, Vec2(3.0f,2.5f), Vec2(200,800) );
+
+{% endhighlight %}
+
+这看起来非常熟悉不是吗？注意，每一个几点对象都以特定的z轴坐标添加，还有2个额外的Vec2类型参数，这是比例和偏移值。这些参数可以看作是相对于父节点的比例。
 
 >资料均来源于<br/>[Chapter 2: Basic Cocos2d-x Concepts](http://www.cocos2d-x.org/docs/programmers-guide/2/index.html)<br/>[Chapter 3: Sprites](http://www.cocos2d-x.org/docs/programmers-guide/3/index.html#creating-sprites)<br/>[Chapter 4: Actions](http://www.cocos2d-x.org/docs/programmers-guide/4/index.html)<br/>[Chapter 5: Building and Transitioning Scenes](http://www.cocos2d-x.org/docs/programmers-guide/5/index.html)<br/>[Chapter 6: UI](http://www.cocos2d-x.org/docs/programmers-guide/6/index.html)<br/>[Chapter 7: Other Node Types](http://www.cocos2d-x.org/docs/programmers-guide/7/index.html)<br/>
