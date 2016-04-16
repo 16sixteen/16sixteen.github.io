@@ -1,0 +1,159 @@
+---
+layout:     post
+title:      "C++ Primer阅读笔记（2）"
+subtitle:   "第二章"
+date:       2016-04-14 19:54:00
+categories: C++
+tags:       C++
+author:     "SixTeen"
+header-img: "img/contact-bg.jpg"
+published:   true
+---
+
+### 第二章 变量和基本类型
+
+1.32位和64位系统，char类型，8位（1字节），int类型，32位（4字节），float类型，32位（4字节），double类型，64位，（8字节）
+
+2.指针变量，32位系统的寻址空间是2^32,而64位系统的寻址空间是2^64，所以32位系统的指针变量是32位（4字节），而64位系统的指针变量是64位（8字节）
+
+3.20的3种进制表示：
+
+{% highlight c++ %}
+
+20//decimal
+024//octal
+0x14//hexadecimal
+
+{% endhighlight %}
+
+4.\n换行
+
+5.所有字符串自面值都由编译器自动在末尾添加一个空字符。
+
+6.\反斜线符号可将此行和下一行当做同一行处理。(反斜线后的下一行前面不能加任何符号：空白，制表，换行，否则会编译错误)
+
+{% highlight c++ %}
+
+#include<iostream>
+using namespace std;
+
+int main() {
+    std::cou\
+t << "123" << st\
+d::endl;
+    return 0;
+}
+
+{% endhighlight %}
+
+7.C++是一门静态类型语言，在编译时会作类型检查。
+
+8.变量名（变量的标识符），必须以字母或者下划线开头，并且区分大小写字母，c++中的标识符都是大小写敏感的。
+
+9.关键字不能用作程序的标识符。
+
+10.复制初始化和直接初始化
+
+{% highlight c++ %}
+
+int i(1024);//direct-initialization
+int i = 1024;//copy-initialization
+
+{% endhighlight %}
+
+11.变量的定义用于为变量分配内存空间，还可以为变量指定初始值，在一个程序中，变量有且仅有一个定义。
+
+12.声明用于向程序表明变量的类型和名字。
+
+13.局部变量最好使用不同的名字。
+
+14.魔数（magic number），它的意义在上下文中没有体现出来，好像这个数是魔术般地从空中出现的。
+
+15.const把一个对象转换成一个常量。任何修改尝试都会导致编译错误。因为常量在定义后就不能被修改，所以定义时必须初始化。
+
+16.引用就是对象的另一个名字。引用必须用与该引用同类型的对象初始化（初始化是指明引用指向哪个对象的唯一方法）。引用只是它绑定的对象的另一个名字，作用在引用上的所有操作事实上都是作用在该引用绑定的对象上。
+
+{% highlight c++ %}
+
+int ival = 1024;
+int &refVal = ival;
+
+{% endhighlight %}
+
+17.const引用的意思是指向const对象的引用。
+
+18.
+
+{% highlight c++ %}
+
+#include<iostream>
+
+using namespace std;
+
+int main() {
+    const double r1 = 2.1;
+    const int &rVal = r1;
+    /**
+    * 这样是合法的，因为编译器会把这些代码转换成
+    * const int temp = r1;
+    * const int &rVal = temp;
+    */
+    cout << rVal << endl;
+    return 0;
+}
+
+{% endhighlight %}
+
+19.typedef可以用作定义类型：
+
+{% highlight c++ %}
+
+#include<iostream>
+
+using namespace std;
+
+typedef double wages;
+
+int main() {
+    const wages a = 1.23;
+    cout << a << endl;
+    return 0;
+}
+
+{% endhighlight %}
+
+20.枚举,默认的第一个枚举成员赋值为0，后面的每个枚举成员赋的值比前面的大1.枚举成员的值是一个常量，初始化之后不能改变。
+
+{% highlight c++ %}
+
+#include<iostream>
+
+using namespace std;
+
+enum price {item1,item2,item3};
+
+int main() {
+    price i = item1;//枚举定义一种新的类型
+    cout << item1 << i << endl;
+    return 0;
+}
+
+{% endhighlight %}
+
+21.类定义后有分号。
+
+22.我们必须保证多次包含同一头文件不会引起该头文件定义的类和对象被多次定义。使得头文件安全的通用做法是使用预处理器定义头文件保护符。头文件保护符用于避免在已经见到头文件的情况下重新处理该头文件的内容。
+
+23.预处理器变量的名字在程序中必须是唯一的。
+
+{% highlight c++ %}
+
+#ifndef VARIABLES_H
+#define VARIABLES_H
+//critical code
+#endif
+
+{% endhighlight %}
+
+    FIN  16.4.16/0.22
+
