@@ -1,0 +1,96 @@
+---
+layout:     post
+title:      "C++ Primer阅读笔记（3）"
+subtitle:   "第三章"
+date:       2016-04-16 00:25:00
+categories: C++
+tags:       C++
+author:     "SixTeen"
+header-img: "img/contact-bg.jpg"
+published:   true
+---
+
+### 第三章 标准库类型
+
+1.::作用域操作符，使用using声明就可以直接引用名字，而不需要饮用该名字的命名空间。
+
+2.标准string类型，string类型支持长度可变的字符串。
+
+{% highlight c++ %}
+
+#include<string>
+using std::string;
+
+{% endhighlight %}
+
+3.cin>>str;忽略开头所有空白，读取直到再次遇到空白
+
+4.getline读取整行文本。getline不忽略开头的换行符,但这时候str是空串。getline（cin，line）;因为getline默认将\n作为定界符，我们可以```getline(cin,line,'#')```这样就将#作为定界符。
+
+{% highlight c++ %}
+
+str.empty();
+str.size();
+
+{% endhighlight %}
+
+5.size()的返回类型是string::size_type，它与unsigned具有相同的含义，但是通过这些配套类型，库类型的使用就能与机器无关。
+
+{% highlight c++ %}
+
+for(string::size_type i = 0; i != str.size();i++){
+    str[i];
+}
+
+{% endhighlight %}
+
+6.vector是一个类模板(class template),vector不是一种数据类型，而是一个类模板，可以用来定义任意多种数据类型。
+
+7.
+
+{% highlight c++ %}
+
+vec.empty();
+vec.size();
+vec.push_back(t);
+for(vector<int>::size_type i = 0; i != vec.size(); i++){
+    vec[i];
+}
+
+{% endhighlight %}
+
+8.调用size成员函数而不保存它的返回值，因为如果增加了元素的话，那么已保存的size值作为循环结束条件就会有问题。
+
+9.迭代器iterator。```vector<int>::iterator it;```若一种类型支持一组确定的操作（这些操作可以遍历容器内的元素，并访问这些元素的值），我们就称这种类型为迭代器。
+
+10.begin和end。begin返回迭代器指向的第一个元素，end返回末端元素的下一个，如果vector是空的，那么begin和end相同。
+
+11.解引用符。```*it;```访问迭代器所指向的元素。不能对end迭代器使用自增和解引用。
+
+{% highlight c++ %}
+
+for(vector<int>::iterator it = vec.begin(); it != vec.end(); it++){
+    *it;
+}
+
+{% endhighlight %}
+
+12.只读迭代器。```vector<int>::const_iterator it;```这种只读迭代器自身的值可以改变，但不能用来改变其所指向的元素的值。这和```const vector<int>::iterator it = vec.begin();```（这种迭代器没什么作用）是不一样的。
+
+13.迭代器算术操作```vector<int>::iterator mid = vec.begin()+vec.size()/2```
+
+14.```bitset<32> bitvec```32位全是0
+
+{% highlight c++ %}
+
+string str("1100");
+bitset<32> bitvec(str);//bitvec中第二和第三位是1，其他位置都是0
+//string对象的字符个数小于bitset长度，高阶位将置为0
+bitvec.any();//false->all zero
+bitvec.none();//true->all zero
+bitvec[index];
+bitvec.test(i);//测试某个二进制位是否为1
+
+{% endhighlight %}
+
+    FIN 4.20/1.15
