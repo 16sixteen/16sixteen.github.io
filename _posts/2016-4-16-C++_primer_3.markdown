@@ -1,7 +1,7 @@
 ---
 layout:     post
 title:      "C++ Primer阅读笔记（3）"
-subtitle:   "第三章"
+subtitle:   "第三章 标准库类型"
 date:       2016-04-16 00:25:00
 categories: C++
 tags:       C++

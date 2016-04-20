@@ -1,7 +1,7 @@
 ---
 layout:     post
 title:      "C++ Primer阅读笔记（2）"
-subtitle:   "第二章"
+subtitle:   "第二章 变量和基本类型"
 date:       2016-04-14 19:54:00
 categories: C++
 tags:       C++
