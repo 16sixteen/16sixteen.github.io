@@ -1,0 +1,164 @@
+---
+layout:     post
+title:      "C++ Primer阅读笔记（4）"
+subtitle:   "第四章 数组和指针"
+date:       2016-04-20 10:45:00
+categories: C++
+tags:       C++
+author:     "SixTeen"
+header-img: "img/contact-bg.jpg"
+published:   true
+---
+
+### 第四章 数组和指针
+
+1.数组的长度是固定的，数组一经创建，就不允许添加新的元素，指针则可以像迭代器一样用于遍历和检查数组中的元素。数组也是一种存储单一数据类型对象的容器，其中每个对象都没有单独的名字，而是通过他在数组中的位置对它进行访问。
+
+2.和vector相比，数组：固定长度，无法知道size，无法预先知道需要多长的空间，很难为数组分配空间，速度比vector快
+
+3.必须使用常量来初始化数组的维数。
+
+4.显式初始化数组```int ia[3] = {0, 1, 2};```如果这样写```int ia[]={0, 1, 2};```编译器会根据列出的元素个数来确定数组长度。
+
+5.初始化字符数组
+
+{% highlight c++ %}
+
+char ca1[]={'c','+','+'};
+char ca2[]={'c','+','+','\0'};
+char ca3[]="c++";//和ca2相同
+
+{% endhighlight %}
+
+6.不允许数组直接复制和赋值。
+
+7.数组下标从0开始。
+
+8.缓冲区溢出（buffer overflow）在引用了越出数组或者其他类似数据结构边界的元素时，就会导致这类错误。
+
+9.指针保存的是一个对象的地址。而迭代器只能用来访问容器内的元素。
+
+10.&取地址操作。
+
+{% highlight c++ %}
+
+stirng s("HelloWorld");
+string* s_ptr = &s;
+
+{% endhighlight %}
+
+11.
+
+{% highlight c++ %}
+
+string *p;//p is a pointer
+string* p;//p is a pointer
+string *p1,*p2;//p1 is a pointer, p2 is a pointer
+string* p1, p2;//p1 is a pointer, p2 is a string
+
+{% endhighlight %}
+
+12.未初始化的指针是无效的。很多运行时错误都源于使用了未初始化的指针。
+
+13.如果使用未初始化的指针，会将指针中存放不确定值视为地址，然后操纵该内存地址中存放的位内容，使用未初始化的指针相当于操纵这个不确定地址中存储的基础数据。因此，在对未初始化的指针使用解引用时，通常会导致程序崩溃。
+
+14.NULL在cstdlib中定义，其值为0。
+
+15.<strong>void*指针。</strong>他可以保存任何类型对象的地址。void*表明该指针和地址值有关，但不清楚是哪种类型的指针。可以使用void*（i）与另一个指针进行比较。（ii）向函数传递void*指针或者从函数返回void*指针（作为函数的参数和返回值）（iii）给另一个void*赋值
+
+16.指针和引用比较：（i）定义引用没有初始化是错误的。（ii）赋值行为差异。给引用赋值就是赋值（因为引用是别名），指针赋值必须要先解引用再进行赋值（修改指向对象的值）。
+
+17.指向指针的指针。指针本身也是可用指针指向的内存对象。
+
+18.
+
+{% highlight c++ %}
+
+int ia[] = {0, 2, 4, 6, 8};
+int *p = ia;//p points to a[0]
+int *p1 = p+4;//p1 points to a[4]
+
+{% endhighlight %}
+
+19.
+
+{% highlight c++ %}
+
+int ia[] = {0, 2, 4, 6, 8};
+int *p = &ia[2];//p points to the element indexed by 2
+int j = p[1];//*(p+1),ia[3]
+int k = p[-2];//*(p-2),ia[0]
+
+{% endhighlight %}
+
+20.c++强制要求指向const对象的指针也必须具有const特性。这里的特性指的是指针只能指向const对象，并不是指针不能修改。```const double *ptr```这里的const并不是针对指针类型的，而是指明指针指向的是const double类型。同样的，```const void *ptr```可以指向任何类型的const对象。
+
+21.但是可以让const指针指向非const对象，因此const指针可以理解为"自以为指向const的指针"
+
+22.当然还存在不能修改的指针的类型。```double *const ptr```.意思就是指向double的const指针。
+
+23.const修饰指针，就是指针是const的。const修饰类型，就是指针指向const类型。
+
+{% highlight c++ %}
+
+string s;
+typedef string *pstring;
+const pstring cstr = &s;//const修饰的是pstring，修饰的是指针
+pstring const cstr2 = &s;
+string *const cstr3 = &s;//这3句话是同一个意思
+
+{% endhighlight %}
+
+24.C风格字符串标准库函数
+
+{% highlight c++ %}
+
+strlen(s);//返回s的长度
+strcmp(s1,s2);//s1==s2,return 0,s1>s2,return >0,s1<s2,return <0
+strcat(s1,s2);//连接s1，s2，保存到s1中
+strcpy(s1,s2);//复制s2到s1中，返回s1
+strncat(s1,s2,n);//s2的前n个
+strncpy(s1,s2,n);//s2的前n个
+
+{% endhighlight %}
+
+25.每一个程序在执行时都占用一块可用的内存空间，用于存放动态分配的对象，此内存空间称为程序的自由存储区或堆，c语言程序使用malloc和free在自由存储区分配储存空间，c++语言则使用new和delete表达式实现相同的功能。
+
+{% highlight c++ %}
+
+int *a = new int[10];
+int *a = new int[10]();//初始化
+delete [] a;
+
+{% endhighlight %}
+
+26.理论上，回收数组时缺少空方括号对，至少会导致运行时少释放了内存空间，从而产生内存泄露（memory leak）。
+
+27.```const char *s = str.c_str()```
+
+28.```vector<int> vec(arr,arr+arr_size)```
+
+29.多维数组（通常指的多维数组其实就是数组的数组）。ia[row][col],行，列。
+
+{% highlight c++ %}
+
+int ia[3][4] = {
+    {0,1,2,3},//第一行
+    {4,5,6,7},//第二行
+    {8,9,10,11}//第二行
+};
+int ia[3][4] = {0,1,2,3,4,5,6,7,8,9,10,11};//和前面的初始化是完全等价的
+
+{% endhighlight %}
+
+30.定义指向多维数组的指针，该指针指向的多维数组是数组的数组。
+
+{% highlight c++ %}
+
+int ia[3][4];
+int (*ip)[4] = ia;//指向int[4]的指针
+ip = &ia[2];
+
+{% endhighlight %}
+
+    FIN 4.22/22.17
