@@ -8,6 +8,7 @@ tags:       Unity3d
 author:     "SixTeen"
 header-img: "img/unity3d.jpg"
 published:   true
+future:      enable
 ---
 
 
