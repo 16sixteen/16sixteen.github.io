@@ -13,6 +13,7 @@ facebook_username:
 # Sidebar filter
 # Choose 'tag' or 'category' as filter in sidebar.
 filter: 'tags'
+timezone: Asia/Shanghai
 permalink: /:categories/:title
 # Build settings
 #markdown: redcarpet
