@@ -2,7 +2,7 @@
 layout:     post
 title:      "Unity3d-模仿AnimationEvent编写StateEvent类"
 subtitle:   "AnimationEvent"
-date:       2016-04-24 23:55:00
+date:       2016-04-24 22:55:00
 categories: Unity3d
 tags:       Unity3d
 author:     "SixTeen"
