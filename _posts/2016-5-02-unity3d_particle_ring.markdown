@@ -187,5 +187,96 @@ public void outCollect() {
 
 ![](/img/unity3d/particle_ring/4.gif)
 
+{% highlight c++ %}
+
+//Particle_ring.cs
+using UnityEngine;
+using System.Collections;
+
+public class Particle_ring : MonoBehaviour {
+    public ParticleSystem particleSystem;
+    private ParticleSystem.Particle[] particleRing;
+    public int particleNum = 10000;
+    public float radius = 5.0f;
+    public float maxRadius = 10.0f;
+    public int level = 5;
+    private float[] particleAngle;
+    private float[] particleR;
+    private float[] collectR;
+    private float[] circleR;
+    float collectSpeed = 2.0f;
+    private bool collect = false;
+    public float speed = 0.1f;
+
+    void Start () {
+        particleRing = new ParticleSystem.Particle[particleNum];
+        particleAngle = new float[particleNum];
+        particleR = new float[particleNum];
+        collectR = new float[particleNum];
+        circleR = new float[particleNum];
+        particleSystem.maxParticles = particleNum;
+        particleSystem.Emit(particleNum);
+        particleSystem.GetParticles(particleRing);
+        for (int i = 0; i < particleNum; i++) {
+            float midR = (maxRadius + radius)/2;
+            //最小半径随机扩大
+            float rate1 = Random.Range(1.0f, midR / radius);
+            //最大半径随机缩小
+            float rate2 = Random.Range(midR / maxRadius, 1.0f);
+            float r = Random.Range(radius*rate1, maxRadius*rate2);
+            float angle = Random.Range(0.0f, 360.0f);
+            particleAngle[i] = angle;
+            particleR[i] = r;
+            circleR[i] = r;
+            collectR[i] = r - 1.5f * (r / radius);
+            if (collectR[i] < radius+0.5f) {
+                float midRadius = radius + 0.25f;
+                float minRate = Random.Range(1.0f, midRadius / radius);
+                collectR[i] = Random.Range(radius*minRate, (radius + 0.5f));
+            }
+            float rad = angle / 180 * Mathf.PI;
+            particleRing[i].position = new Vector3(r * Mathf.Cos(angle), r * Mathf.Sin(angle), 0.0f);
+        }
+        particleSystem.SetParticles(particleRing,particleNum);
+    }
+    
+    
+    void Update () {
+        //设置为5部分的粒子，能被2整除的部分逆时针旋转，否则顺时针
+        for(int i = 0;i < particleNum; i++) {
+            if (collect == true) {
+                if (particleR[i] > collectR[i]) {
+                    particleR[i] -= collectSpeed *(particleR[i]/collectR[i]) * Time.deltaTime;
+                }
+            } else {
+                if (particleR[i] < circleR[i]) {
+                    particleR[i] += collectSpeed * (circleR[i] / particleR[i]) * Time.deltaTime;
+                }else if(particleR[i] > circleR[i]) {
+                    particleR[i] = circleR[i];
+                }
+            }
+            if (i%2 == 0) {
+                particleAngle[i] += (i % level+1) * speed;
+            } else {
+                particleAngle[i] -= (i % level+1) * speed;
+            }
+            particleAngle[i] = particleAngle[i] % 360;
+            float rad = particleAngle[i] / 180 * Mathf.PI;
+            particleRing[i].position = new Vector3(particleR[i] * Mathf.Cos(rad), particleR[i] * Mathf.Sin(rad), 0f);
+        }
+        particleSystem.SetParticles(particleRing, particleNum);
+    }
+
+    public void Collect() {
+        collect = true;
+    }
+    public void outCollect() {
+        collect = false;
+    }
+}
+
+
+{% endhighlight %}
+
     FIN 5.2/23.50
 
