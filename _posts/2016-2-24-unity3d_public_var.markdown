@@ -86,11 +86,11 @@ Vector3里的变量x,y,z分别代表x,y,z轴上的坐标。
 
 ## <a name="07"/>单例模式
 
-[单例模式](/algorithm/singleton/)
+[单例模式](/algorithm/singleton)
 
 ## <a name="08"/>C# Collection使用
 
-[collection使用](/unity3d/unity3d_collection/)
+[collection使用](/unity3d/unity3d_collection)
 
 ## <a name="09"/>双击检测
 

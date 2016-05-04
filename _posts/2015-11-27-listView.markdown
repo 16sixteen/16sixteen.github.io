@@ -1,0 +1,36 @@
+---
+layout:     post
+title:      "ListView"
+subtitle:   "ListView"
+date:       2015-11-17 22:29:00
+categories: android
+tags:       android
+author:     "SixTeen"
+header-img: "img/solvingReport.jpg"
+published:   false
+---
+
+---
+
+如何使用ListView
+
+```
+String str[]={"1","2","3"};
+ListView l = (ListView) findViewById(R.id.list1);
+ArrayAdapter<String> x = new ArrayAdapter<String>(MainActivity.this,android.R.layout.simple_list_item_1,str);
+l.setAdapter(x);
+```
+
+定制ListView界面
+
+1.根据自定义的界面要显示的内容自定义新的数据类型
+2.自定义的样式表
+3.自定义的适配器，重写getView
+
+
+
+
+
+
+
+

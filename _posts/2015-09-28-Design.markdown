@@ -1,7 +1,7 @@
 ---
 layout:     post
 title:      "设计心理学读后感"
-subtitle:   "1020"
+subtitle:   ""
 date:       2015-09-22 21:51:00
 categories: Read
 tags:       Read
