@@ -1,0 +1,169 @@
+---
+layout:     post
+title:      "C++ Primer阅读笔记（5）"
+subtitle:   "第五章 表达式"
+date:       2016-05-03 22:00:00
+categories: C++
+tags:       C++
+author:     "SixTeen"
+header-img: "img/contact-bg.jpg"
+published:   true
+---
+
+### 第五章 表达式
+
+1.表达式由一个或多个操作数通过操作符组合而成。
+
+2.作用在一个操作数上的操作符成为一元操作符，如取地址操作符和解引用操作符，而二元操作符则作用于两个操作数上，如加法操作符和减法操作符。三元操作符则作用在三个操作数上。
+
+3.对负数求模的结果不可预估
+
+4.逻辑与（&&）和逻辑或（<strong>||</strong>）操作符总是先计算其左操作数。只有仅靠左操作数的值无法确定该逻辑表达式的结果时，才会求解其右操作数。我们常常称这种求值策略为"短路求值"。
+
+5.~位求反,<<左移,>>右移,&位与,＾位异或,<strong>|</strong>位或.
+
+6.位操作符，由于系统不能确保如何处理其操作数的符号位，所以强烈建议使用unsigned整数操作数。
+
+7.赋值操作具有右结合性。
+
+{% highlight c++ %}
+
+int ival;int* pval;
+ival = pval = 0;//error,不能将指针赋给整形
+
+{% endhighlight %}
+
+8.
+
+{% highlight c++ %}
+
+int i = 0, j;
+j = ++i;//j=1,i=1
+j = i++;//j=1,i=2
+
+{% endhighlight %}
+
+9.条件操作符的优先度很低。
+
+{% highlight c++ %}
+
+cout << (i>j?i:j);//print i or j
+cout << (i>j)?i:j;//print 1 or 0
+cout << i>j?i:j;//error,compares cout to int
+
+{% endhighlight %}
+
+10.sizeof返回一个对象或类型名的长度，返回值为size_t
+
+对char类型sizeof操作保证得1
+
+对引用类型做sizeof将返回存放此引用类型对象所需要得内存空间大小
+
+对指针做sizeof返回存放指针所需要的内存大小。
+
+对数组做sizeof操作等效于对其元素做sizeof操作的结果乘上数组元素的个数。
+
+11.逗号操作符：表达式从左向右计算，逗号表达式的结果是其最右边表达式的值。
+
+12.优先级：
+
+::
+
+.  ->  []  ()函数调用，类型构造
+
+后++ 后-- typeid() 强制类型转换
+
+sizeof() 前++ 前-- ~ ! - + * & ()类型转换 new delete delete[]
+
+->* .* 指向成员操作的指针
+
+<strong>*</strong> / %
+
+<strong>+</strong> -
+
+<< >>
+
+< <= > >=
+
+== !=
+
+&
+
+^
+
+<strong>|</strong>
+
+&&
+
+<strong>||</strong>
+
+?:
+
+= *=,/=,%= +=,-=,<<=,>>=,&=,<strong>|</strong>=,^=
+
+throw
+
+,
+
+13.尽管现代机器的内存容量越来越大，但是自由存储区总有可能被耗尽，如果程序用完了所有可用的内存，new表达式就有可能失败，如果new表达式无法获取需要的内存空间，系统将抛出名为bad_alloc的异常。
+
+14.如果指针指向不是用new分配的内存地址，则在该指针上使用delete是不合法的。
+
+15.如果指针的值为0，对其做delete是合法的，但这样做没有意义。C++保证删除0值指针是安全的。
+
+16.在delete后，p变成没有定义（指向被释放的内存），变成了悬垂指针。悬垂指针指向曾经存放对象的内存，但对象已经不存在了。悬垂指针往往导致程序错误，而且很难检测。
+
+17.一旦删除了指针所指向的对象，立即将指针置为0，这样就非常清楚的表明指针不再指向任何对象。
+
+18.删除动态分配内存失败称为"内存泄露"。
+
+19.读写已删除的对象和对同一个内存空间使用两次delete表达式都会造成错误。
+
+20.隐式类型转换（由编译器自动执行）
+
+21.算术转换定义了一个类型转换层次，改层次规定了操作数应按什么次序转换成表达式中最宽的类型。在包含多种类型的表达式中，转换规则要确保计算值的精度。
+
+22.无符号的转换依赖于机器。
+
+23.指向任意数据类型的指针都可以转换为void*类型，整型数值常量0可转换为任意指针类型。
+
+24.将istream类型转换成bool类型意味着要检验流的状态。如果最后一次读cin的尝试是成功的，则流的状态将导致类型装换为 bool类型后获得true值。
+
+25.显式转换```static_cast```,```dynamic_cast```,```const_cast```,```reinterpret_cast```,格式为```cast-name<type>(expression)```
+
+26.const_cast只能用于添加或者删除const特性。
+
+{% highlight c++ %}
+
+int main() {
+    const int i = 100;
+    int* j = const_cast<int*>(&i);
+    (*j)++;
+    cout << &i << " " << i << endl;
+    cout <<  j << " " << (*j) << endl;
+    return 0;
+}
+//output
+/*
+* 0018FC18 100
+* 0018FC18 101
+*/
+{% endhighlight %}
+
+27.编译器隐式执行的任何类型转换都可以由static_cast显式完成。
+
+{% highlight c++ %}
+
+int main() {
+    double d = 3.14;
+    void* v_ptr = &d;
+    double* d_ptr = static_cast<double*>(v_ptr);
+    cout << (*d_ptr) << endl;
+    return 0;
+}
+
+{% endhighlight %}
+
+28.旧类型转换。 ```(type) expr``` ```type (expr)```
+
+    FIN 5.12/9.22
