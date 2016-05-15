@@ -3,8 +3,8 @@ layout:     post
 title:      "剑指offer-阅读笔记（1）"
 subtitle:   "sizeof 复制构造函数 赋值函数"
 date:       2016-05-12 09:48:00
-categories: C++
-tags:       C++
+categories: jianzhi_offer
+tags:       基础
 author:     "SixTeen"
 header-img: "img/contact-bg.jpg"
 published:   true
