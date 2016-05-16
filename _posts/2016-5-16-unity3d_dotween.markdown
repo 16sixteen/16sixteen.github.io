@@ -88,12 +88,11 @@ Dotween工厂的作用是管理所有的dotween，将他们保存在列表中，
 {% highlight c++ %}
 
 public class Dotween{
-    private static List<dotween> dotList = null;
+    private static List<dotween> dotList = new List<dotween>();
     private static Dotween dot = null;
     public static Dotween getInstance() {
         if(dot == null) {
             dot = new Dotween();
-            dotList = new List<dotween>();
         }
         return dot;
     }
