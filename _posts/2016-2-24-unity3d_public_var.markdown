@@ -10,7 +10,7 @@ header-img: "img/unity3d.jpg"
 published:   true
 ---
 
->## 索引：<br/><a href="#01">C#公有变量</a><br/><a href="#02">C#的获取组件</a><br/><a href="#03">C#用代码改变材质</a><br/><a href="#04">Vector3</a><br/><a href="#05">Transform.Translate和Transform.Rotate</a><br/><a href="#06">Time,Random</a><br/><a href="#07">单例模式</a><br/><a href="#08">C# Collection使用</a><br/><a href="#08">双击检测</a><br/>
+>## 索引：<br/><a href="#01">C#公有变量</a><br/><a href="#02">C#的获取组件</a><br/><a href="#03">C#用代码改变材质</a><br/><a href="#04">Vector3</a><br/><a href="#05">Transform.Translate和Transform.Rotate</a><br/><a href="#06">Time,Random</a><br/><a href="#07">单例模式</a><br/><a href="#08">C# Collection使用</a><br/><a href="#09">双击检测</a><br/><a href="#10">foreach</a><br/>
 
 
 
@@ -125,3 +125,7 @@ public class double_click : MonoBehaviour {
 }
 
 {% endhighlight %}
+
+## <a name="10"/>foreach
+
+foreach 中不能进行元素的删减

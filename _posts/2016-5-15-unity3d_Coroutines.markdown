@@ -61,6 +61,15 @@ public class WaitForSecondsExample : MonoBehaviour {
 
 {% endhighlight %}
 
+停止协程
+
+{% highlight c++ %}
+
+StopCoroutine(Coroutine);
+StopCoroutine("FunctionName");//只有使用startCoroutine("funName")的才能使用 
+
+{% endhighlight %}
+
 
 >参考资料：[Unity Manual/Scripting/Scripting Overview/Coroutines](http://docs.unity3d.com/Manual/Coroutines.html)
 
