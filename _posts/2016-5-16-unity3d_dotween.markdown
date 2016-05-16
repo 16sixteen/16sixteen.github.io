@@ -262,4 +262,199 @@ public class test : MonoBehaviour {
 
 ![result](/img/unity3d/Dotween/result.gif)
 
+
+### 完整的Dotween.cs代码：
+
+{% highlight c# %}
+
+using UnityEngine;
+using System.Collections;
+using System.Collections.Generic;
+
+public class Dotween{
+    private static List<dotween> dotList = new List<dotween>();
+    private static Dotween dot = null;
+    public static Dotween getInstance() {
+        if(dot == null) {
+            dot = new Dotween();
+        }
+        return dot;
+    }
+    //添加一个dotween对象到列表中
+    public void Add(dotween d) {
+        dotList.Add(d);
+    }
+    //从列表中删除一个dotween对象
+    public void Remove(dotween d) {
+        dotList.Remove(d);
+    }
+    //暂停
+    public static void PauseAll() {
+        for(int i = dotList.Count - 1; i >= 0; i--) {
+            dotList[i].Pause();
+        }
+    }
+    public static void Pause(string name) {
+        for (int i = dotList.Count - 1; i >= 0; i--) {
+            if(dotList[i].name == name) {
+                dotList[i].Pause();
+            }
+        }
+    }
+    public static void Pause(Transform transform) {
+        for (int i = dotList.Count - 1; i >= 0; i--) {
+            if (dotList[i].transform == transform) {
+                dotList[i].Pause();
+            }
+        }
+    }
+    //播放
+    public static void PlayAll() {
+        foreach (dotween d in dotList) {
+            d.Play();
+        }
+    }
+    public static void Play(string name) {
+        foreach(dotween d in dotList) {
+            if(d.name == name) {
+                d.Play();
+            }
+        }
+    }
+    public static void Play(Transform transform) {
+        foreach(dotween d in dotList) {
+            if(d.transform == transform) {
+                d.Play();
+            }
+        }
+    }
+    //销毁
+    public static void KillAll() {
+        for (int i = dotList.Count - 1; i >= 0; i--) {
+            dotList[i].Kill();
+        }
+    }
+    public static void Kill(string name) {
+        for (int i = dotList.Count - 1; i >= 0; i--) {
+            if (dotList[i].name == name) {
+                dotList[i].Kill();
+            }
+        }
+    }
+    public static void Kill(Transform transform) {
+        for (int i = dotList.Count - 1; i >= 0; i--) {
+            if (dotList[i].transform == transform) {
+                dotList[i].Pause();
+            }
+        }
+    }
+}
+
+public class dotween{
+    public string name;
+    public Coroutine coroutine = null;
+    public Transform transform = null;
+    public Vector3 target;
+    public float time;
+    public bool isPause = false;
+    public bool autoKill = true;
+    public delegate void OnComplete();
+    public OnComplete onComplete = null;
+    public dotween(string n, Transform trans,Vector3 tar, float t, Coroutine co) {
+        name = n;
+        transform = trans;
+        target = tar;
+        time = t;
+        //添加到工厂中管理
+        Dotween.getInstance().Add(this);
+    }
+    public void setCoroutine(Coroutine co) {
+        coroutine = co;
+    }
+    public void Kill() {
+        MonoBehaviour mono = transform.GetComponent<MonoBehaviour>();
+        mono.StopCoroutine(coroutine);
+        //生命周期结束，从工厂中删除
+        Dotween.getInstance().Remove(this);
+    }
+    public void Play() {
+        isPause = false;
+    }
+    public void Pause() {
+        isPause = true;
+    }
+    //设置回调函数，可以设置多个回调函数
+    public void setOnComplete(OnComplete fun) {
+        onComplete += fun;
+    }
+    public void runOnComplete() {
+        if (onComplete != null) {
+            onComplete();
+        }
+        if (autoKill) {
+            Kill();
+        }
+    }
+    //设置执行完动作后是否自动销毁
+    public void setAutoKill(bool b) {
+        autoKill = b;
+    }
+}
+
+public static class extension_method {
+    //DoMove扩展方法(MonoBehaviour,Transform)
+    //通过time秒移动到指定的位置target
+    public static IEnumerator DoMove(this MonoBehaviour mono, dotween dot) {
+        //根据目标和现在的位置，按时间长度算出速度
+        Vector3 distance = (dot.target - dot.transform.position)/dot.time;
+        for (float f = dot.time; f >= 0.0f; f -= Time.deltaTime) {
+            dot.transform.Translate(distance * Time.deltaTime);
+            yield return null;
+            //根据dotween确认状态
+            while (dot.isPause == true) {
+                yield return null;
+            }
+        }
+        //动作结束调用回调函数
+        dot.runOnComplete();
+    }
+
+    public static dotween DoMove(this Transform transform,Vector3 target,float time) {
+        MonoBehaviour mono = transform.GetComponents<MonoBehaviour>()[0];
+        //新建dotween
+        dotween dot = new dotween("DoMove",transform, target, time,null);
+        //创建协程
+        Coroutine coroutine = mono.StartCoroutine(mono.DoMove(dot));
+        //给dotween设置对应协程
+        dot.setCoroutine(coroutine);
+        return dot;
+    }
+
+
+    //DoScale扩展方法(MonoBehaviour,Transform)
+    //通过time秒放大到特定倍数target
+    public static IEnumerator DoScale(this MonoBehaviour mono, dotween dot) {
+        Vector3 distance = (dot.target - dot.transform.localScale)/dot.time;
+        for (float f = dot.time; f >= 0.0f; f -= Time.deltaTime) {
+            dot.transform.localScale = dot.transform.localScale + distance * Time.deltaTime;
+            yield return null;
+            while (dot.isPause == true) {
+                yield return null;
+            }
+        }
+        dot.runOnComplete();
+    }
+    public static dotween DoScale(this Transform transform, Vector3 target, float time) {
+        MonoBehaviour mono = transform.GetComponents<MonoBehaviour>()[0];
+        dotween dot = new dotween("DoScale", transform, target, time, null);
+        Coroutine coroutine = mono.StartCoroutine(mono.DoScale(dot));
+        dot.setCoroutine(coroutine);
+        return dot;
+    }
+
+}
+
+
+{% endhighlight %}
+
     FIN 5.16/22.50
