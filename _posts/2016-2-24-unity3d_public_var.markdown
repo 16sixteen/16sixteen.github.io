@@ -10,7 +10,7 @@ header-img: "img/unity3d.jpg"
 published:   true
 ---
 
->## 索引：<br/><a href="#01">C#公有变量</a><br/><a href="#02">C#的获取组件</a><br/><a href="#03">C#用代码改变材质</a><br/><a href="#04">Vector3</a><br/><a href="#05">Transform.Translate和Transform.Rotate</a><br/><a href="#06">Time,Random</a><br/><a href="#07">单例模式</a><br/><a href="#08">C# Collection使用</a><br/><a href="#09">双击检测</a><br/><a href="#10">foreach</a><br/>
+>## 索引：<br/><a href="#01">C#公有变量</a><br/><a href="#02">C#的获取组件</a><br/><a href="#03">C#用代码改变材质</a><br/><a href="#04">Vector3</a><br/><a href="#05">Transform.Translate和Transform.Rotate</a><br/><a href="#06">Time,Random</a><br/><a href="#07">单例模式</a><br/><a href="#08">C# Collection使用</a><br/><a href="#09">双击检测</a><br/><a href="#10">foreach</a><br/><a href="#11">unity3d 角色控制器 卡墙和弹飞问题</a><br/>
 
 
 
@@ -129,3 +129,26 @@ public class double_click : MonoBehaviour {
 ## <a name="10"/>foreach
 
 foreach 中不能进行元素的删减
+
+## <a name="11"/>角色控制器 卡墙和弹飞问题
+
+卡墙的问题我们可以用到自带的角色控制器中的AdvanceSettings中的shellOffset来解决。设置为0.1或者以上就可以解决卡墙问题。
+
+{% highlight c# %}
+
+        [Serializable]
+        public class AdvancedSettings
+        {
+            public float groundCheckDistance = 0.01f; // distance for checking if the controller is grounded ( 0.01f seems to work best for this )
+            public float stickToGroundHelperDistance = 0.5f; // stops the character
+            public float slowDownRate = 20f; // rate at which the controller comes to a stop when there is no input
+            public bool airControl; // can the user control the direction that is being moved in the air
+            [Tooltip("set it to 0.1 or more if you get stuck in wall")]
+            public float shellOffset = 0.1f; //reduce the radius by that ratio to avoid getting stuck in wall (a value of 0.1f is nice)
+        }
+
+{% endhighlight %}
+
+弹飞的问题是因为在碰撞后y位置发生改变，我们在rigidbody中锁定y，就可以不让物理效果改变我们的y坐标，锁定的坐标只能由代码来改变。
+
+![freeze_position](/img/unity3d/freeze_position.png)

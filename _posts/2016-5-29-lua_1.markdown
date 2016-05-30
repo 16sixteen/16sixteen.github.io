@@ -1,0 +1,227 @@
+---
+layout:     post
+title:      "Lua学习笔记（1）"
+subtitle:   "Lua基本语法 Lua面向对象编程"
+date:       2016-05-29 19:47:00
+categories: Lua
+tags:       Lua
+author:     "SixTeen"
+header-img: "img/lua.jpg"
+published:   true
+---
+
+* TOC
+{:toc}
+
+## Lua
+
+Lua 是一种嵌入式脚本语言，它非常小，速度很快，功能却非常强大。[在线的lua解释器](http://www.lua.org/cgi-bin/demo)
+
+### Lua类型
+
+    Lua 类型。在 Lua 中，值可以有类型，但是变量的类型都是动态决定的。nil、布尔型、数字 和 字符串 类型的工作方式与我们期望的一样。
+    Nil 是值为 nil 的一种特殊类型，用来表示没有值。
+    布尔型的值可以是 true 和 false 常量。（Nil 也可以表示 false，任何非 nil 的值都表示 true。）
+    Lua 中所有的数字都是双精度的（不过我们可以非常简便地编写一些代码来实现其他数字类型）。
+    字符串是定长字符数组。（因此，要在一个字符串后面附加上字符，必须对其进行拷贝。）
+    表、函数 和线程 类型都是引用。每个都可以赋值给一个变量，作为参数传递，或作为返回值从函数中返回。例如，下面是一个存储函数的例子
+
+这里需要注意的是，任何非nil的值都表示true。
+
+### 函数和循环
+
+lua和python不一样，没有严格的缩进规则。```--```是lua中的单行注释。
+
+{% highlight lua %}
+
+--循环
+while condition do
+--statements
+end
+
+repeat
+--statements
+until condition
+
+for i = first,last,delta do
+--statements
+end
+
+--函数
+function f(n)
+    local x = 1
+    for i = 2, n, 1 do
+        x = x * i
+    end
+    return x
+end
+
+{% endhighlight %}
+
+### 注释
+
+{% highlight lua %}
+
+--单行注释
+
+--[[多
+    行
+    注
+    释]]
+
+{% endhighlight %}
+
+### 闭包函数
+
+{% highlight lua %}
+
+function add(x)
+    return function(y)
+        return x+y
+    end
+end
+
+f = add(2)
+--function(y) return 2+y
+f(3)
+--5
+
+{% endhighlight %}
+
+### lua中的数据结构
+
+#### Table
+
+tables是lua内置的唯一的复合数据结构，和python的字典是一样的
+
+{% highlight lua %}
+
+a_table = {} -- Creates a new, empty table
+
+a_table = {x = 10}  -- Creates a new table, with one entry mapping "x" to the number 10.
+print(a_table["x"]) -- Prints the value associated with the string key, in this case 10.
+b_table = a_table
+b_table["x"] = 20   -- The value in the table has been changed to 20.
+print(b_table["x"]) -- Prints 20.
+print(a_table["x"]) -- Also prints 20, because a_table and b_table both refer to the same table.
+print(b_table.x) --Also prints 20，syntactic sugar
+
+{% endhighlight %}
+
+#### Array
+
+一维数组,lua中的数组下标是从1开始的。
+
+{% highlight lua %}
+
+array = {0,1,2,3}
+print(array[2]) -- print 1
+print(#array) --# is the length operator for tables and strings.
+array[0] = 1 --下标0也是合法的，但是计算数组的长度是从下标1开始计算的
+print(#array)
+
+{% endhighlight %}
+
+二维数组
+
+{% highlight lua %}
+
+ExampleTable =
+{
+     {1,2,3,4},
+     {5,6,7,8}
+}
+print(ExampleTable[1][3]) -- Prints "3"
+print(ExampleTable[2][4]) -- Prints "8"
+
+{% endhighlight %}
+
+    Using a hash map to emulate an array normally is slower than using an actual array; however, Lua tables are optimized for use as arrays[9] to help avoid this issue.
+
+#### metaTables
+
+metaTable非常厉害，它可以让我们定制自己的表，在键不存在的时候，我们会查看元表中的__index对应的表。
+
+{% highlight lua %}
+
+--斐波那契数组
+fibs = { 1,1 }
+
+count = 0
+
+setmetatable(fibs,{
+    __index = function(values,n)
+        values[n] = values[n-1]+values[n-2]
+        count = count + 1
+        return values[n]
+    end
+})
+
+a1 = fibs[10] 
+print(count)  --print 8
+a2 = fibs[9]  
+print(count)  --print 8
+
+{% endhighlight %}
+
+__index是一个lua预定义的一个函数，它会在n不存在的时候调用。
+
+### lua的面向对象编程
+
+类是成员变量和成员方法封装在一起的一个抽象，用类作为模板实例化的就是对象。
+
+类中的成员变量和成员方法都可以用键值对表示，键是变量名或者函数名，值就是对应的数值或者方法。
+
+metatable是我们用lua编写类的核心。metatable(元表)的作用就是帮我们的表扩展既定的操作。本质上，元表也是一个表。
+
+全局方法```setmetatable(table,m_table)```可以将表table的元表设置为m_table，```getmetatable(table)```可以获取table的元表。
+
+元表中有lua预定义的方法，这些方法都是以```__```开头的，这些元方法定义了我们想对表的自定义的操作。
+
+构建类最核心的就是lua的表是怎么查找一个键对应的值的流程。
+
+![metatable](/img/lua/metatable.jpg)
+
+{% highlight lua %}
+
+local Vector = {}
+Vector.__index = Vector
+
+function Vector:new(x, y, z)    -- The constructor
+  return setmetatable({x = x, y = y, z = z}, Vector)
+end
+
+function Vector:magnitude()     -- Another method
+  -- Reference the implicit object using self
+  return math.sqrt(self.x^2 + self.y^2 + self.z^2)
+end
+
+local vec = Vector:new(0, 1, 0) -- Create a vector
+print(vec:magnitude())          -- Call a method (output: 1)
+print(vec.x)                    -- Access a member variable (output: 0)
+
+{% endhighlight %}
+
+这里面最核心的一步是将我们的类的__index键设为自身。在构造函数中，我们把类模板作为我们实例对象（表）的元表。这样做的结果我们调用类中的成员方法实际上是使用```getmetatable(object).__index.method```。
+
+{% highlight lua %}
+
+class.method = function(arg)
+    --dosomething
+end
+
+function class.method(arg)
+    --dosomething
+end
+
+function class:method(arg)
+    --dosomething
+end
+
+{% endhighlight %}
+
+上面的代码中的写法是完全等价的，这是lua中的syntactic sugar。
+
+>参考资料：<br/>1.[使用 Lua 编写可嵌入式脚本](http://www.ibm.com/developerworks/cn/linux/l-lua.html)<br/>2.[wiki](https://en.wikipedia.org/wiki/Lua_(programming_language))<br/>3.[Lua中实现类的原理](http://www.360doc.com/content/14/0909/11/15077656_408111686.shtml)
+
+    FIN 5.30/21.07
