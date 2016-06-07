@@ -122,6 +122,15 @@ print(#array)
 
 {% endhighlight %}
 
+{% highlight lua %}
+
+//表容器的循环
+for key, value in pairs(_G) do
+  print(key, value)
+end
+
+{% endhighlight %}
+
 二维数组
 
 {% highlight lua %}

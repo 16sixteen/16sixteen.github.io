@@ -1,0 +1,331 @@
+---
+layout:     post
+title:      "Lua学习笔记（2）"
+subtitle:   "Unity中使用lua"
+date:       2016-06-02 09:47:00
+categories: Lua
+tags:       Lua
+author:     "SixTeen"
+header-img: "img/lua.jpg"
+published:   true
+---
+
+* TOC
+{:toc}
+
+### 安装SLua
+
+[slua 1.1.1 Release](https://github.com/pangweiwei/slua/releases/tag/v1.1.1)
+
+1.解压下载的压缩文件。
+
+2.在Assets中创建Plugins文件夹，将解压的slua-1.1.1>Assets>Plugins中对应版本的放入Plugins文件夹中(当然全部放进去也没关系)
+
+### 在C#文件中使用lua
+
+#### 1.添加命名空间
+
+{% highlight C# %}
+
+using System;
+using LuaInterface;//C#封装的lua
+
+{% endhighlight %}
+
+#### 2.C#调用lua
+
+{% highlight C# %}
+
+IntPtr _L = LuaDLL.luaL_newstate();//创建一个新的 Lua 虚拟机。 它以一个基于标准 C 的 realloc 函数实现的内存分配器 调用 lua_newstate 。
+LuaDLL.luaL_openlibs(_L);//打开指定虚拟机中的所有LUA标准库
+lua_close (_L);//销毁虚拟机，释放虚拟机中使用的动态内存
+
+{% endhighlight %}
+
+lua虚拟机可以解释运行lua程序，每一个lua虚拟机都有一个lua栈,-1表示栈顶，1表示栈底。
+
+#### 3.一些常用的api
+
+{% highlight C# %}
+    
+//lua_pushtype(lua_State *L,lua_type)将某个类型的值压栈
+void lua_pushnumber (lua_State *L, lua_Number n);
+
+//从栈顶pop n个元素
+void lua_pop (lua_State *L, int n);
+
+//从lua程序的变量中，将名字为name的值压入栈中
+//#define lua_getglobal(L,s)  lua_getfield(L, LUA_GLOBALSINDEX, s)
+void lua_getglobal (lua_State *L, const char *name);
+
+//将栈顶元素的值赋给lua程序中名字为name的变量，之后pop
+//#define lua_setglobal(L,s)   lua_setfield(L, LUA_GLOBALSINDEX, s)
+void lua_setglobal (lua_State *L, const char *name);
+
+//将索引指向的表中的键值k对应的值压栈(t[k],t为index指向的表)
+void lua_getfield (lua_State *L, int index, const char *k);
+
+//给索引指向的表中的键值k赋值，相当于t[k] = value，value的值是栈顶元素的值，然后pop
+void lua_setfield (lua_State *L, int index, const char *k);
+
+//没发生错误返回0，错误则返回1
+//(luaL_loadstring(L, str) || lua_pcall(L, 0, LUA_MULTRET, 0))
+int luaL_dostring (lua_State *L, const char *str);
+
+//返回栈顶元素的索引，因为索引从1开始，因此结果等于栈上元素的个数
+int lua_gettop(lua_State *L);
+
+//将指定索引处的值以lua_Number的形式返回，必须是number类型或者是能转换成number的string类型，否则返回0
+lua_Number lua_tonumber (lua_State *L, int index);
+
+//将索引处的值以c字符串的形式返回
+const char *lua_tostring (lua_State *L, int index);
+
+{% endhighlight %}
+
+#### 4.例子
+
+{% highlight lua %}
+
+void Start() {
+        IntPtr _L = LuaDLL.luaL_newstate();//创建一个新的 Lua 状态机。
+        LuaDLL.luaL_openlibs(_L);//打开指定状态机中的所有LUA标准库
+        LuaDLL.lua_pushnumber(_L, 1);//1
+        LuaDLL.lua_pushnumber(_L, 2);//1,2
+        LuaDLL.lua_setglobal(_L, "var1");//1
+        Debug.Log("stack_size:" + LuaDLL.lua_gettop(_L));
+        Debug.Log("top:" + LuaDLL.lua_tonumber(_L, -1));
+        LuaDLL.lua_getglobal(_L, "var1");//1,2
+        Debug.Log("stack_size:" + LuaDLL.lua_gettop(_L));
+        Debug.Log("top:" + LuaDLL.lua_tonumber(_L, -1));
+        LuaDLL.lua_dostring(_L, "table={x=\"abc\"};");
+        LuaDLL.lua_getglobal(_L, "table");//1,2,table
+        Debug.Log("stack_size:" + LuaDLL.lua_gettop(_L));
+        Debug.Log("top:" + LuaDLL.lua_tonumber(_L, -1));
+        LuaDLL.lua_getfield(_L, -1, "x");//1,2,table,"abc"
+        Debug.Log("stack_size:" + LuaDLL.lua_gettop(_L));
+        Debug.Log("top:" + LuaDLL.lua_tostring(_L, -1));
+        LuaDLL.lua_pop(_L, 2);//1，2
+        Debug.Log("stack_size:" + LuaDLL.lua_gettop(_L));
+        LuaDLL.lua_close (_L);
+    }
+
+{% endhighlight %}
+
+输出结果：
+
+![result1](/img/unity3d/lua/lua_2/result1.png)
+
+#### 5.lua与c函数的协议
+
+协议定义了这个c函数执行的参数传递规则和返回值传递规则。c函数通过lua的栈来传递参数和返回值。参数按顺序入栈，第一个参数先入栈，最后一个参数最后入栈，因此lua_gettop可以获取参数的个数，
+
+{% highlight c %}
+
+static int f(lua_State *L){
+    int n = lua_gettop(L);//参数的个数
+    int index;
+    for(index = 1; index <= n; index++){
+        lua_tonumber(L,i);
+    }
+    return x;//返回值的个数
+}
+
+{% endhighlight %}
+
+#### 6.lua和C#的沟通
+
+{% highlight c# %}
+
+[MonoPInvokeCallback(typeof(LuaCSFunction))]
+public static int f(IntPtr L) {
+    int n = LuaDLL.lua_gettop(L);//获取参数个数
+    double sum = 0;
+    for (int i = 1; i <= n; i++) {
+        sum += LuaDLL.lua_tonumber(L, i);
+    }
+    LuaDLL.lua_pushnumber(L, sum);//返回值
+    return 1;
+}
+
+{% endhighlight %}
+
+#### 7.lua调用函数
+
+调用函数用到的是```void lua_call (lua_State *L, int nargs, int nresults);```,使用这个参数必须先将要调用的函数压栈，然后将需要的参数按顺序压栈，nargs代表的是参数的个数，nresults代表的是返回值的个数。
+
+{% highlight c# %}
+
+LuaDLL.lua_pushcfunction(_L, f);//将函数f放入栈中
+LuaDLL.lua_pushnumber(_L, 1);//f,1
+LuaDLL.lua_pushnumber(_L, 2);//f,1,2
+LuaDLL.lua_call(_L, 2, 1);//调用函数
+Debug.Log("stack_size:" + LuaDLL.lua_gettop(_L));
+Debug.Log("result:" + LuaDLL.lua_tonumber(_L, -1));
+
+{% endhighlight %}
+
+结果：
+
+![result2](/img/unity3d/lua/lua_2/result2.png)
+
+
+### 将Vector3写入lua和从lua读取一个Vector3
+
+#### 创建一个简单的表
+
+先看一个简单的使用C#创建表的例子：
+
+{% highlight c# %}
+
+LuaDLL.lua_newtable(_L);//empty_table
+LuaDLL.lua_pushnumber(_L, 1);//empty_table,1
+LuaDLL.lua_setfield(_L, -2, "x");//table and table.x = 1
+Debug.Log("stack_size: "+LuaDLL.lua_gettop(_L));
+LuaDLL.lua_pushnumber(_L, 2);//table,2
+LuaDLL.lua_setfield(_L, -2, "y");//table = {x=1,y=2}
+Debug.Log("stack_size: " + LuaDLL.lua_gettop(_L));
+LuaDLL.lua_getfield(_L, -1, "x");//table,table.x
+Debug.Log("stack_size: " + LuaDLL.lua_gettop(_L));
+Debug.Log("top_value: " + LuaDLL.lua_tonumber(_L, -1));
+LuaDLL.lua_getfield(_L, -2, "x");//table,table.x,table.x
+Debug.Log("stack_size: " + LuaDLL.lua_gettop(_L));
+
+{% endhighlight %}
+
+首先，使用```void lua_newtable (lua_State *L);```创建一张空表并压入栈中，然后压入需要赋给table["x"]的值，使用```lua_setfield```将栈顶的值v赋给table["x"],(-1是栈顶，-2就是我们的表在栈中的索引，"x"就是键值),同理给table设置键值y对应的值，现在我们的表是```table={x=1,y=2}```。然后我们通过```lua_getfield```从栈中将表里面的值压栈。
+
+结果：
+
+![result3](/img/unity3d/lua/lua_2/result3.png)
+
+#### 将Vector3写入lua
+
+下面将vector3写入lua：
+
+{% highlight c# %}
+
+Vector3 v = new Vector3(1, 2, 3);
+LuaDLL.lua_newtable(_L);
+LuaDLL.lua_pushnumber(_L, v.x);
+LuaDLL.lua_pushnumber(_L, v.y);
+LuaDLL.lua_pushnumber(_L, v.z);
+int table_index = -4;//table,x,y,z
+LuaDLL.lua_setfield(_L,table_index++,"z");
+LuaDLL.lua_setfield(_L, table_index++, "y");
+LuaDLL.lua_setfield(_L, table_index++, "x");
+
+{% endhighlight %}
+
+这里我们先将vector3的3个坐标压入栈中，这时候，我们的表的索引是-4，每次我们执行```lua_setfield```栈顶的元素就被我们放入了我们的表中，因此索引自增。我们用代码检测下我们的表有没有构建正确：
+
+{% highlight c# %}
+
+Debug.Log("stack_size: " + LuaDLL.lua_gettop(_L));
+LuaDLL.lua_getfield(_L, table_index--, "x");
+Debug.Log("x_value: " + LuaDLL.lua_tonumber(_L, -1));
+LuaDLL.lua_getfield(_L, table_index--, "y");
+Debug.Log("y_value: " + LuaDLL.lua_tonumber(_L, -1));
+LuaDLL.lua_getfield(_L, table_index--, "z");
+Debug.Log("z_value: " + LuaDLL.lua_tonumber(_L, -1));
+
+{% endhighlight %}
+
+结果：
+
+![result4](/img/unity3d/lua/lua_2/result4.png)
+
+#### 从lua读取一个Vector3
+
+从lua读取一个vector3。实际上刚刚我们已经用```lua_tonumber```从lua中将x,y,z的值从表中读取了出来。
+
+{% highlight c# %}
+
+LuaDLL.lua_getfield(_L, table_index--, "x");
+float x = (float)LuaDLL.lua_tonumber(_L, -1);
+//Debug.Log("x_value: " + LuaDLL.lua_tonumber(_L, -1));
+LuaDLL.lua_getfield(_L, table_index--, "y");
+float y = (float)LuaDLL.lua_tonumber(_L, -1);
+//Debug.Log("y_value: " + LuaDLL.lua_tonumber(_L, -1));
+LuaDLL.lua_getfield(_L, table_index--, "z");
+float z = (float)LuaDLL.lua_tonumber(_L, -1);
+//Debug.Log("z_value: " + LuaDLL.lua_tonumber(_L, -1));
+Vector3 v2 = new Vector3(x, y, z);
+Debug.Log(v2);
+
+{% endhighlight %}
+
+结果：
+
+![result5](/img/unity3d/lua/lua_2/result5.png)
+
+#### 构建成一个cfunction
+
+##### cfunction
+
+{% highlight c# %}
+
+//根据栈顶的3个元素(x,y,z)创建一个table={x=x',y=y',z=z'}并压入栈中
+[MonoPInvokeCallback(typeof(LuaCSFunction))]
+public static int createLuaVector3(IntPtr L) {
+    double x, y, z;
+    int index = 1;
+    x = LuaDLL.lua_tonumber(L, index++);
+    y = LuaDLL.lua_tonumber(L, index++);
+    z = LuaDLL.lua_tonumber(L, index++);
+    LuaDLL.lua_newtable(L);
+    LuaDLL.lua_pushnumber(L, x);
+    LuaDLL.lua_setfield(L, -2, "x");
+    LuaDLL.lua_pushnumber(L, y);
+    LuaDLL.lua_setfield(L, -2, "y");
+    LuaDLL.lua_pushnumber(L, z);
+    LuaDLL.lua_setfield(L, -2, "z");
+    return 1;
+}
+
+//将栈顶的Vector3(lua中的表)中的x,y,z按顺序压入栈中
+[MonoPInvokeCallback(typeof(LuaCSFunction))]
+public static int getLuaVector3(IntPtr L) {
+    int index = -1;
+    LuaDLL.lua_getfield(L, index--, "x");
+    LuaDLL.lua_getfield(L, index--, "y");
+    LuaDLL.lua_getfield(L, index--, "z");
+    return 3;
+}
+
+{% endhighlight %}
+
+##### 调用
+
+{% highlight c# %}
+
+Vector3 v = new Vector3(1, 2, 3);
+LuaDLL.lua_pushcfunction(_L, createLuaVector3);
+//传入参数
+LuaDLL.lua_pushnumber(_L, v.x);
+LuaDLL.lua_pushnumber(_L, v.y);
+LuaDLL.lua_pushnumber(_L, v.z);
+LuaDLL.lua_call(_L, 3, 1);
+
+LuaDLL.lua_setglobal(_L, "table");
+
+LuaDLL.lua_pushcfunction(_L, getLuaVector3);
+//传入参数
+LuaDLL.lua_getglobal(_L, "table");
+LuaDLL.lua_call(_L, 1, 3);
+int index = -3;
+float x = (float)LuaDLL.lua_tonumber(_L, index++);
+float y = (float)LuaDLL.lua_tonumber(_L, index++);
+float z = (float)LuaDLL.lua_tonumber(_L, index++);
+
+Vector3 v2 = new Vector3(x, y, z);
+Debug.Log(v2);
+
+{% endhighlight %}
+
+结果：
+
+![result6](/img/unity3d/lua/lua_2/result6.png)
+
+
+>参考资料：<br/>1.[Lua 5.1 Reference Manual](http://www.lua.org/manual/5.1/manual.html)<br/>2.[Lua 5.3 中文版手册](http://cloudwu.github.io/lua53doc/manual.html)
