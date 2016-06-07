@@ -329,3 +329,5 @@ Debug.Log(v2);
 
 
 >参考资料：<br/>1.[Lua 5.1 Reference Manual](http://www.lua.org/manual/5.1/manual.html)<br/>2.[Lua 5.3 中文版手册](http://cloudwu.github.io/lua53doc/manual.html)
+
+    FIN 6.7/9.47
