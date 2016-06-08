@@ -85,7 +85,7 @@ const char *lua_tostring (lua_State *L, int index);
 
 #### 4.例子
 
-{% highlight lua %}
+{% highlight C# %}
 
 void Start() {
         IntPtr _L = LuaDLL.luaL_newstate();//创建一个新的 Lua 状态机。
