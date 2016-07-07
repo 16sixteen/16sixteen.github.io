@@ -1,0 +1,108 @@
+---
+layout:     post
+title:      "Lua学习笔记（3）"
+subtitle:   "Slua与unity的交互"
+date:       2016-07-05 14:06:00
+categories: Lua
+tags:       Lua
+author:     "SixTeen"
+header-img: "img/lua.jpg"
+published:   true
+---
+
+* TOC
+{:toc}
+
+
+## 在unity中使用SLua创建lua虚拟机，执行字符串，执行lua文件
+
+{% highlight c# %}
+
+//test3.cs
+
+using UnityEngine;
+using System.Collections;
+using SLua;
+using System.IO;
+using System;
+
+public class test3 : MonoBehaviour {
+    
+    //使用Slua接口创建一个lua虚拟机
+    private static LuaState ls_state = new LuaState();
+    void Start () {
+        //修改读取的默认路径
+        LuaState.loaderDelegate = ((string fn) => {
+            //设置lua文件目录
+            string file_path = Directory.GetCurrentDirectory() + "/Assets/lua_script/" + fn;
+            Debug.Log(file_path);
+            return File.ReadAllBytes(file_path);
+        });
+        //执行字符串
+        ls_state.doString("print(\"hello world\")");
+        //执行lua文件
+        ls_state.doFile("test.lua");
+    }
+}
+
+{% endhighlight %}
+
+{% highlight lua %}
+
+print("load successfully")
+
+{% endhighlight %}
+
+
+## 使用Slua在unity中调用lua文件中的函数
+
+{% highlight c# %}
+
+using UnityEngine;
+using System.Collections;
+using SLua;
+using System.IO;
+using System;
+using LuaInterface;
+
+public class test3 : MonoBehaviour {
+    
+
+    // Use this for initialization
+    void Start () {
+        LuaState ls_state = new LuaState();
+        LuaState.loaderDelegate = ((string fn) => {
+            string file_path = Directory.GetCurrentDirectory() + "/Assets/lua_script/" + fn;
+            Debug.Log(file_path);
+            return File.ReadAllBytes(file_path);
+        });
+        //初始化LuaObject对象，如果没有这一步将无法对luafunction进行call
+        LuaObject.init(ls_state.L);
+        ls_state.doFile("test.lua");
+        //获取脚本中的函数
+        LuaFunction mul = ls_state.getFunction("mul");
+        //执行
+        double result = (double)mul.call(2, 3);
+        Debug.Log(result);
+    }
+}
+
+{% endhighlight %}
+
+{% highlight lua %}
+
+function mul(v1,v2)
+    return v1*v2
+end
+
+{% endhighlight %}
+
+## 在unity中编写类，在lua中创建类和调用类
+
+这里出了很大问题，在lua中使用类中的静态方法来创建该类的时候一直出现产生nil的情况，现在还没有解决。
+
+
+> [[Unity]使用Slua框架开发Unity项目的重要步骤](http://www.jianshu.com/p/2dc2b816f1a4)
+
+
+    16.7.5/19.46
