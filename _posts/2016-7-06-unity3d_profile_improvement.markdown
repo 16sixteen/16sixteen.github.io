@@ -33,9 +33,19 @@ CPU中需要关注的首先是Time ms，如果Time ms很大，那么这个地方
 
 CPU中的GC ALLOC很高，要从2方面优化，第一方面是foreach的使用，每执行一次foreach会产生20B的GC，如果foreach写在update中，那么每一帧就会造成20B的GC，一旦数量多起来，GC多，修改又麻烦，因此尽量避免使用foreach。第二方面就是setActive的使用，为了实现对象池，我在update中调用了单例中的方法，在update中进行了setActive，setActive对普通对象的消耗不大，但是对于UGUI，却会造成大量的GC，查阅很多资料发现似乎是UI组件频繁的setActive，会不停的调用onEnable，UI在此函数中的消耗很大，因此只能将不活跃的对象移到视野之外。（如果是有脚本的对象，那么必须将脚本设为不活跃）
 
-![profile](/img/unity3d/profile/setActive_GC.png.png)
+![profile](/img/unity3d/profile/setActive_GC.png)
 
-    2016.7.7/12.03
+## 迷一样的gfx.waitforpresent
+
+一种说法是因为项目帧数太高，垂直同步（让帧数和显示器同步）造成的，一种说法是关闭垂直同步之后还会存在，是因为unity中的(bug？)，一种说法是draw call太高，cpu需要等待gpu（我一开始认为我项目中的gfx.waitforpresent是由这一点造成的，但是第二天再打开项目的时候又找不到这个消耗了(惊！)....,不过一开始的gfx.waitforpresent是在渲染场景复杂，drawcall高的时候出现的，因此这个原因还是有可能存在的）
+
+### 垂直同步关闭方法
+
+edit->project settings->quality
+
+![profile](/img/unity3d/profile/v-sync.png)
+
+    2016.7.7/12.18
 
 
 
