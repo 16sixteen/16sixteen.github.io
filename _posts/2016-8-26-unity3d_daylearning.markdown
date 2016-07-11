@@ -13,6 +13,9 @@ published:   true
 * TOC
 {:toc}
 
+## 努力，每天都要进步
+
+
 ## 7月5日 Slua与unity的交互
 
 学习了Slua中的基本方法：创建lua虚拟机，设置代理（默认路径），执行字符串，文件。在unity中调用lua中的函数。unity3d中定义类，lua使用（存在bug未解决）
@@ -23,8 +26,10 @@ published:   true
 
 [profile](/unity3d/unity3d_profile_improvement)
 
-## 7月7日
+## 7月7日 canvas问题与DrawLine
 
 [canvasdisplay-drawLine](/unity3d/unity3d_canvasdisplay_drawline)
 
-## 7月8日
+## 7月8日 初识UNET
+
+[UNET](/unity3d/unity3d_unet)
