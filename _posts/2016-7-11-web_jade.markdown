@@ -1,0 +1,122 @@
+---
+layout:     post
+title:      "jade模板"
+subtitle:   "jade node.js"
+date:       2016-07-11 15:27:00
+categories: WEB
+tags:       WEB
+author:     "SixTeen"
+header-img: "img/contact-bg.jpg"
+published:   true
+---
+
+* TOC
+{:toc}
+
+## Jade
+
+jade引擎是一个前端模板引擎，可以渲染出html
+
+### Jade的一些语法
+
+Jade的语法很简单，不需要像html一样写2个标签，看起来也比html可读性高。
+
+#### 标签
+
+{% highlight jade %}
+
+tag.classname.classname2(property = "",property="",style="property:xx;")
+    tag.classname content
+
+eg. 
+div.ui(height:100px)
+    span 我是内容
+
+link(rel='stylesheet', href='/stylesheets/style.css')
+script(src="/javascript.js")
+
+{% endhighlight %}
+
+### Jade特点
+
+#### 使用后台传输的数据
+
+jade作为一个模板引擎，自然是可以使用后台传递的数据渲染填充前端。```#{json.property}```
+
+{% highlight jade %}
+
+img(src="#{data.profile}")
+
+span #{data.content}
+
+{% endhighlight %}
+
+#### 嵌入代码段
+
+在jade中可以嵌入代码,最常用的大概有```each```,```for```,```if...else...```。使用循环和逻辑判断块基本能实现所有的逻辑。
+
+{% highlight jade %}
+
+-var categories = ['1','2','3'];
+
+each category in categories
+    span category
+
+{% endhighlight %}
+
+### 模块化
+
+#### extends
+
+在jade中添加一个标识block，表明可以被extends的元素填充
+
+{% highlight jade %}
+
+//html基础模板
+doctype html
+html
+  head
+  body
+    block content
+
+{% endhighlight %}
+
+{% highlight jade %}
+
+extends layout
+
+block content
+    div...
+
+{% endhighlight %}
+
+#### include
+
+{% highlight jade %}
+
+name
+    div...
+
+{% endhighlight %}
+
+{% highlight jade %}
+
+include name
+
+{% endhighlight %}
+
+### 与JS共享数据
+
+在jade模板中加入```JSON.stringify(object)```
+
+{% highlight jade %}
+
+//在js中就可以使用window.data
+script.
+    window.data = !{JSON.stringify(data)};
+
+{% endhighlight %}
+
+> [Jade中文教程](http://blog.jayself.com/2014/07/28/Jade/)
+
+    FIN  2016.7.18/19.46

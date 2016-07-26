@@ -115,5 +115,8 @@ public class cubemove : NetworkBehaviour {
 
 ![gif](/img/unity3d/daylearning/7.9/unet.gif)
 
+
+> [[视频教程]Unity3D多人游戏开发：UNET快速入门](http://tieba.baidu.com/p/4314320473?see_lz=1)
+
     FIN 2016.7.11/17.18
 

@@ -45,7 +45,7 @@ edit->project settings->quality
 
 ![profile](/img/unity3d/profile/v-sync.png)
 
-    2016.7.7/12.18
+    2016.7.7/12.03
 
 
 
