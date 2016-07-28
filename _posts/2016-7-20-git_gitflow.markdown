@@ -10,6 +10,9 @@ header-img: "img/unity3d.jpg"
 published:   true
 ---
 
+* TOC
+{:toc}
+
 ## gitflow
 
 gitflow就是如何使用github进行多人开发，在软件设计综合实验这门课中，我们小组制作了一个音乐分享的web，从中不仅学习到了很多前端的javascript，nodejs和jade模板的使用，还有很多关于git的使用方法，了解到了一些git的流程。因此再次回顾记录。

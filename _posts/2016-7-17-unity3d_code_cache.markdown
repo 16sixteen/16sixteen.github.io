@@ -10,6 +10,9 @@ header-img: "img/unity3d.jpg"
 published:   true
 ---
 
+* TOC
+{:toc}
+
 ## 什么是代码缓存和效率
 
 首先放一个[视频连接(Caching - Code Efficiency Tut)](http://www.iqiyi.com/w_19rrx4prp1.html?list=19rro6h3iq)，视频里有这篇博文的所有内容。然后解释一下视频和这里所讨论的代码缓存和效率实际上指的是```GameObject.Find()```和```GetComponent<>()```的效率。

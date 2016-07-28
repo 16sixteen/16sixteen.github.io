@@ -10,6 +10,8 @@ header-img: "img/designPattern.jpg"
 published:   true
 ---
 
+* TOC
+{:toc}
 
 ### 装饰者模式
 

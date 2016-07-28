@@ -10,6 +10,10 @@ header-img: "img/unity3d.jpg"
 published:   true
 ---
 
+* TOC
+{:toc}
+
+
 使用[装饰模式](/DesignPattern/design_pattern_3)来简单实现游戏中的装备附魔系统
 
 ## 类图
