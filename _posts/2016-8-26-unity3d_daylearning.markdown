@@ -40,11 +40,11 @@ published:   true
 
 ## 7月10日 node.js服务器学习笔记(1)
 
-[NodeJS学习笔记(1)](/WEB/web_nodejs_1)
+[http 模块化](/web/web_nodejs_1)
 
 ## 7月11日 jade模板引擎
 
-[JADE](/WEB/web_jade)
+[JADE](/web/web_jade)
 
 ## 7月12日 www制作简单的网络同步
 
@@ -72,19 +72,27 @@ published:   true
 
 ## 7月18日 生命周期以及使用
 
+[官方文档生命周期图片](/unity3d/unity3d_lifecircle)
+
 ## 7月19日 node.js服务器学习笔记(2)
+
+[路由选择](/web/web_nodejs_2)
 
 ## 7月20日 git workflow
 
 [git workflow](/Git/git_gitflow)
 
-## 7月21日 C#数据结构
+## 7月21日 Unity3d常用数据结构
 
-## 7月22日 Slua
+[Unity3d常用数据结构](/unity3d/unity3d_dataStruction)
 
-## 7月23日 shejimoshi
+## 7月22日 lua
+
+## 7月23日 设计模式
 
 ## 7月24日 C++
 
+## 7月25日 设计模式
 
-## 7月25日
+## 7月26日 node.js服务器学习笔记(3)
+
