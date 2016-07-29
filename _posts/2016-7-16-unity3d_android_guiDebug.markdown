@@ -1,7 +1,7 @@
 ---
 layout:     post
 title:      "www安卓上的问题和调试"
-subtitle:   "UNET学习 脚本使用gui在画面输出调试信息"
+subtitle:   "Unity3d学习 脚本使用gui在画面输出调试信息"
 date:       2016-07-16 13:48:00
 categories: Unity3d
 tags:       Unity3d

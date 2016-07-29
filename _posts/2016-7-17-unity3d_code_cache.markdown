@@ -1,7 +1,7 @@
 ---
 layout:     post
 title:      "Unity3d 代码缓存和效率"
-subtitle:   "UNET学习 Find GetComponent"
+subtitle:   "Find GetComponent"
 date:       2016-07-17 19:39:00
 categories: Unity3d
 tags:       Unity3d

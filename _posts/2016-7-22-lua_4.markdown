@@ -1,0 +1,67 @@
+---
+layout:     post
+title:      "Lua学习笔记（4）"
+subtitle:   "使用lua脚本和Slua构建场景"
+date:       2016-07-22 10:13:00
+categories: Lua
+tags:       Lua
+author:     "SixTeen"
+header-img: "img/lua.jpg"
+published:   true
+---
+
+* TOC
+{:toc}
+
+## 使用lua脚本编写场景
+
+在lua中可以使用import导入引擎，导入的引擎以表的形式存在。在学习的过程中遇到了很多坑，例如：一直无法导入UnityEngine,总是出现路径错误。最后只能像slua提供的example一样编写，将lua文件放进Slua下的Resources文件夹中，还要注意的是，必须将lua后缀改成txt后缀，不然是无法读取的。
+
+## 创建C#脚本
+
+创建一个C#脚本用来启动lua脚本。
+
+{% highlight c# %}
+
+using UnityEngine;
+using System.Collections;
+using SLua;
+
+public class test4 : MonoBehaviour {
+
+    LuaSvr svr;
+    void Start () {
+        svr = new LuaSvr();
+        svr.init(null,()=> {
+            svr.start("test");
+        });
+    }
+}
+
+{% endhighlight %}
+
+C#脚本创建了一个LuaSvr，然后用init来执行test.txt，test.txt中的main函数会被执行。init会给luasvr初始化一个luastate，如果直接使用svr.start是不行的，因为svr.start使用的是luastate中的dofile。但是有一个问题就是通过luastate设置loaddelegate却没有效果，现在仍没有解决。
+
+## lua脚本
+
+{% highlight lua %}
+
+import "UnityEngine"
+
+function main()
+    print("load successfully")
+    local cube = UnityEngine.GameObject.CreatePrimitive(UnityEngine.PrimitiveType.Cube)
+    UnityEngine.Debug.Log("success!")
+end
+
+{% endhighlight %}
+
+注意要保存为txt，并保存在Slua中的Resources文件夹中，然后运行：
+
+![](/img/unity3d/daylearning/7.22/result.png)
+
+使用lua创建3d对象，读取lua的消耗和lua的运行效率能让我们明显看到cube创建出来之前需要一定的时间，因此3d的游戏的主要界面主要逻辑还是使用C#更快，在需要热更新的ui等等的地方使用lua更为合适，毕竟更新lua不需要重新再编译。
+
+>  [使用Slua框架开发创建Unity引擎中的对象]http://www.jianshu.com/p/fadb5dd59352
+
+    FIN 2016.7.29/11.30

@@ -1,7 +1,7 @@
 ---
 layout:     post
 title:      "Unity3d 脚本生命周期"
-subtitle:   "UNET学习 生命周期"
+subtitle:   "生命周期"
 date:       2016-07-18 10:34:00
 categories: Unity3d
 tags:       Unity3d

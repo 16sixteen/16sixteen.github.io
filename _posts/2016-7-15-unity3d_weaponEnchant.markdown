@@ -1,7 +1,7 @@
 ---
 layout:     post
 title:      "装饰模式实现装备附魔"
-subtitle:   "UNET学习 装备附魔 装饰模式"
+subtitle:   "Unity3d学习 装备附魔 装饰模式"
 date:       2016-07-15 16:30:00
 categories: Unity3d
 tags:       Unity3d 设计模式
