@@ -62,6 +62,6 @@ end
 
 使用lua创建3d对象，读取lua的消耗和lua的运行效率能让我们明显看到cube创建出来之前需要一定的时间，因此3d的游戏的主要界面主要逻辑还是使用C#更快，在需要热更新的ui等等的地方使用lua更为合适，毕竟更新lua不需要重新再编译。
 
->  [使用Slua框架开发创建Unity引擎中的对象]http://www.jianshu.com/p/fadb5dd59352
+>  [使用Slua框架开发创建Unity引擎中的对象](http://www.jianshu.com/p/fadb5dd59352)
 
     FIN 2016.7.29/11.30

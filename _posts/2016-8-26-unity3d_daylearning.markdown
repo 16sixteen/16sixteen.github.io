@@ -15,6 +15,7 @@ published:   true
 
 ## 努力，每天都要进步
 
+# 7月
 
 ## 7月5日 Slua与unity的交互
 
@@ -86,13 +87,34 @@ published:   true
 
 [Unity3d常用数据结构](/unity3d/unity3d_dataStruction)
 
-## 7月22日 lua
+## 7月22日 使用lua脚本和Slua构建场景
 
-## 7月23日 设计模式
+[Lua学习笔记（4）](/lua/lua_4)
+
+## 7月23日 状态模式
+
+[简单状态模式和状态模式](/designpattern/design_pattern_4)
 
 ## 7月24日 C++
 
-## 7月25日 设计模式
+## 7月25日 简单状态模式实现简单AI
+
+[简单状态模式实现简单AI](/unity3d/unity3d_simpleAI)
 
 ## 7月26日 node.js服务器学习笔记(3)
 
+## 7月27日 简单工厂模式
+
+[设计模式-设计模式入门（5）](/designpattern/design_pattern_5)
+
+## 7月28日 工厂模式
+
+[设计模式-设计模式入门（6）](/designpattern/design_pattern_6)
+
+## 7月29日
+
+## 7月30日
+
+## 7月31日
+
+# 8月
