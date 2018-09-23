@@ -1032,13 +1032,17 @@ jQuery(document).ready(function($) {
     var MQL = 1170;
 
     //primary navigation slide-in effect
-    if ($(window).width() > MQL) {
+    // if ($(window).width() > MQL) {
         var headerHeight = $('.navbar-custom').height();
         $(window).on('scroll', {
                 previousTop: 0
             },
             function() {
                 var currentTop = $(window).scrollTop();
+                
+                console.log("currentTop" + currentTop)
+                console.log("previousTop" + this.previousTop)
+
                 //check if user is scrolling up
                 if (currentTop < this.previousTop) {
                     //if scrolling up...
@@ -1054,5 +1058,5 @@ jQuery(document).ready(function($) {
                 }
                 this.previousTop = currentTop;
             });
-    }
+    // }
 });
