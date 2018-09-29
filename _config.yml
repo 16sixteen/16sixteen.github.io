@@ -18,12 +18,13 @@ future: true
 permalink: /:categories/:title
 # Build settings
 #markdown: redcarpet
+#支持mathjax的markdown解释器，支持toc
 markdown: kramdown
 excerpt_separator: ""
 #jekyll3.0 not support other highlight
 #highlighter: pygments
 highlighter: rouge
 #permalink: pretty
-paginate: 5
+paginate: 10
 exclude: ["less","node_modules","Gruntfile.js","package.json","README.md"]
 plugins: [jekyll-paginate]
