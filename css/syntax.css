@@ -1,3 +1,10 @@
+
+.highlight pre { color:#9f9f9f; margin: 0; background-color: #303030; border: 1px solid #303030;}
+.highlight pre .p { color: #9f9f9f; }
+.highlight .lineno { color: #2b91af !important; }
+.highlight .gutter.gl {background-color: #303030;}
+.highlight .code {background-color: #303030; border: 1px solid #303030;}
+
 .highlight table td { background-color: #303030 !important; border: 1px solid #303030 !important; padding: 5px; }
 .highlight table pre { color:#9f9f9f; margin: 0; background-color: #303030; border: 1px solid #303030;}
 .highlight table pre .p { color: #9f9f9f; }
