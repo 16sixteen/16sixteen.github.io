@@ -20,10 +20,21 @@ permalink: /:categories/:title
 #markdown: redcarpet
 #支持mathjax的markdown解释器，支持toc
 markdown: kramdown
+kramdown:
+  input: GFM
+  syntax_highlighter_opts:
+    default_lang: html
+    css_class: 'highlight'
+    span:
+      line_numbers: false
+    block:
+      line_numbers: true
+      start_line: 1
 excerpt_separator: ""
 #jekyll3.0 not support other highlight
-#highlighter: pygments
+# highlighter: pygments
 highlighter: rouge
+# highlighting stylesheet: monokai
 #permalink: pretty
 paginate: 10
 exclude: ["less","node_modules","Gruntfile.js","package.json","README.md"]

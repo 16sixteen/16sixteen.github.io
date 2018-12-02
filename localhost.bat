@@ -1,2 +1,2 @@
 @echo off
-jekyll serve --watch
+jekyll serve --watch --trace
