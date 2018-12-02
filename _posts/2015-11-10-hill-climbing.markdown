@@ -60,7 +60,7 @@ published:   true
 
 ###<a name="04"></a>C++代码实现
 
-{% highlight c++ %}
+{% highlight c++ linenos %}
 /*fin 11.11
 最陡爬山法
 */
@@ -132,7 +132,7 @@ bool steepest(queen q, int* sum){
 {% endhighlight %}
 
 
-{% highlight c++ %}
+{% highlight c++ linenos %}
 /*fin 11.11
 首选爬山法
 */
@@ -196,7 +196,7 @@ bool firstchoice(queen q,int* sum){
 {% endhighlight %}
 
 
-{% highlight c++ %}
+{% highlight c++ linenos %}
 /*fin 11.8
 随机重新开始爬山法
 */
