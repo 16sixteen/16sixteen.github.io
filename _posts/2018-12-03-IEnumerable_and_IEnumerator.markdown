@@ -13,7 +13,7 @@ author:     "SixTeen"
 
 ### IEnumerable 和 IEnumerator
 
-IEnumerable（可枚举的）描述的是一个集合。我们知道接口描述的是一个东西can do。所以，IEnumerable能做的是他可以迭代（枚举）。因此IEnumerable需要实现一个`public IEnumerator GetEnumerator()`，作用是获取一个迭代器。
+IEnumerable（可枚举的）描述的是一个集合。我们知道接口描述的是一个东西can do。所以，IEnumerable能做的是他可以迭代（枚举）。因此IEnumerable需要实现一个`public IEnumerator GetEnumerator()`，作用是获取一个迭代器，由迭代器提供遍历的功能。
 
 IEnumerator描述的是一个迭代器。IEnumerator需要我们实现的接口`public object Current{get;};bool MoveNext();void Reset();`，迭代器是一个每一次调用返回一个集合中的值的浮标。他的三个方法也是对应了他的这个职责（can do），current就是当前指向的集合元素，movenext就是指向下一个元素，reset就是重置迭代器指向的元素（第一个元素的前一个元素）。
 
